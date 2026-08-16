@@ -151,6 +151,12 @@ img { max-width: 100%; }
   animation: curtainRule 3.2s cubic-bezier(.76,0,.24,1) forwards;
 }
 
+/* Set by the inline head script when this tab already has a saved session, so
+   returning from a case study skips straight to the tower. Once set it stays
+   set — the curtain is a first-impression flourish, and Back is not a first
+   impression. */
+.is-resumed .curtain { display: none; }
+
 /* 3D scene --------------------------------------------------------------- */
 
 .scene-layer { position: fixed; inset: 0; z-index: 0; }

@@ -3,7 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.remove('no-js');</script>
+<script>
+document.documentElement.classList.remove('no-js');
+/* Inline and before the stylesheet on purpose: a reader coming back from a case
+   study has already watched the opening curtain once this session, and finding
+   out about it after first paint would mean watching it flash. */
+try {
+  var s = sessionStorage.getItem('tg.portfolio.v1');
+  if (s && JSON.parse(s).started) document.documentElement.classList.add('is-resumed');
+} catch (e) {}
+</script>
 
 <title>Thomas Gao — Civil Engineering, Building Science &amp; Software</title>
 <meta name="description" content="Civil engineering portfolio of Thomas Gao: envelope thermal modelling, deep foundations on the Ontario Line, MTO pavement QC, published solar research, and engineering software.">

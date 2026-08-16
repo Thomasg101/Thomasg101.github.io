@@ -82,6 +82,29 @@ links from the case-study pages land in the right place. Moving between chapters
 pushes history, so Back and Forward step through chapters rather than leaving the
 site.
 
+### Resuming after a case study
+
+Clicking through to a case study is a real navigation, so Back reloads the
+homepage from scratch. A snapshot in `sessionStorage` (`tg.portfolio.v1`) is what
+lets it come back to the same tower rather than a finished one: build stage,
+which markers are unlocked and which have been read, the open chapter, its scroll
+offset, and the selected ProjectSearch query. The opening curtain is skipped on a
+resumed load.
+
+The rules that fall out of it:
+
+- **Back from a case study** restores the build exactly where it was — mid-build
+  stays mid-build, with *Continue construction* still waiting.
+- **A lift still animating** when the reader left counts as finished, rather than
+  replaying a camera move they already watched.
+- **"All projects" from a case study** asks for `#projects`, which may be past
+  the current lift. That is a deliberate jump, not a resume, so it tops the tower
+  out as it always did — the same as any shared `#hash` link.
+- **Home / Back to the start** clears the snapshot; starting over means being
+  forgotten.
+- `sessionStorage`, not `localStorage`: the memory lasts exactly as long as the
+  tab, so a visitor returning tomorrow still breaks ground.
+
 **Home** in the top bar (and *Back to the start*) returns to the title card and
 resets the build. **Skip the build** on the title card jumps straight to the
 topped-out view with every chapter unlocked, for readers who don't want to play

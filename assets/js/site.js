@@ -42,6 +42,24 @@ const MILES = [
 
 const SCENE_TIMEOUT_MS = 6000;
 
+/* Leaving for a case study is a real navigation, so Back re-runs init() with
+   nothing but `#education` in the URL — and a bare hash is indistinguishable
+   from a link someone shared, which is why the tower used to come back topped
+   out. This snapshot is what lets the two be told apart.
+
+   sessionStorage, not localStorage, is the whole point: it lives exactly as
+   long as the tab. A reader returning tomorrow should still break ground. */
+const STATE_KEY = 'tg.portfolio.v1';
+
+const loadSnapshot = () => {
+  try {
+    const raw = sessionStorage.getItem(STATE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    return (s && s.v === 1 && s.started) ? s : null;
+  } catch (e) { return null; }   /* private mode, disabled storage, bad JSON */
+};
+
 class Portfolio {
   constructor() {
     this.hero      = $('#hero');
@@ -86,6 +104,10 @@ class Portfolio {
     this.pside = 'right';
     this.sc = null;
     this._routing = false;
+    this.demo = 0;
+    this.snapshot = loadSnapshot();
+    this._resuming = false;
+    this._restoreScroll = 0;
 
     this.markers.forEach(m => { m.tabIndex = -1; });
   }
@@ -99,6 +121,17 @@ class Portfolio {
   init() {
     this.bindEvents();
     this.hashTarget = this.hashIndex();
+
+    /* Take the title card down now rather than when the scene resolves —
+       whenDefined can be hundreds of milliseconds, and a reader pressing Back
+       should not watch the hero flash past on the way to where they were. */
+    if (this.snapshot) {
+      this._resuming = true;
+      this.started = true;
+      this.hideHero(true);
+      this.setStatus('Restoring the site where you left it…');
+    }
+
     this.syncRail();
 
     /* customElements.whenDefined replaces the old 120 ms setInterval poll. The
@@ -131,6 +164,11 @@ class Portfolio {
     sc.enterGuided();
     sc.addEventListener('built', () => this.onBuilt());
 
+    const snap = this.snapshot;
+    this.snapshot = null;
+    if (this._resuming && snap && this.restore(snap)) return;
+    this._resuming = false;
+
     if (this.stage === 'done' && this.started) { sc.startBuild(); sc.setProgress(1); }
     else if (this.hashTarget >= 0) this.openHash(this.hashTarget);
     else if (this._wantStart) this._begin();
@@ -149,6 +187,97 @@ class Portfolio {
       this.setStatus('Topped out · EL +40.8 m — revisit any level');
     }
     this.syncRail();
+    this.persist();
+  }
+
+  /* ------------------------------------------------------- session state -- */
+
+  /* Called at the end of every transition, and once more on the way out so the
+     live camera height and panel scroll are caught even mid-lift. */
+  persist() {
+    if (!this.started && this.stage === 'intro') { this.forget(); return; }
+    try {
+      sessionStorage.setItem(STATE_KEY, JSON.stringify({
+        v: 1,
+        started: this.started,
+        stage: this.stage,
+        unlocked: this.unlocked,
+        pending: this.pending,
+        cur: this.panelOpen ? this.cur : -1,
+        read: this.read,
+        demo: this.demo,
+        scroll: (this.panelOpen && this.panelBody) ? Math.round(this.panelBody.scrollTop) : 0,
+        p: this.sc ? this.sc.p : 0
+      }));
+    } catch (e) { /* storage unavailable — the site just loses its memory */ }
+  }
+
+  forget() {
+    try { sessionStorage.removeItem(STATE_KEY); } catch (e) {}
+  }
+
+  /* Put the tower back at the elevation it was left at, reopen whatever chapter
+     was open, and return the panel to the paragraph it was scrolled to.
+     Returns false if the snapshot cannot be trusted, in which case the caller
+     falls through to the normal first-visit path. */
+  restore(snap) {
+    const last = MILES.length - 1;
+    let stage = snap.stage;
+    let unlocked = snap.unlocked | 0;
+
+    /* A lift still in flight when the reader left counts as finished. Replaying
+       a camera move they already sat through would be the worse of the two. */
+    if (stage === 'building') {
+      const pending = Math.max(0, snap.pending | 0);
+      stage = pending > last ? 'done' : 'ready';
+      unlocked = Math.min(pending, last);
+    }
+    if (stage === 'done') unlocked = last;
+    if ((stage !== 'done' && stage !== 'ready') || unlocked < 0 || unlocked > last) return false;
+
+    this.started = true;
+    this.stage = stage;
+    this.unlocked = unlocked;
+    this.pending = unlocked;
+    if (Array.isArray(snap.read) && snap.read.length === MILES.length) this.read = snap.read.map(Boolean);
+    this.hideHero(true);
+    this.sc.startBuild();
+    this.sc.setProgress(stage === 'done' ? 1 : MILES[unlocked].p);
+    if (snap.demo > 0 && snap.demo < PS_DEMO.length) this.runDemo(snap.demo | 0);
+
+    /* The URL wins where it can. Back restores the hash the reader left on, so
+       that hash *is* the memory. But a case study's "All projects" link can ask
+       for a chapter the build has not reached yet — that is a deliberate jump,
+       not a resume, and it still tops the tower out the way it always did. */
+    const wanted = this.hashIndex();
+    let openAt = -1;
+    if (wanted > unlocked) {
+      this.stage = 'done';
+      this.unlocked = this.pending = last;
+      this.sc.setProgress(1);
+      openAt = wanted;
+    } else if (wanted >= 0) {
+      openAt = wanted;
+    } else if (snap.cur >= 0 && snap.cur <= unlocked) {
+      openAt = snap.cur;
+    }
+
+    this.syncRail();
+    if (openAt >= 0) {
+      this.showFinale(false);
+      if (openAt === snap.cur) this._restoreScroll = Math.max(0, snap.scroll | 0);
+      /* Opened synchronously, unlike the deep-link path: a tab restored in the
+         background never gets a frame, and the chapter has to be there waiting
+         when the reader switches to it. */
+      this.openBub(openAt);
+    } else {
+      this.showFinale(this.stage === 'done');
+      this.setStatus(this.stage === 'done'
+        ? 'Topped out · EL +40.8 m — revisit any level'
+        : 'Marker ' + MILES[this.unlocked].num + ' ready — click it to continue');
+      this.persist();
+    }
+    return true;
   }
 
   /* -------------------------------------------------------------- events -- */
@@ -207,6 +336,15 @@ class Portfolio {
     /* Back/forward now moves between chapters instead of leaving the site. */
     addEventListener('popstate', () => this.onRoute());
     addEventListener('hashchange', () => this.onRoute());
+
+    /* The last write before the document goes away, which is the one that
+       matters: clicking through to a case study is a navigation, and only here
+       are the live build progress and panel scroll still readable.
+       visibilitychange backs it up on mobile, where pagehide is less reliable. */
+    addEventListener('pagehide', () => this.persist());
+    addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') this.persist();
+    });
 
     if (typeof matchMedia === 'function' && matchMedia('(pointer:fine)').matches) {
       document.addEventListener('pointerleave', () => { this.ptr.has = false; this.cursor(); });
@@ -274,6 +412,7 @@ class Portfolio {
     this.showFinale(true);
     this.syncRail();
     this.setStatus('Topped out · EL +40.8 m — every chapter is open');
+    this.persist();
   }
 
   _begin() {
@@ -290,6 +429,7 @@ class Portfolio {
     this.setStatus(MILES[0].build);
     this.sc.buildTo(MILES[0].p, this.dur(0));
     this.syncRail();
+    this.persist();
   }
 
   dur(i) {
@@ -298,16 +438,29 @@ class Portfolio {
     return Math.max(6, Math.min(10, (to - from) * 38));
   }
 
+  /* No tower, so there is no elevation to return to — but which chapter the
+     reader was reading still survives the trip to a case study and back. */
   enableFallback(i) {
     if (this.sc) return;
+    const snap = this.snapshot;
+    this.snapshot = null;
+    this._resuming = false;
     this.started = true;
     this.hideHero(true);
     this.stage = 'done';
     this.unlocked = MILES.length - 1;
+    if (snap && Array.isArray(snap.read) && snap.read.length === MILES.length) this.read = snap.read.map(Boolean);
     this.syncRail();
     this.showFinale(true);
     this.setStatus('Portfolio chapters ready · 3D view unavailable');
-    if (i >= 0) requestAnimationFrame(() => this.openBub(i));
+
+    const open = i >= 0 ? i : (snap && snap.cur >= 0 ? snap.cur : -1);
+    if (open >= 0) {
+      if (snap && open === snap.cur) this._restoreScroll = Math.max(0, snap.scroll | 0);
+      this.openBub(open);
+    } else {
+      this.persist();
+    }
   }
 
   /* ------------------------------------------------------------- routing -- */
@@ -347,7 +500,9 @@ class Portfolio {
     this.unlocked = MILES.length - 1;
     this.syncRail();
     this.showFinale(false);
-    requestAnimationFrame(() => this.openBub(i));
+    /* Synchronous for the same reason as restore(): a link opened in a
+       background tab gets no frame, and would land on a chapterless tower. */
+    this.openBub(i);
   }
 
   /* --------------------------------------------------------------- panel -- */
@@ -405,7 +560,18 @@ class Portfolio {
     });
     this.kicker.textContent = m.num + ' / ' + m.name + ' · EL +' + m.el + ' m';
     this.syncFoot(i);
-    this.panelBody.scrollTop = 0;
+
+    /* Normally the panel opens at the top. The exception is a restore: someone
+       who clicked the seventh project card should come back to the seventh
+       project card, not to the top of the chapter. Writing scrollTop flushes
+       layout, so the first assignment usually lands; it is re-asserted next
+       frame in case the chapter's images had not been sized yet and the offset
+       clamped short. */
+    const scroll = this._restoreScroll;
+    this._restoreScroll = 0;
+    this.panelBody.scrollTop = scroll;
+    if (scroll > 0) requestAnimationFrame(() => { this.panelBody.scrollTop = scroll; });
+
     panel.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)';
 
     const active = document.activeElement;
@@ -420,6 +586,7 @@ class Portfolio {
     this.setStatus('Reviewing ' + m.num + ' — ' + m.name);
     this.setHash(m.hash, !first);
     this.syncRail();
+    this.persist();
     requestAnimationFrame(() => this.closeBtn.focus({ preventScroll: true }));
   }
 
@@ -471,6 +638,7 @@ class Portfolio {
       this.setStatus('Marker ' + MILES[this.unlocked].num + ' ready — click it to continue');
     }
     this.syncRail();
+    this.persist();
   }
 
   advance() {
@@ -489,6 +657,7 @@ class Portfolio {
       this.sc.buildTo(1, this.dur(nxt));
     }
     this.syncRail();
+    this.persist();
   }
 
   /* ---------------------------------------------------------------- home -- */
@@ -503,12 +672,17 @@ class Portfolio {
     this.read = Array(MILES.length).fill(false);
     this.returnFocus = null;
     this.hashTarget = -1;
+    this._resuming = false;
+    this.snapshot = null;
+    this.demo = 0;
     this.showFinale(false);
     this.showHero();
     if (this.sc) { this.sc.resetBuild(); this.sc.focusLevel(null, 0); }
     this.setHash('', false);
     this.setStatus('Back at the title card — scroll to break ground again');
     this.syncRail();
+    /* Asking to start over is also asking to be forgotten. */
+    this.persist();
   }
 
   hideHero(immediate) {
@@ -559,6 +733,7 @@ class Portfolio {
   runDemo(i) {
     const d = PS_DEMO[i];
     if (!d || !this.demoQuery || !this.demoRes) return;
+    this.demo = i;
     this.demoQuery.textContent = d.q;
     this.demoRes.textContent = '';
 
@@ -594,6 +769,7 @@ class Portfolio {
     $$('[data-demo]').forEach(b => {
       b.setAttribute('aria-pressed', String(+b.getAttribute('data-demo') === i));
     });
+    this.persist();
   }
 
   /* ---------------------------------------------------------------- rail -- */
