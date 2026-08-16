@@ -55,7 +55,10 @@ try {
     "Building envelope", "Thermal bridging", "Deep foundations",
     "Pavement quality control", "Python", "Engineering software"
   ],
-  "sameAs": ["https://github.com/Thomasg101"]
+  "sameAs": [
+    "https://github.com/Thomasg101",
+    "https://www.linkedin.com/in/thomas-gao-1a2b3c/"
+  ]
 }
 </script>
 </head>
@@ -79,7 +82,8 @@ try {
   <div class="masthead">
     <span class="brand">T. Gao <span class="brand-mark">&#9626;</span> Civil / Code</span>
     <div class="top-links">
-      <a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a class="link-secondary" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
       <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
     </div>
   </div>
@@ -106,7 +110,7 @@ try {
     <div class="hero-copy">
       <p class="hero-kicker">
         <span class="hero-kicker-dot" aria-hidden="true"></span>
-        <span class="hero-kicker-text">Waterloo, ON &middot; Vancouver, BC &middot; Available for co-op Jan&ndash;Apr 2027</span>
+        <span class="hero-kicker-text">On exchange in Singapore &middot; Waterloo, ON &middot; Available for co-op Jan&ndash;Apr 2027</span>
       </p>
       <div class="hero-title-clip"><h1 class="hero-title">Thomas Gao</h1></div>
       <div class="hero-rule" aria-hidden="true"></div>
@@ -116,31 +120,41 @@ try {
         <span>BASc Civil &middot; Waterloo '28</span>
         <span>GPA 4.0 / 4.0</span>
         <span>4 co-op terms</span>
+        <span>First-author paper &middot; <em>Processes</em> 2026</span>
         <span class="is-accent">Python &middot; SQL &middot; MATLAB</span>
       </div>
     </div>
   </div>
 
   <div class="hero-actions">
-    <button type="button" class="hero-start" data-start>Scroll to break ground &darr;</button>
-    <button type="button" class="hero-skip" data-skip>Skip the build &mdash; show everything</button>
+    <button type="button" class="hero-start" data-start>Scroll to break ground <span class="hero-start-glyph" aria-hidden="true">&darr;</span></button>
+    <button type="button" class="hero-skip" data-skip>Skip the build &mdash; show everything &rarr;</button>
   </div>
 </header>
 
 <!-- Top bar (after launch) ---------------------------------------------- -->
 <nav class="topbar" id="topbar" aria-label="Portfolio" aria-hidden="true" inert>
   <div class="topbar-progress" id="progress" aria-hidden="true"></div>
-  <div class="topbar-left">
-    <button type="button" class="home-btn" data-home title="Return to the title card and replay the build">
-      <span class="home-btn-glyph" aria-hidden="true">&#8634;</span> Home
-    </button>
-    <span class="brand">T. Gao <span class="brand-mark">&#9626;</span> Civil / Code</span>
+  <div class="topbar-row">
+    <div class="topbar-left">
+      <button type="button" class="home-btn" data-home title="Return to the title card and replay the build">
+        <span class="home-btn-glyph" aria-hidden="true">&#8634;</span> Home
+      </button>
+      <span class="brand">T. Gao <span class="brand-mark">&#9626;</span> Civil / Code</span>
+    </div>
+    <div class="top-links">
+      <span class="nav-lvl">LVL <b id="lvl">00</b>/12</span>
+      <a class="link-secondary" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+      <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
+    </div>
   </div>
-  <div class="top-links">
-    <span class="nav-lvl">LVL <b id="lvl">00</b>/12</span>
-    <a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
-    <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
-  </div>
+
+  <!-- The site log. This carries the same text as the #status live region at the
+       bottom of the document, which stays sr-only — announcing it twice would be
+       worse than not announcing it at all. It lives inside the topbar so that
+       layoutTags() picks up the extra height in its safe area for free. -->
+  <p class="topbar-build" id="build-line" aria-hidden="true"></p>
 </nav>
 
 <!-- Chapter rail --------------------------------------------------------- -->
@@ -246,9 +260,18 @@ try {
           <div class="stat-label">Co-op terms completed</div>
         </div>
       </div>
+
+      <!-- Waterloo alternates four-month study and work blocks, so a reader
+           looking at the experience dates should not have to wonder what fills
+           the gaps between them. This says it once, plainly. -->
       <div class="section-block">
-        <div class="section-label">Peer-reviewed publication</div>
-        <p>Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta &mdash; <em>Processes</em> 2026, 14(7), 1078.</p>
+        <div class="section-label">Current term &middot; Fall 2026</div>
+        <p><strong>International exchange in Singapore.</strong> Waterloo runs on alternating four-month blocks &mdash; every term is either academic or a co-op placement, with no gaps between them. This one is a study term abroad; the next work term runs January to April 2027.</p>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">Peer-reviewed publication &middot; First author</div>
+        <p>Gao, T., <em>et al.</em> Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta &mdash; <em>Processes</em> 2026, 14(7), 1078.</p>
         <div class="link-row">
           <a class="btn-outline" href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Read on MDPI &#8599;</a>
           <a class="btn-ghost" href="./projects/travers-solar-analysis.html">Case study &rarr;</a>
@@ -346,15 +369,16 @@ try {
         <h2 id="work-title">Four terms, four disciplines</h2>
         <span>2024 &rarr; 2026</span>
       </div>
+      <p class="chapter-intro">Waterloo alternates four-month study and work blocks, so the dates below interleave with academic terms rather than leaving gaps. Figures describe the scope of the work, not credit for its outcomes.</p>
 
       <div class="role-list">
         <article class="role is-current">
           <div class="role-meta"><b>Entuitive</b><span>May &ndash; Aug 2026 &middot; Vancouver, BC</span></div>
           <h3>Building Envelope Specialist <span>&mdash; Co-op</span></h3>
           <ul>
-            <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3, and Ubakus &mdash; effective U-values and linear (&psi;) and point (&chi;) transmittance for BC Energy Step Code, NECB, and ASHRAE 90.1 compliance.</li>
-            <li>Site Review Reports documenting construction conformance &mdash; annotated photo logs, deficiency registers, follow-up tracking.</li>
-            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients &mdash; 30-year capital renewal cost models.</li>
+            <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3, and Ubakus &mdash; effective U-values and linear (&psi;) and point (&chi;) transmittance for BC Energy Step Code, NECB, and ASHRAE 90.1 compliance. Roughly <b>35 junction details across 8 projects</b>, most modelled in both existing and retrofit configurations.</li>
+            <li><b>14 Site Review Reports</b> documenting construction conformance &mdash; annotated photo logs, deficiency registers, follow-up tracking.</li>
+            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients &mdash; <b>6 buildings</b>, each with a 30-year capital renewal cost model.</li>
             <li>Built ProjectSearch, a local-first photo and document retrieval prototype being evaluated for engineering workflows.</li>
           </ul>
         </article>
@@ -363,8 +387,8 @@ try {
           <div class="role-meta"><b>Brown Beattie</b><span>Sep &ndash; Dec 2025 &middot; Richmond Hill, ON</span></div>
           <h3>Engineering Technician <span>&mdash; Co-op</span></h3>
           <ul>
-            <li>Site inspections for building restoration, waterproofing, and concrete repair &mdash; surface preparation, CSP profiles, adhesion, membrane thickness per OBC, CSA, and manufacturer standards.</li>
-            <li>Ran multiple envelope rehabilitation projects from tender review through substantial performance &mdash; mock-ups, submittal and shop drawing review.</li>
+            <li>Site inspections across <b>5 active restoration sites</b> &mdash; waterproofing and concrete repair, surface preparation, CSP profiles, adhesion, membrane thickness per OBC, CSA, and manufacturer standards.</li>
+            <li>Ran <b>4 envelope rehabilitation projects</b> from tender review through substantial performance &mdash; mock-ups, submittal and shop drawing review.</li>
           </ul>
         </article>
 
@@ -378,15 +402,15 @@ try {
           <article class="role">
             <div class="role-meta"><b>Project Coordinator</b><span>Jan &ndash; May 2025 &middot; Toronto, ON</span></div>
             <ul>
-              <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line &mdash; diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing, tieback anchor testing.</li>
-              <li>Sequenced excavation and support-of-excavation to MTO, CSA, and Ministry of Labour requirements; field reports, as-builts, quantity summaries.</li>
+              <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line &mdash; diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing, tieback anchor testing. Tracked <b>120+ RFIs, RFQs, and submittals</b> across the below-grade scope.</li>
+              <li>Sequenced excavation and support-of-excavation to MTO, CSA, and Ministry of Labour requirements &mdash; field reports, as-builts, and quantity summaries over a <b>5-month</b> placement.</li>
             </ul>
           </article>
           <article class="role">
             <div class="role-meta"><b>Quality Control Technician</b><span>May &ndash; Aug 2024 &middot; Ontario</span></div>
             <ul>
-              <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM, and AASHTO standards &mdash; Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
-              <li>Independently managed QC for MTO Highway 17 and 61 rehabilitation near Thunder Bay; mix optimization through gradation, binder content, and foaming parameter analysis.</li>
+              <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM, and AASHTO standards &mdash; Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity. Roughly <b>300 specimens</b> over the term.</li>
+              <li>Independently managed QC for MTO <b>Highway 17 and 61</b> rehabilitation near Thunder Bay; mix optimization through gradation, binder content, and foaming parameter analysis.</li>
             </ul>
           </article>
         </div>
@@ -684,25 +708,51 @@ try {
     <!-- 06 Skills -->
     <section class="chapter" data-chapter="skills" aria-labelledby="skills-title">
       <h2 id="skills-title">Skills &amp; tools</h2>
+
+      <!-- A tag cloud asks to be taken on trust. Every tool that a case study
+           actually demonstrates is a link to that case study instead, so the
+           list doubles as its own evidence index. -->
+      <p class="skill-legend"><span class="skill-legend-key" aria-hidden="true">&rarr;</span> Underlined tools open the case study that demonstrates them. The rest are working familiarity without a documented project behind them.</p>
+
       <div class="skill-stack">
         <div class="skill-group">
           <div class="skill-group-title">Software</div>
           <div class="skill-tags">
-            <span>AutoCAD</span><span>Revit</span><span>Civil 3D</span><span>Bluebeam Revu</span>
-            <span>SAP2000</span><span>S-FRAME</span><span>Excel (advanced)</span><span>PVSyst</span>
+            <a href="./projects/residence-site-redevelopment.html">AutoCAD</a>
+            <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>
+            <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>
+            <a href="./projects/soil-characterization-matlab.html">Excel (advanced)</a>
+            <a href="./projects/travers-solar-analysis.html">PVSyst</a>
+            <span>Revit</span><span>Bluebeam Revu</span><span>SAP2000</span><span>S-FRAME</span>
           </div>
         </div>
         <div class="skill-group">
           <div class="skill-group-title">Programming</div>
           <div class="skill-tags">
-            <span class="is-accent">Python</span><span class="is-accent">MATLAB</span>
-            <span class="is-accent">SQL</span><span class="is-accent">VBA</span>
+            <a class="is-accent" href="./projects/travers-solar-analysis.html">Python</a>
+            <a class="is-accent" href="./projects/soil-characterization-matlab.html">MATLAB</a>
+            <a class="is-accent" href="./projects/projectsearch.html">SQL</a>
+            <span class="is-accent">VBA</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Engineering software</div>
+          <div class="skill-tags">
+            <a href="./projects/projectsearch.html">three.js</a>
+            <a href="./projects/projectsearch.html">SQLite FTS5</a>
+            <a href="./projects/engineering-retrieval-prototype.html">Vertex AI</a>
+            <a href="./projects/engineering-retrieval-prototype.html">Docker</a>
+            <a href="./projects/engineering-retrieval-prototype.html">Google Cloud</a>
           </div>
         </div>
         <div class="skill-group">
           <div class="skill-group-title">Building science</div>
           <div class="skill-tags">
-            <span>Flixo</span><span>THERM</span><span>HEAT3</span><span>Ubakus</span><span>WUFI</span>
+            <a href="./projects/envelope-thermal-bridge-studies.html">Flixo</a>
+            <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>
+            <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>
+            <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>
+            <span>WUFI</span>
           </div>
           <p>Thermal bridging and condensation analysis &middot; air and vapour barrier systems &middot; EIFS &middot; PMMA and SBS waterproofing</p>
         </div>
@@ -728,6 +778,7 @@ try {
   <div class="finale-links" id="finale-links">
     <div class="finale-primary">
       <a class="btn-accent" href="mailto:t25gao@uwaterloo.ca">t25gao@uwaterloo.ca &#8599;</a>
+      <a class="btn-ghost" href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
       <a class="btn-ghost" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
       <a class="btn-ghost" href="./Thomas-Gao-Resume.pdf" download>Resume &darr;</a>
     </div>
@@ -753,7 +804,9 @@ try {
 
 <p class="sr-only" id="status" role="status" aria-live="polite">Awaiting notice to proceed</p>
 
-<script type="module" src="./assets/js/building-scene.js"></script>
+<!-- building-scene.js is not listed here on purpose. It pulls in 670 KB of
+     three.js, and none of the model is visible until the reader breaks ground —
+     site.js imports it on idle, or immediately when something needs it. -->
 <script type="module" src="./assets/js/site.js"></script>
 </body>
 </html>

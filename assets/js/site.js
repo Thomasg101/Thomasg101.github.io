@@ -78,6 +78,7 @@ class Portfolio {
     this.finaleLinks = $('#finale-links');
     this.finaleTitle = $('#finale-title');
     this.status    = $('#status');
+    this.buildLine = $('#build-line');
     this.lvl       = $('#lvl');
     this.progress  = $('#progress');
     this.crossV    = $('#crosshair-v');
@@ -134,12 +135,44 @@ class Portfolio {
 
     this.syncRail();
 
-    /* customElements.whenDefined replaces the old 120 ms setInterval poll. The
-       poll had no exit path when three.js failed to load, so it ran forever on
-       exactly the devices already struggling. */
+    /* The title card is opaque and covers the viewport, so not one pixel of the
+       model is on screen until someone breaks ground. three.js is 670 KB, which
+       used to be spent before the reader had decided whether they wanted it. */
+    if (this.snapshot || this.hashTarget >= 0) this.loadScene();
+    else this.warmScene();
+
+    this.loop = this.loop.bind(this);
+    this._raf = requestAnimationFrame(this.loop);
+  }
+
+  /* Fetched once the browser is idle, so the module is parsed and the element
+     upgraded well before the title card has been read — the deferral costs the
+     reader nothing. Skipped where the reader has asked to save data or is on a
+     slow connection; there it loads only if they actually ask for the build. */
+  warmScene() {
+    const c = navigator.connection || {};
+    if (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return;
+    const idle = window.requestIdleCallback || (fn => setTimeout(fn, 1500));
+    idle(() => this.loadScene(), { timeout: 4000 });
+  }
+
+  /* customElements.whenDefined replaces the old 120 ms setInterval poll. The
+     poll had no exit path when three.js failed to load, so it ran forever on
+     exactly the devices already struggling. */
+  loadScene() {
+    if (this._sceneAsked) return;
+    this._sceneAsked = true;
+
     let settled = false;
+    const fail = () => {
+      if (settled) return;
+      settled = true;
+      this.enableFallback(this.hashTarget);
+    };
     const timeout = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('scene timeout')), SCENE_TIMEOUT_MS));
+
+    import('./building-scene.js').catch(fail);
 
     Promise.race([customElements.whenDefined('building-scene'), timeout])
       .then(() => {
@@ -147,14 +180,7 @@ class Portfolio {
         settled = true;
         this.attachScene();
       })
-      .catch(() => {
-        if (settled) return;
-        settled = true;
-        this.enableFallback(this.hashTarget);
-      });
-
-    this.loop = this.loop.bind(this);
-    this._raf = requestAnimationFrame(this.loop);
+      .catch(fail);
   }
 
   attachScene() {
@@ -393,6 +419,7 @@ class Portfolio {
   start() {
     if (this.started) return;
     this.started = true;
+    this.loadScene();
     this.hideHero(false);
     /* Someone who asked for reduced motion should not be given a 40-second
        camera fly-through; hand them the finished tower instead. */
@@ -401,6 +428,7 @@ class Portfolio {
   }
 
   skipToEnd() {
+    this.loadScene();
     if (!this.started) { this.started = true; this.hideHero(true); }
     this.jumpToEnd();
   }
@@ -442,6 +470,7 @@ class Portfolio {
      reader was reading still survives the trip to a case study and back. */
   enableFallback(i) {
     if (this.sc) return;
+    document.documentElement.classList.add('no-scene');
     const snap = this.snapshot;
     this.snapshot = null;
     this._resuming = false;
@@ -491,7 +520,7 @@ class Portfolio {
 
   openHash(i) {
     if (i < 0 || i >= MILES.length) return;
-    if (!this.sc) { this.hashTarget = i; return; }
+    if (!this.sc) { this.hashTarget = i; this.loadScene(); return; }
     this.started = true;
     this.hideHero(true);
     this.sc.startBuild();
@@ -791,11 +820,22 @@ class Portfolio {
       el.disabled = !unlocked && !current;
       el.classList.toggle('is-unlocked', unlocked && !current);
       el.classList.toggle('is-current', current);
+      /* The rail is the site's table of contents; colour alone was telling
+         sighted readers which chapter they were in and nobody else. */
+      if (current) el.setAttribute('aria-current', 'true');
+      else el.removeAttribute('aria-current');
     });
   }
 
+  /* One message, two destinations: the sr-only live region announces it, and
+     the topbar shows it. The visible copy is aria-hidden so it is not read a
+     second time, and it stays collapsed on the title card. */
   setStatus(s) {
     if (this.status && this.status.textContent !== s) this.status.textContent = s;
+    const line = this.buildLine;
+    if (!line) return;
+    if (line.textContent !== s) line.textContent = s;
+    line.classList.toggle('is-live', this.stage !== 'intro');
   }
 
   /* ---------------------------------------------------------------- loop -- */

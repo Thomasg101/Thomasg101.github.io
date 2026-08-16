@@ -261,38 +261,44 @@ class BuildingScene extends HTMLElement {
   }
   isBuilding() { return !!this.tw; }
 
+  /* The site is light-only by design — see the README. This used to branch on
+     the lightness of --bg and carry a full night palette (deep sky, emissive
+     glass, lit city windows, street lamps at intensity 7) that no stylesheet
+     could ever reach, because --bg is a constant. The branch is gone; only the
+     daylight half was ever rendered. Restoring it means `git log -- this file`.
+
+     --bg and --accent are still read rather than hard-coded, so retuning the
+     palette in site.css still carries through to the model. */
   setTheme() {
     if (!this.scene) return;
     const cs = getComputedStyle(document.documentElement);
     const g = n => (cs.getPropertyValue(n) || '').trim();
     const bgc = new THREE.Color(g('--bg') || '#f4f2ed');
     const accent = g('--accent') || '#1544c8';
-    const dark = bgc.getHSL({ h: 0, s: 0, l: 0 }).l < 0.5;
-    this.dark = dark;
 
-    const top = dark ? new THREE.Color('#0a1120') : bgc.clone().lerp(new THREE.Color('#8fb4e2'), 0.62);
-    const bot = dark ? new THREE.Color('#1a2536') : bgc.clone().lerp(new THREE.Color('#ffffff'), 0.34);
+    const top = bgc.clone().lerp(new THREE.Color('#8fb4e2'), 0.62);
+    const bot = bgc.clone().lerp(new THREE.Color('#ffffff'), 0.34);
     this.sky.material.uniforms.top.value.copy(top);
     this.sky.material.uniforms.bot.value.copy(bot);
     this.scene.fog = new THREE.Fog(bot, 130, 620);
 
     const m = this.m;
-    m.soil.color.set(dark ? '#232a24' : '#7e8467');
-    m.gravel.color.set(dark ? '#3a3a34' : '#b4ab95');
-    m.road.color.set(dark ? '#23262b' : '#6d6d6c');
-    m.concrete.color.set(dark ? '#5d6167' : '#c3bdb0');
-    m.steel.color.set(dark ? '#5c646d' : '#98a0a8');
-    m.galv.color.set(dark ? '#6a7079' : '#aeb4ba');
+    m.soil.color.set('#7e8467');
+    m.gravel.color.set('#b4ab95');
+    m.road.color.set('#6d6d6c');
+    m.concrete.color.set('#c3bdb0');
+    m.steel.color.set('#98a0a8');
+    m.galv.color.set('#aeb4ba');
     m.glass.color.set(accent);
-    m.glass.opacity = dark ? 0.5 : 0.34;
-    m.glass.emissive.set(dark ? '#ffd9a0' : '#000000');
-    m.glass.emissiveIntensity = dark ? 0.34 : 0;
-    m.city.color.set(dark ? '#161c26' : '#b9b6ad');
-    m.cityWin.emissiveIntensity = dark ? 1.1 : 0.05;
-    m.lamp.emissiveIntensity = dark ? 2.4 : 0.15;
-    m.clouds.forEach(c => { c.opacity = dark ? 0.18 : 0.5; });
-    this.lampLights.forEach(l => { l.intensity = dark ? 7 : 0; });
-    this.sky.material.uniforms.sunCol.value.set(dark ? '#5a6b8c' : '#ffe6bd');
+    m.glass.opacity = 0.34;
+    m.glass.emissive.set('#000000');
+    m.glass.emissiveIntensity = 0;
+    m.city.color.set('#b9b6ad');
+    m.cityWin.emissiveIntensity = 0.05;
+    m.lamp.emissiveIntensity = 0.15;
+    m.clouds.forEach(c => { c.opacity = 0.5; });
+    this.lampLights.forEach(l => { l.intensity = 0; });
+    this.sky.material.uniforms.sunCol.value.set('#ffe6bd');
     this._genEnv();
   }
 
@@ -1269,10 +1275,10 @@ class BuildingScene extends HTMLElement {
     const elev = lerp(Math.max(0.08, Math.sin(dayPhase * Math.PI)), 0.13, Math.max(cine, fin * 0.92));
     const az = -1.1 + dayPhase * 2.9;
     this.sun.position.set(Math.cos(az) * 105, 16 + elev * 100, Math.sin(az) * 70);
-    this.sun.intensity = (this.dark ? 0.5 : 2.2) * (0.2 + elev * 0.9);
+    this.sun.intensity = 2.2 * (0.2 + elev * 0.9);
     const warm = 1 - elev;
     this.sun.color.setRGB(1, 0.95 - warm * 0.2, 0.86 - warm * 0.4);
-    this.hemi.intensity = (this.dark ? 0.55 : 0.5) * (0.5 + elev * 0.75);
+    this.hemi.intensity = 0.5 * (0.5 + elev * 0.75);
     this.sky.material.uniforms.sunDir.value.copy(this.sun.position).normalize();
 
     // ---- structure ----
@@ -1416,7 +1422,7 @@ class BuildingScene extends HTMLElement {
     this.swing.rotation.x = Math.cos(t * 0.75) * 0.03;
     this.load.visible = cycle > 0.12 && p > 0.1 && p < 0.95;
     this.flag.visible = p > 0.94;
-    this.beacon.material.emissiveIntensity = (Math.sin(t * 2.2) > 0.2 ? 2.6 : 0.15) * (this.dark ? 1 : 0.4);
+    this.beacon.material.emissiveIntensity = (Math.sin(t * 2.2) > 0.2 ? 2.6 : 0.15) * 0.4;
 
     this.crawlerBoom.rotation.z = 1.02 + Math.sin(t * 0.18) * 0.06;
     this.crawler.rotation.y = -0.2 + Math.sin(t * 0.1) * 0.1;

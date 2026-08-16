@@ -870,6 +870,22 @@ main {
   gap: 20px;
 }
 
+/* A reader who lands on a case study from a search result should be able to
+   reach him from where they are, without going back to the homepage first. */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.footer-links a:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 900px) {
   .project-hero,
   .hero {

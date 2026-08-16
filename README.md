@@ -43,14 +43,16 @@ normally.
 | `index.html` | Homepage. All content is real HTML — it reads as a document with JavaScript off. |
 | `assets/css/site.css` | Homepage styles. Light palette only. |
 | `assets/css/fonts.css` | Self-hosted IBM Plex faces (generated). |
-| `assets/js/site.js` | Homepage controller — chapters, routing, marker layout. |
-| `assets/js/building-scene.js` | Three.js construction sequence and milestone markers. |
+| `assets/js/site.js` | Homepage controller — chapters, routing, session state, marker layout. |
+| `assets/js/building-scene.js` | Three.js construction sequence and milestone markers. Imported lazily by `site.js`. |
 | `assets/js/vendor/three.module.min.js` | Vendored Three.js 0.160.0. |
 | `projects/` | Nine case studies plus two redirect stubs for the merged solar URLs. |
 | `projects/project-detail.css` | Shared case-study styles. |
 | `projects/projectsearch-demo.js` | Four-record search demonstration on the ProjectSearch page. |
 | `assets/projects/`, `assets/photography/`, `assets/profile/` | Imagery, each with AVIF + JPEG derivatives at two widths. |
-| `assets/og-image.jpg`, `assets/favicon.svg` | Social card and icon (both generated). |
+| `assets/og-image.jpg`, `assets/og/` | Social cards — one for the site, one per case study (generated). |
+| `assets/fallback-tower.svg` | Flat elevation shown when WebGL is unavailable (generated). |
+| `assets/favicon.svg` | Icon (generated). |
 | `tools/` | Regeneration scripts — see below. |
 | `docs/projectsearch-sync.md` | Notes on what the ProjectSearch section was sourced from. |
 
@@ -59,7 +61,8 @@ normally.
 ```sh
 ./tools/build-images.sh          # AVIF + JPEG derivatives for every image
 python3 tools/fetch-fonts.py     # re-download the IBM Plex latin subset
-python3 tools/make-og-image.py   # rebuild the 1200x630 Open Graph card
+python3 tools/make-og-image.py   # rebuild every 1200x630 Open Graph card
+python3 tools/make-fallback-tower.py  # rebuild the no-WebGL elevation
 python3 tools/build-sitemap.py   # rebuild sitemap.xml from pages on disk
 ```
 
@@ -125,6 +128,15 @@ the left/right arrow keys.
   region announces build progress.
 - `prefers-reduced-motion` skips the build sequence entirely and lands on the
   finished tower instead of playing a long camera move.
+- The build narration is on screen as well as in the live region — the same
+  sentence, with the visible copy `aria-hidden` so it is not announced twice.
+- The chapter rail marks the open chapter with `aria-current`.
+- three.js is imported on idle rather than up front. Nothing of the model is
+  visible behind the opaque title card, so 670 KB used to be spent before the
+  reader had decided they wanted it. If it never arrives — no WebGL, a blocked
+  CDN-free vendor file, a six-second timeout — the scene layer shows
+  `assets/fallback-tower.svg`, a flat elevation of the same building, so the
+  fallback reads as a decision rather than a failure.
 - Scrolling the title card scrolls the title card. The build only starts once
   the card has been read to the end, which matters on phones where it overflows.
 - Case-study pages have a print stylesheet.
@@ -135,8 +147,11 @@ the left/right arrow keys.
   the included resume and documented case studies.
 - The two Green Infrastructure Partners co-op terms are grouped under one
   employer heading with sequential dates, since GIP is the same company in both.
-- The unresolved placeholder LinkedIn profile and unconfirmed EIT credential are
-  intentionally omitted.
+- The EIT credential is unconfirmed and intentionally omitted.
+- **Scope figures added to the experience and case studies are estimates, not
+  records.** See [docs/scope-figures.md](docs/scope-figures.md) for the list that
+  still needs confirming, along with the LinkedIn URL and the Singapore exchange
+  host institution.
 - Photography originals remain in Google Drive; the site serves downsized
   derivatives with EXIF metadata removed.
 - Employer/client field photographs and performance plots still require the
