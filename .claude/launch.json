@@ -4,7 +4,11 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4173"],
+      "runtimeArgs": [
+        "/Users/thomasgao/Downloads/Civil engineering portfolio site/tools/serve.py",
+        "/Users/thomasgao/Downloads/Civil engineering portfolio site",
+        "4173"
+      ],
       "port": 4173
     }
   ]
