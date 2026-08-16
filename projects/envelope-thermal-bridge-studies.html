@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Envelope Thermal-Bridge Studies — Thomas Gao</title>
+  <meta name="description" content="Anonymized Flixo studies comparing insulation strategies at roof-to-wall and balcony-slab thermal bridges.">
+  <meta name="theme-color" content="#f4f2ed">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script src="./project-detail.js" defer></script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../Thomas%20Gao%20-%20Portfolio.dc.html">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../Thomas%20Gao%20-%20Portfolio.dc.html#projects">← <span>All projects</span></a>
+        <div class="theme-switch" aria-label="Colour theme">
+          <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+          <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Building science · Envelope analysis · 2026</p>
+          <h1 id="project-title">Envelope Thermal-Bridge Studies</h1>
+          <p class="lead">Two-dimensional models used to compare insulation continuity at difficult roof-to-wall and balcony-slab junctions without losing sight of the existing construction.</p>
+          <ul class="tags" aria-label="Tools and methods">
+            <li>Flixo</li>
+            <li>Ubakus</li>
+            <li>2D heat flow</li>
+            <li>Isotherms</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure figure-tall">
+          <img src="../assets/projects/thermal-bridge-full.jpg" width="933" height="808" alt="Anonymized Flixo geometry for a roof truss meeting a masonry wall with continuous exterior insulation" fetchpriority="high">
+          <figcaption>Full-insulation roof-to-wall scenario. The model preserves the steel truss, roof build-up, wall, and insulation path while removing project-identifying information.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project scope">
+        <li><strong>2</strong><span>Junction families</span></li>
+        <li><strong>2D</strong><span>Steady-state heat flow</span></li>
+        <li><strong>Multiple</strong><span>Insulation scenarios</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>Continuity becomes hardest where geometry changes.</h3>
+              <p>Roof edges, structural penetrations, and exposed balcony slabs can bypass otherwise effective insulation. Simple centre-of-wall R-values cannot show how those junctions redistribute heat or affect local interior-surface conditions.</p>
+              <p>I studied two detail families: an existing steel roof/truss connection at a masonry wall and a balcony-slab connection with alternative interior and exterior insulation strategies.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / My work</h2>
+            <div>
+              <h3>I translated construction details into comparable thermal models.</h3>
+              <ul>
+                <li>Reconstructed the principal materials, structural members, and insulation layers in Flixo.</li>
+                <li>Created consistent existing, partial-insulation, full-insulation, interior-insulation, and exterior-insulation scenarios where applicable.</li>
+                <li>Reviewed heat-flow paths and temperature contours at the critical transitions.</li>
+                <li>Used a separate Ubakus wall-assembly check to support the broader thermal and moisture review.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / Comparison</h2>
+            <div>
+              <h3>Change one envelope decision at a time.</h3>
+              <ol class="step-list">
+                <li><strong>Establish the existing geometry.</strong> Preserve the structural path and known assembly layers.</li>
+                <li><strong>Define scenarios.</strong> Compare worst-case, partial, and continuous roof/wall insulation paths.</li>
+                <li><strong>Test balcony options.</strong> Contrast two-inch interior and four-inch exterior insulation arrangements and a drop-ceiling assumption.</li>
+                <li><strong>Read the fields.</strong> Review how isotherms and heat flow concentrate around steel, slab edges, and interrupted insulation.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / Value</h2>
+            <div>
+              <h3>The models turn a detail debate into a visual comparison.</h3>
+              <p>Rather than treating each proposed layer in isolation, the scenario set shows whether the insulation path actually remains continuous around the junction. That makes thermal bypasses and local surface-temperature concerns easier to communicate to a project team.</p>
+              <p>No final project recommendation or approved numerical transmittance result was present in the public-use archive, so this case study documents the comparative method rather than claiming a selected design.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Role</h2>
+            <p>Detail interpretation, model construction, scenario definition, and comparative review.</p>
+          </section>
+          <section>
+            <h2>Junctions</h2>
+            <ul>
+              <li>Steel roof to masonry wall</li>
+              <li>Balcony slab edge</li>
+              <li>Interior versus exterior insulation</li>
+              <li>Drop-ceiling condition</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Review lens</h2>
+            <p>Insulation continuity, concentrated heat-flow paths, isotherm shape, and local interior-surface conditions.</p>
+          </section>
+        </aside>
+      </div>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> This is anonymized employer work. Building names, addresses, title blocks, boundary values, client correspondence, and model files are not published. The image is a cropped technical output used to explain the method, not a construction document.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./travers-solar-analysis.html">
+          <small>← Previous project</small>
+          <strong>Travers Solar: Capacity &amp; Temperature</strong>
+        </a>
+        <a rel="next" href="./deep-foundations-soe.html">
+          <small>Next project →</small>
+          <strong>Deep Foundations &amp; Support of Excavation</strong>
+        </a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Project record · anonymized</span></div>
+  </footer>
+</body>
+</html>

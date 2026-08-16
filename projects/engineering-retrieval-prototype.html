@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engineering Retrieval &amp; Report-Drafting System — Thomas Gao</title>
+  <meta name="description" content="A deployed engineering RAG system built with Vertex AI, Docker, and Google Cloud for citation-aware retrieval and report drafting.">
+  <meta name="theme-color" content="#f4f2ed">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script src="./project-detail.js" defer></script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../Thomas%20Gao%20-%20Portfolio.dc.html">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../Thomas%20Gao%20-%20Portfolio.dc.html#projects">← <span>All projects</span></a>
+        <div class="theme-switch" aria-label="Colour theme">
+          <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+          <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Software · Knowledge systems · 2026</p>
+          <h1 id="project-title">Engineering Retrieval &amp; Report Drafting</h1>
+          <p class="lead">A deployed, citation-first RAG service that retrieves evidence from engineering files and turns it into reviewable report drafts using Vertex AI on Google Cloud.</p>
+          <ul class="tags" aria-label="Technology stack">
+            <li>Vertex AI</li>
+            <li>Docker</li>
+            <li>Google Cloud</li>
+            <li>RAG</li>
+            <li>Citation grounding</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure">
+          <img src="../assets/projects/rag-query-flow.svg" width="1200" height="700" alt="One engineering question routed through ranked source evidence into a draft in which each statement keeps its citation" fetchpriority="high">
+          <figcaption>One question through the system: evidence is retrieved and scored first, and the draft that follows keeps every source passage attached for the reviewer. Illustrative query — no client content.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>Vertex AI</strong><span>Retrieval + generation core</span></li>
+        <li><strong>Docker</strong><span>Reproducible deployment</span></li>
+        <li><strong>Google Cloud</strong><span>Deployed environment</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>Engineering answers existed, but were scattered across file types.</h3>
+              <p>Useful precedent was spread across reports, specifications, spreadsheets, drawing metadata, and field notes. Folder names could locate a project, but not necessarily the paragraph, detail, or observation needed for a new technical question.</p>
+              <p>The system was designed around a stricter requirement than generic chat: every useful draft needed to remain connected to retrievable source evidence.</p>
+              <figure class="media-figure">
+                <img src="../assets/projects/rag-retrieve-generate.jpg" width="1243" height="701" alt="Project-authored slide showing Connect, Retrieve, and Generate stages of the engineering RAG engine" loading="lazy" decoding="async">
+                <figcaption>The concept slide the work started from. Its text describes the intended product, not a measured deployment result — the sections below cover what was actually implemented and deployed.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / What I built</h2>
+            <div>
+              <h3>A retrieval-and-drafting service built on Vertex AI.</h3>
+              <ul>
+                <li>Created a multi-format ingestion path for reports, spreadsheets, drawing metadata, and field observations.</li>
+                <li>Structured content into retrievable chunks with source identifiers and useful engineering metadata.</li>
+                <li>Used Vertex AI for the semantic and generative layers of the RAG workflow.</li>
+                <li>Returned source-grounded passages before producing citation-aware report language.</li>
+                <li>Prepared 17 structured field-note-to-report examples for drafting and review behaviour.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / Deployment</h2>
+            <div>
+              <h3>Containerized with Docker and deployed on Google Cloud.</h3>
+              <p>I packaged the application and its dependencies as a Docker container so the same service could run consistently outside the development environment. The deployed Google Cloud environment hosted the working RAG pipeline and connected it to Vertex AI.</p>
+              <ol class="step-list">
+                <li><strong>Ingest.</strong> Parse approved engineering files and preserve document and source metadata.</li>
+                <li><strong>Index.</strong> Store searchable chunks for semantic and metadata-aware retrieval.</li>
+                <li><strong>Retrieve.</strong> Rank evidence relevant to the user’s question before any answer is drafted.</li>
+                <li><strong>Generate.</strong> Use Vertex AI to synthesize retrieved evidence into a cited response or report section.</li>
+                <li><strong>Review.</strong> Keep an engineer responsible for interpretation, completeness, and final issue.</li>
+              </ol>
+              <figure class="media-figure">
+                <img src="../assets/projects/rag-vertex-architecture.svg" width="1200" height="750" alt="Deployment schematic showing engineering files entering a Dockerized Google Cloud service that uses Vertex AI for retrieval and grounded drafting" loading="lazy" decoding="async">
+                <figcaption>Deployment schematic based on the implemented stack: Vertex AI, Docker, and Google Cloud. Private source paths, credentials, and client content are intentionally excluded.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / My role</h2>
+            <div>
+              <h3>From product concept through cloud deployment.</h3>
+              <p>I shaped the use case, designed the retrieval flow, prepared the drafting examples, implemented the application logic, containerized it with Docker, and deployed the prototype in Google Cloud. I also defined the evidence boundary: retrieved sources support the draft, while engineering judgment stays with the reviewer.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>05 / Outcome</h2>
+            <div>
+              <h3>A working deployed prototype—not just a pitch deck.</h3>
+              <p>The result was a cloud-deployed service that could retrieve engineering context and produce reviewable, source-aware draft language. The case study does not present projected efficiency figures as measured outcomes; the value demonstrated here is the implemented workflow, deployment, and traceability model.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Stack</h2>
+            <ul><li>Vertex AI</li><li>Google Cloud</li><li>Docker</li><li>RAG</li><li>Structured metadata</li></ul>
+          </section>
+          <section>
+            <h2>Design principle</h2>
+            <p>Retrieve first, generate second, and keep the cited evidence visible to the reviewer.</p>
+          </section>
+          <section>
+            <h2>Status</h2>
+            <p>Working deployed prototype with private engineering sources excluded from this public page.</p>
+          </section>
+        </aside>
+      </div>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> This page shows the system architecture and implementation approach without exposing employer names, private project files, document links, credentials, or client data.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./soil-characterization-matlab.html"><small>← Previous project</small><strong>Soil Characterization in MATLAB</strong></a>
+        <a rel="next" href="./projectsearch.html"><small>Next project →</small><strong>ProjectSearch</strong></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Deployed system · 2026</span></div></footer>
+</body>
+</html>
