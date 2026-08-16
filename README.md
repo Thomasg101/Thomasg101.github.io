@@ -20,6 +20,22 @@ read this folder; `tools/serve.py` exists because that module evaluates
 `os.getcwd()` at import time, which fails under some sandboxes, and because it
 serves the correct MIME type for `.avif` and `.woff2`.
 
+### Previewing from Claude Code
+
+macOS restricts access to `~/Downloads`, and Claude Code's preview launcher does
+not hold that permission — it cannot open a file in this folder at all. The
+workaround is to serve a copy from outside the protected directory:
+
+```sh
+./tools/sync-preview.sh          # prints the mirror path
+```
+
+Point `.claude/launch.json` at that path. **The mirror is a copy, so re-run
+`sync-preview.sh` after editing** or the preview will show stale files.
+`.claude/launch.json` is git-ignored because it holds absolute paths specific to
+one machine. None of this affects your own terminal, which reads the folder
+normally.
+
 ## Layout
 
 | Path | Purpose |

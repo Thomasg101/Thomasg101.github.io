@@ -8,5 +8,6 @@
 # Working files — source material, not part of the published site
 uploads/
 
-# Local tooling
+# Local tooling — absolute, machine-specific paths
 .claude/settings.local.json
+.claude/launch.json
