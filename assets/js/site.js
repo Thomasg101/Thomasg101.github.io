@@ -584,9 +584,24 @@ class Portfolio {
       panel.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)';
     }
 
+    let activeChapter = null;
     this.chapters.forEach(el => {
-      el.classList.toggle('is-active', el.getAttribute('data-chapter') === m.id);
+      const isActive = el.getAttribute('data-chapter') === m.id;
+      el.classList.toggle('is-active', isActive);
+      if (isActive) activeChapter = el;
     });
+
+    /* These images start inside display:none chapters and are later revealed
+       inside the panel's own scroll container. Native lazy loading can keep the
+       lower cards source-less until after they enter the window viewport,
+       leaving blank previews while the panel is being scrolled. Keep the fast
+       title-card load, then fetch the active chapter's images as soon as the
+       reader opens it. */
+    if (activeChapter) {
+      activeChapter.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        img.loading = 'eager';
+      });
+    }
     this.kicker.textContent = m.num + ' / ' + m.name + ' · EL +' + m.el + ' m';
     this.syncFoot(i);
 
