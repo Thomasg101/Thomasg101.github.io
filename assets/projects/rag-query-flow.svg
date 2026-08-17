@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">One engineering question through the retrieval flow</title>
+  <desc id="desc">An engineer's question is answered by ranking evidence from approved engineering files, then drafting a response in which every statement keeps the source passage attached for review.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1544c8" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0l10 5-10 5z" fill="#1544c8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="#f4f2ed"/>
+  <rect width="1200" height="700" fill="url(#grid)"/>
+
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="52" y="52" fill="#1544c8" font-size="13" letter-spacing="3">ONE QUESTION THROUGH THE RETRIEVAL FLOW</text>
+    <text x="52" y="78" fill="#6b6a62" font-size="11" letter-spacing="1.6">EVIDENCE IS RANKED BEFORE ANY LANGUAGE IS DRAFTED</text>
+  </g>
+
+  <!-- 01 question -->
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="52" y="140" fill="#1544c8" font-size="12" font-weight="600" letter-spacing="2">01 · ENGINEER ASKS</text>
+    <rect x="52" y="158" width="286" height="150" fill="#eae7df" stroke="#cdc8ba"/>
+    <g fill="#14171a" font-size="14" font-family="IBM Plex Sans, system-ui, sans-serif">
+      <text x="74" y="196">“What sealant was</text>
+      <text x="74" y="220">specified at the balcony</text>
+      <text x="74" y="244">slab edge, and what did</text>
+      <text x="74" y="268">the site review find?”</text>
+    </g>
+    <text x="74" y="294" fill="#6b6a62" font-size="10">PLAIN LANGUAGE · NO FILE NAMES</text>
+  </g>
+
+  <path d="M338 233H408" fill="none" stroke="#1544c8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 02 retrieval -->
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="416" y="140" fill="#1544c8" font-size="12" font-weight="600" letter-spacing="2">02 · EVIDENCE RANKED</text>
+    <rect x="416" y="158" width="360" height="86" fill="#ffffff" stroke="#1544c8" stroke-width="2"/>
+    <text x="438" y="184" fill="#1544c8" font-size="11" font-weight="600">SPEC 07 92 00 · §2.3</text>
+    <text x="700" y="184" fill="#1544c8" font-size="11" font-weight="600" text-anchor="end">0.94</text>
+    <g font-family="IBM Plex Sans, system-ui, sans-serif" fill="#14171a" font-size="12.5">
+      <text x="438" y="208">Silicone sealant, low-modulus,</text>
+      <text x="438" y="228">at slab-edge movement joints.</text>
+    </g>
+
+    <rect x="416" y="264" width="360" height="86" fill="#eae7df" stroke="#cdc8ba"/>
+    <text x="438" y="290" fill="#1544c8" font-size="11" font-weight="600">SITE REVIEW 14 · P.6</text>
+    <text x="700" y="290" fill="#1544c8" font-size="11" font-weight="600" text-anchor="end">0.88</text>
+    <g font-family="IBM Plex Sans, system-ui, sans-serif" fill="#14171a" font-size="12.5">
+      <text x="438" y="314">Joint observed discontinuous at</text>
+      <text x="438" y="334">two balconies; photo log 14-22.</text>
+    </g>
+
+    <rect x="416" y="370" width="360" height="86" fill="#eae7df" stroke="#cdc8ba"/>
+    <text x="438" y="396" fill="#1544c8" font-size="11" font-weight="600">SUBMITTAL 07-114</text>
+    <text x="700" y="396" fill="#1544c8" font-size="11" font-weight="600" text-anchor="end">0.71</text>
+    <g font-family="IBM Plex Sans, system-ui, sans-serif" fill="#14171a" font-size="12.5">
+      <text x="438" y="420">Approved product data sheet,</text>
+      <text x="438" y="440">reviewed 2023-08-11.</text>
+    </g>
+
+    <text x="416" y="486" fill="#6b6a62" font-size="10">SEMANTIC + METADATA RETRIEVAL · SCORED, NOT SUMMARISED</text>
+  </g>
+
+  <path d="M776 233H846" fill="none" stroke="#1544c8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M776 307H812V245H846" fill="none" stroke="#1544c8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M776 413H812V257H846" fill="none" stroke="#1544c8" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#arrow)"/>
+
+  <!-- 03 draft -->
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="854" y="140" fill="#1544c8" font-size="12" font-weight="600" letter-spacing="2">03 · CITED DRAFT</text>
+    <rect x="854" y="158" width="294" height="298" fill="#ffffff" stroke="#1544c8" stroke-width="2"/>
+    <g font-family="IBM Plex Sans, system-ui, sans-serif" fill="#14171a" font-size="13">
+      <text x="876" y="192">The balcony slab edge was</text>
+      <text x="876" y="214">specified to receive a low-</text>
+      <text x="876" y="236">modulus silicone sealant at</text>
+      <text x="876" y="258">movement joints.</text>
+      <text x="876" y="304">Site review recorded the</text>
+      <text x="876" y="326">joint as discontinuous at</text>
+      <text x="876" y="348">two balcony locations.</text>
+    </g>
+    <rect x="876" y="270" width="34" height="18" fill="#1544c8"/>
+    <text x="884" y="284" fill="#f4f2ed" font-size="11" font-weight="600">[1]</text>
+    <rect x="876" y="360" width="34" height="18" fill="#1544c8"/>
+    <text x="884" y="374" fill="#f4f2ed" font-size="11" font-weight="600">[2]</text>
+    <line x1="876" y1="400" x2="1126" y2="400" stroke="#cdc8ba"/>
+    <text x="876" y="424" fill="#6b6a62" font-size="10">[1] SPEC 07 92 00 §2.3</text>
+    <text x="876" y="442" fill="#6b6a62" font-size="10">[2] SITE REVIEW 14, P.6</text>
+  </g>
+
+  <rect x="52" y="536" width="1096" height="76" fill="#1544c8"/>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="76" y="570" fill="#f4f2ed" font-size="14" font-weight="600" letter-spacing="1.5">04 · THE ENGINEER REVIEWS, THE SOURCES STAY ATTACHED</text>
+    <text x="76" y="594" fill="#dce5ff" font-size="10.5" letter-spacing="1">NOTHING IS ISSUED FROM THE DRAFT ALONE · RETRIEVED PASSAGES REMAIN OPENABLE</text>
+  </g>
+
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#6b6a62">
+    <text x="52" y="656">VERTEX AI · DOCKER · GOOGLE CLOUD — DEPLOYED PROTOTYPE</text>
+    <text x="52" y="676">ILLUSTRATIVE QUERY. PRIVATE ENGINEERING CONTENT STAYS OUT OF THE PUBLIC PORTFOLIO.</text>
+  </g>
+</svg>

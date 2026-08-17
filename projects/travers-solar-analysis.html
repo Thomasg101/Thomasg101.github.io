@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Travers Solar: Capacity Regression &amp; Temperature Prediction — Thomas Gao</title>
+  <meta name="description" content="Published SCADA analysis for Canada's largest solar facility: automated ASTM E2848 capacity-test selection and a baseline-plus-residual module temperature model, in MDPI Processes 14(7) 1078.">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="canonical" href="https://thomasg101.github.io/projects/travers-solar-analysis.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Thomas Gao">
+  <meta property="og:url" content="https://thomasg101.github.io/projects/travers-solar-analysis.html">
+  <meta property="og:title" content="Travers Solar: Capacity Regression &amp; Temperature Prediction">
+  <meta property="og:description" content="Published SCADA analysis for Canada's largest solar facility: automated ASTM E2848 capacity-test selection and a baseline-plus-residual module temperature model, in MDPI Processes 14(7) 1078.">
+  <meta property="og:image" content="https://thomasg101.github.io/assets/og/travers-solar-analysis.jpg">
+  <meta property="og:image:alt" content="Travers Solar: Capacity Regression &amp; Temperature Prediction — Thomas Gao">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Travers Solar: Capacity Regression &amp; Temperature Prediction">
+  <meta name="twitter:description" content="Published SCADA analysis for Canada's largest solar facility: automated ASTM E2848 capacity-test selection and a baseline-plus-residual module temperature model, in MDPI Processes 14(7) 1078.">
+  <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/travers-solar-analysis.jpg">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Travers Solar: Capacity Regression & Temperature Prediction",
+  "description": "Published SCADA analysis for Canada's largest solar facility: automated ASTM E2848 capacity-test selection and a baseline-plus-residual module temperature model, in MDPI Processes 14(7) 1078.",
+  "url": "https://thomasg101.github.io/projects/travers-solar-analysis.html",
+  "image": "https://thomasg101.github.io/assets/og/travers-solar-analysis.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "inLanguage": "en",
+  "citation": {
+    "@type": "ScholarlyArticle",
+    "name": "Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta",
+    "author": {
+      "@type": "Person",
+      "name": "Thomas Gao"
+    },
+    "isPartOf": {
+      "@type": "Periodical",
+      "name": "Processes"
+    },
+    "datePublished": "2026",
+    "url": "https://www.mdpi.com/2227-9717/14/7/1078"
+  }
+}
+  </script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../#projects">← <span>All projects</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Published research · Solar · 2026</p>
+          <h1 id="project-title">Travers Solar: Capacity &amp; Temperature</h1>
+          <p class="lead">Two halves of one study on Canada's largest solar facility: an automated, auditable path from raw SCADA to an ASTM E2848 capacity regression, and a physics-first module-temperature model that learns only the error its baseline leaves behind.</p>
+          <ul class="tags" aria-label="Tools and methods">
+            <li>Python</li>
+            <li>SCADA</li>
+            <li>ASTM E2848</li>
+            <li>Isolation Forest</li>
+            <li>Gradient boosting</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure">
+          <picture>
+        <source type="image/avif" srcset="../assets/projects/pv-temperature-parity-600.avif 600w, ../assets/projects/pv-temperature-parity-802.avif 802w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/pv-temperature-parity-802.jpg" srcset="../assets/projects/pv-temperature-parity-600.jpg 600w, ../assets/projects/pv-temperature-parity-802.jpg 802w" sizes="(max-width: 900px) 92vw, 640px" width="802" height="613" alt="Measured versus predicted photovoltaic module temperatures, comparing a physical baseline with a residual-learning model" fetchpriority="high" decoding="async">
+      </picture>
+          <figcaption>Leave-one-day-out pooled parity. Orange residual-model predictions follow the measured-temperature diagonal more closely than the blue physical-baseline predictions.</figcaption>
+        </figure>
+      </section>
+
+      <aside class="callout publication-callout">
+        <p class="section-index">Published</p>
+        <p><strong>Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta.</strong> Gao, Z.; Chai, Y.; Thai, A.; Oketola, T.; Bell, G.; Schachtschneider, W.; Yin, S. <em>Processes</em> <strong>2026</strong>, <em>14</em>(7), 1078.</p>
+        <p><a class="rail-link" href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Read the paper on MDPI ↗</a> · <a class="rail-link" href="https://doi.org/10.3390/pr14071078" target="_blank" rel="noopener">doi.org/10.3390/pr14071078 ↗</a></p>
+      </aside>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>465 MW<sub>AC</sub></strong><span>Plant scale studied</span></li>
+        <li><strong>780 / 11,520</strong><span>Records auto-retained</span></li>
+        <li><strong>R² 0.921</strong><span>Residual temperature model</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>One plant, two questions that both come down to trusting the data.</h3>
+              <p>Capacity testing decides whether a plant is delivering what it promised, and module temperature drives how much it can deliver at all. Both questions are answered from the same high-frequency SCADA record, and both are usually answered by hand.</p>
+              <p>The study treated them as one problem in two parts: make the capacity-test selection reproducible instead of judgment-by-eye, and improve the temperature model without throwing away the physics that makes it interpretable.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / Capacity regression</h2>
+            <div>
+              <h3>A defensible ASTM E2848 dataset, selected by a pipeline rather than by eye.</h3>
+              <p>Reviewing thousands of high-frequency records by hand is slow, hard to reproduce, and sensitive to inconsistent judgment. Selection was reframed as an auditable pipeline that preserves the physical basis of the test, automates the repetitive checks, and exposes enough diagnostics for an engineer to challenge the result.</p>
+              <ul>
+                <li>Ingested and aggregated five-second SCADA exports into a consistent analysis interval.</li>
+                <li>Applied physical operating-window filters before any statistical screening.</li>
+                <li>Added rolling-stability logic and Isolation Forest anomaly detection to drop unstable or atypical periods.</li>
+                <li>Produced the retained dataset, regression outputs, residual checks, and figures as one repeatable analysis package.</li>
+              </ul>
+              <p>Automatic selection closely reproduced the manual review: 780 automatically retained observations against 788 selected by hand, from 11,520 candidate records.</p>
+              <figure class="media-figure">
+                <picture>
+        <source type="image/avif" srcset="../assets/projects/solar-capacity-pipeline-600.avif 600w, ../assets/projects/solar-capacity-pipeline-1200.avif 1200w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/solar-capacity-pipeline-1200.jpg" srcset="../assets/projects/solar-capacity-pipeline-600.jpg 600w, ../assets/projects/solar-capacity-pipeline-1200.jpg 1200w" sizes="(max-width: 900px) 92vw, 640px" width="1552" height="388" alt="Flow diagram from five-second SCADA files through aggregation, filtering, RC197 selection, regression, and validation" loading="lazy" decoding="async">
+      </picture>
+                <figcaption>The selection pipeline: five-second records are aggregated, screened, selected, regressed, and validated through one reproducible path.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / Temperature prediction</h2>
+            <div>
+              <h3>Keep the physical estimate; learn only the error it leaves behind.</h3>
+              <p>Module temperature responds to irradiance, ambient conditions, wind, time history, and plant-specific effects. A physical baseline captures the first-order relationship but leaves recurring, structured error. Rather than replace it, the model learns that residual.</p>
+              <ol class="step-list">
+                <li><strong>Estimate.</strong> Calculate a physically based module-temperature prediction from weather and operating variables.</li>
+                <li><strong>Measure the gap.</strong> Subtract the baseline from the observed module temperature.</li>
+                <li><strong>Learn the residual.</strong> Fit histogram gradient boosting to the remaining systematic error.</li>
+                <li><strong>Recombine.</strong> Add the predicted residual back onto the physical estimate.</li>
+                <li><strong>Hold out days.</strong> Test on complete unseen days to keep time-series leakage out of the result.</li>
+              </ol>
+              <p>Across the saved 3,077-observation test set the residual model reached 1.96 °C MAE, 2.55 °C RMSE, and R² of 0.921 — roughly 52% lower MAE and 51% lower RMSE than the archived physical baseline.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / My role</h2>
+            <div>
+              <h3>Data pipeline, filtering, modelling, and validation.</h3>
+              <p>I developed the Python filtering and validation workflow for the capacity analysis, and built the end-to-end temperature modelling work: data preparation, physically meaningful and time-aware features, the residual formulation, the leave-one-day-out evaluation, and the published figures and diagnostics. The paper is co-authored; the sections above describe my own contribution to it.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>05 / Outcome</h2>
+            <div>
+              <h3>A result that can be rerun, inspected, and argued with.</h3>
+              <p>The strongest outcome is not a smaller dataset or a lower error figure. It is a documented route from raw records to a published result that another engineer can rerun, inspect, and revise — with the physical reasoning still visible inside the model rather than buried under it.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Methods</h2>
+            <ul>
+              <li>SCADA processing</li>
+              <li>Rolling stability</li>
+              <li>Isolation Forest</li>
+              <li>Linear regression</li>
+              <li>Histogram gradient boosting</li>
+              <li>Leave-one-day-out testing</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Design principle</h2>
+            <p>Automation should expose engineering judgment, not conceal it. Every exclusion has a traceable purpose and every result keeps its diagnostics.</p>
+          </section>
+          <section>
+            <h2>Publication</h2>
+            <p><a class="rail-link" href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Processes 2026, 14(7), 1078 ↗</a></p>
+          </section>
+        </aside>
+      </div>
+
+      <section class="gallery" aria-labelledby="solar-gallery-title">
+        <div class="gallery-header">
+          <h2 id="solar-gallery-title">Selection output</h2>
+          <p>The saved figure highlights the RC197 capacity-test subset within the physically filtered operating points.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="wide">
+            <picture>
+        <source type="image/avif" srcset="../assets/projects/solar-capacity-selection-600.avif 600w, ../assets/projects/solar-capacity-selection-802.avif 802w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/solar-capacity-selection-802.jpg" srcset="../assets/projects/solar-capacity-selection-600.jpg 600w, ../assets/projects/solar-capacity-selection-802.jpg 802w" sizes="(max-width: 900px) 92vw, 640px" width="802" height="554" alt="RC197 capacity-test subset highlighted in orange within the filtered operating points" loading="lazy" decoding="async">
+      </picture>
+            <figcaption>Automated RC197 selection highlighted within the filtered dataset. The time-series residual panel is intentionally excluded from the public case study.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> This page uses aggregate figures from the saved analysis and the published paper. Raw SCADA values, commercial information, and private source files are excluded. Figures quoted here are the archived analysis outputs; the published article remains the citable record.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./projectsearch.html"><small>← Previous project</small><strong>ProjectSearch</strong></a>
+        <a rel="next" href="./envelope-thermal-bridge-studies.html"><small>Next project →</small><strong>Envelope Thermal-Bridge Studies</strong></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Published research · 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
+  </footer>
+</body>
+</html>

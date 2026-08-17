@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Thomas Gao">
+  <rect width="64" height="64" fill="#1544c8"/>
+  <!-- rising skyline: the tower the site builds, legible down to 16px -->
+  <g fill="#f4f2ed">
+    <rect x="12" y="34" width="9" height="20"/>
+    <rect x="26" y="22" width="9" height="32"/>
+    <rect x="40" y="28" width="9" height="26"/>
+  </g>
+  <rect x="10" y="56" width="44" height="3" fill="#f4f2ed"/>
+</svg>

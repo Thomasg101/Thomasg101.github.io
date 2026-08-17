@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grand River Watershed Analysis — Thomas Gao</title>
+  <meta name="description" content="An ArcGIS Pro workflow for terrain processing, stream extraction, watershed delineation, land-use comparison, soils, and drainage density.">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="canonical" href="https://thomasg101.github.io/projects/grand-river-watershed-analysis.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Thomas Gao">
+  <meta property="og:url" content="https://thomasg101.github.io/projects/grand-river-watershed-analysis.html">
+  <meta property="og:title" content="Grand River Watershed Analysis">
+  <meta property="og:description" content="An ArcGIS Pro workflow for terrain processing, stream extraction, watershed delineation, land-use comparison, soils, and drainage density.">
+  <meta property="og:image" content="https://thomasg101.github.io/assets/og/grand-river-watershed-analysis.jpg">
+  <meta property="og:image:alt" content="Grand River Watershed Analysis — Thomas Gao">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Grand River Watershed Analysis">
+  <meta name="twitter:description" content="An ArcGIS Pro workflow for terrain processing, stream extraction, watershed delineation, land-use comparison, soils, and drainage density.">
+  <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/grand-river-watershed-analysis.jpg">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Grand River Watershed Analysis",
+  "description": "An ArcGIS Pro workflow for terrain processing, stream extraction, watershed delineation, land-use comparison, soils, and drainage density.",
+  "url": "https://thomasg101.github.io/projects/grand-river-watershed-analysis.html",
+  "image": "https://thomasg101.github.io/assets/og/grand-river-watershed-analysis.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "inLanguage": "en"
+}
+  </script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../#projects">← <span>All projects</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Academic · GIS and hydrology · 2026</p>
+          <h1 id="project-title">Grand River Watershed Analysis</h1>
+          <p class="lead">An ArcGIS Pro workflow that builds a watershed view from a 30 m elevation model, then connects terrain-derived drainage with land use and hydrologic soil context.</p>
+          <ul class="tags" aria-label="Tools and methods">
+            <li>ArcGIS Pro</li>
+            <li>D8 hydrology</li>
+            <li>Terrain analysis</li>
+            <li>Land use</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure figure-tall">
+          <picture>
+        <source type="image/avif" srcset="../assets/projects/grand-river-subwatersheds-600.avif 600w, ../assets/projects/grand-river-subwatersheds-802.avif 802w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/grand-river-subwatersheds-802.jpg" srcset="../assets/projects/grand-river-subwatersheds-600.jpg 600w, ../assets/projects/grand-river-subwatersheds-802.jpg 802w" sizes="(max-width: 900px) 92vw, 640px" width="802" height="872" alt="Map of the Grand River watershed in southern Ontario divided into named, colour-coded subwatersheds" fetchpriority="high" decoding="async">
+      </picture>
+          <figcaption>Grand River watershed and derived subwatershed organization over regional satellite imagery, prepared as part of the ArcGIS Pro analysis.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>~6,800 km²</strong><span>Watershed extent</span></li>
+        <li><strong>30 m</strong><span>Elevation-model cells</span></li>
+        <li><strong>D8</strong><span>Flow-direction method</span></li>
+        <li><strong>17N</strong><span>NAD83 UTM zone</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Objective</h2>
+            <div>
+              <h3>Build a traceable spatial model of how water moves through the basin.</h3>
+              <p>The assignment combined raster hydrology and regional context. The central task was to turn elevation data into connected flow paths and basin boundaries, then interpret those results alongside land-cover and soil information.</p>
+              <p>I organized the work as a sequence of derived datasets so that each map could be traced back to the input elevation model and processing choice.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / My work</h2>
+            <div>
+              <h3>I completed the GIS workflow and assembled the analytical maps.</h3>
+              <ul>
+                <li>Prepared a 30 m digital elevation model in NAD83 UTM Zone 17N and generated supporting terrain views.</li>
+                <li>Calculated D8 flow direction and flow accumulation.</li>
+                <li>Applied a stream threshold, linked the extracted network, and delineated watershed and subwatershed areas.</li>
+                <li>Compared land-use information and hydrologic soil groups and evaluated drainage density as a basin descriptor.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / Workflow</h2>
+            <div>
+              <h3>Terrain first, interpretation second.</h3>
+              <ol class="step-list">
+                <li><strong>Prepare elevation.</strong> Project, clip, inspect, and condition the DEM for hydrologic processing.</li>
+                <li><strong>Route flow.</strong> Derive D8 direction and accumulated upstream area for every raster cell.</li>
+                <li><strong>Extract drainage.</strong> Convert high-accumulation cells into a connected stream network.</li>
+                <li><strong>Delineate basins.</strong> Use the drainage structure to define watershed and subwatershed boundaries.</li>
+                <li><strong>Add context.</strong> Compare the terrain-derived result with land use, soils, hillshade, and drainage-density mapping.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / Output</h2>
+            <div>
+              <h3>A coherent set of maps, with draft conclusions kept separate from finished evidence.</h3>
+              <p>The analysis produced terrain, stream, watershed, subwatershed, land-use, and soil-context outputs. The subwatershed map demonstrates the regional structure particularly well: upstream branches combine through the central basin before the Grand River reaches Lake Erie.</p>
+              <p>The supporting report still contains unfinished numerical fields. This page therefore presents the completed GIS workflow and map evidence without turning draft calculations into final findings.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Role</h2>
+            <p>Raster preparation, hydrologic processing, thematic overlays, cartography, and report development.</p>
+          </section>
+          <section>
+            <h2>Layers</h2>
+            <ul>
+              <li>Digital elevation model</li>
+              <li>Flow direction and accumulation</li>
+              <li>Streams and subwatersheds</li>
+              <li>Land use</li>
+              <li>Hydrologic soil groups</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Quality control</h2>
+            <p>A consistent projected coordinate system, explicit derivation order, and separation of completed map evidence from unfinished report fields.</p>
+          </section>
+        </aside>
+      </div>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> This academic case study uses a completed map exported from the project archive. Draft report placeholders and unresolved numerical values are deliberately excluded; they should be finalized before the full report is published.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./residence-site-redevelopment.html">
+          <small>← Previous project</small>
+          <strong>Residence Site Redevelopment</strong>
+        </a>
+        <a rel="next" href="./soil-characterization-matlab.html">
+          <small>Next project →</small>
+          <strong>Soil Characterization in MATLAB</strong>
+        </a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Academic project · Rev. 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
+  </footer>
+</body>
+</html>

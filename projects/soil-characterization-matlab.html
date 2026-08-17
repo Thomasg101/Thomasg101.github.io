@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soil Characterization in MATLAB — Thomas Gao</title>
+  <meta name="description" content="Thomas Gao's MATLAB liquid-limit regression and spreadsheet sieve-analysis case study.">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="canonical" href="https://thomasg101.github.io/projects/soil-characterization-matlab.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Thomas Gao">
+  <meta property="og:url" content="https://thomasg101.github.io/projects/soil-characterization-matlab.html">
+  <meta property="og:title" content="Soil Characterization in MATLAB">
+  <meta property="og:description" content="Thomas Gao's MATLAB liquid-limit regression and spreadsheet sieve-analysis case study.">
+  <meta property="og:image" content="https://thomasg101.github.io/assets/og/soil-characterization-matlab.jpg">
+  <meta property="og:image:alt" content="Soil Characterization in MATLAB — Thomas Gao">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Soil Characterization in MATLAB">
+  <meta name="twitter:description" content="Thomas Gao's MATLAB liquid-limit regression and spreadsheet sieve-analysis case study.">
+  <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/soil-characterization-matlab.jpg">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Soil Characterization in MATLAB",
+  "description": "Thomas Gao's MATLAB liquid-limit regression and spreadsheet sieve-analysis case study.",
+  "url": "https://thomasg101.github.io/projects/soil-characterization-matlab.html",
+  "image": "https://thomasg101.github.io/assets/og/soil-characterization-matlab.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "inLanguage": "en"
+}
+  </script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../#projects">← <span>All projects</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Academic · Geotechnical · 2025</p>
+          <h1 id="project-title">Soil Characterization in MATLAB</h1>
+          <p class="lead">A compact geotechnical workflow connecting liquid-limit regression in MATLAB with sieve-analysis bookkeeping in a laboratory spreadsheet.</p>
+          <ul class="tags" aria-label="Tools and methods">
+            <li>MATLAB</li>
+            <li>Semilog regression</li>
+            <li>Atterberg limits</li>
+            <li>Sieve analysis</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure">
+          <picture>
+        <source type="image/avif" srcset="../assets/projects/soil-characterization-matlab-600.avif 600w, ../assets/projects/soil-characterization-matlab-818.avif 818w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/soil-characterization-matlab-818.jpg" srcset="../assets/projects/soil-characterization-matlab-600.jpg 600w, ../assets/projects/soil-characterization-matlab-818.jpg 818w" sizes="(max-width: 900px) 92vw, 640px" width="818" height="856" alt="Thomas Gao authored MATLAB code defining liquid-limit data and a semilog regression" fetchpriority="high" decoding="async">
+      </picture>
+          <figcaption>Saved MATLAB code for the liquid-limit flow curve. The capture is cropped to the document itself; account and Drive interface details are excluded.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>14 sieves</strong><span>63 mm → 75 μm</span></li>
+        <li><strong>Semilog</strong><span>Liquid-limit flow curve</span></li>
+        <li><strong>Authored</strong><span>MATLAB routine</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>Turning laboratory readings into interpretable soil behaviour.</h3>
+              <p>The lab record contained two related analyses: blow-count and moisture-content readings for a liquid-limit flow curve, and a sieve table tracking retained mass and percent passing from coarse to fine sizes. The challenge was less about volume than about keeping units, transforms, and data lineage clear.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / My role</h2>
+            <div>
+              <h3>Code the flow curve and reconcile the tabular checks.</h3>
+              <p>I authored the saved MATLAB liquid-limit script and used the course laboratory workbook as the companion gradation record. My contribution covered the data inputs, semilog plot, fitted relationship, axis treatment, and review of the sieve calculations.</p>
+              <p><strong>Evidence boundary.</strong> The saved files support the workflow and authorship of the MATLAB code. A final reported liquid limit and soil classification are not shown because the available archive does not preserve a reconciled final submission.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / What I did</h2>
+            <div>
+              <h3>Made each transformation inspectable.</h3>
+              <ul>
+                <li>Entered paired blow-count and moisture-content observations and checked their ordering before fitting.</li>
+                <li>Used a logarithmic blow-count axis and a first-order fit in transformed space to create the liquid-limit flow curve.</li>
+                <li>Defined axis limits and tick labels explicitly so the chart read like the underlying geotechnical convention.</li>
+                <li>Reviewed sieve mass, cumulative retained mass, and percent-passing columns across the standard sieve sequence.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / Approach</h2>
+            <div>
+              <h3>Small datasets still deserve reproducible analysis.</h3>
+              <ol class="step-list">
+                <li><strong>Preserve raw observations.</strong> Keep measured values distinct from fitted or cumulative quantities.</li>
+                <li><strong>Use the correct transform.</strong> Model blow count on the logarithmic scale used by the liquid-limit flow curve.</li>
+                <li><strong>Check arithmetic independently.</strong> Reconcile retained mass, cumulative mass, and percent passing rather than trusting a single formula chain.</li>
+                <li><strong>Report only resolved results.</strong> Separate a verified method from any result that is absent or ambiguous in the surviving course record.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>05 / Outcome</h2>
+            <div>
+              <h3>A reusable analysis pattern.</h3>
+              <p>The project produced an authored MATLAB routine for the flow curve and a traceable sieve-analysis workbook. More importantly, it reinforced a durable habit: state the transformation, retain the raw inputs, and make final classification claims only when the full record supports them.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Role</h2>
+            <p>Authored the MATLAB liquid-limit routine and reviewed the companion gradation calculations.</p>
+          </section>
+          <section>
+            <h2>Methods</h2>
+            <ul>
+              <li>Semilog regression</li>
+              <li>Atterberg limits</li>
+              <li>Sieve analysis</li>
+              <li>Spreadsheet formulas</li>
+              <li>Quality checks</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Design principle</h2>
+            <p>State the transformation, keep the raw inputs, and claim only what the record supports.</p>
+          </section>
+        </aside>
+      </div>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> The image is a direct capture of the saved project code. The final liquid limit and classification remain intentionally omitted until a complete, attributable submission is available.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./grand-river-watershed-analysis.html"><small>← Previous project</small><strong>Grand River Watershed Analysis</strong></a>
+        <a rel="next" href="./engineering-retrieval-prototype.html"><small>Next project →</small><strong>Engineering Retrieval &amp; Report Drafting</strong></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Project record · Rev. 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
+  </footer>
+</body>
+</html>

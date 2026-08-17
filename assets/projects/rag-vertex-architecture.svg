@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Deployed engineering RAG architecture</title>
+  <desc id="desc">Engineering source files flow through a Dockerized service on Google Cloud to a secure retrieval index and Vertex AI, producing citation-aware report drafts for human review.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1544c8" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0l10 5-10 5z" fill="#1544c8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="750" fill="#f4f2ed"/>
+  <rect width="1200" height="750" fill="url(#grid)"/>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="52" y="54" fill="#1544c8" font-size="13" letter-spacing="3">DEPLOYED RAG ARCHITECTURE · ENGINEERING KNOWLEDGE</text>
+    <text x="52" y="82" fill="#6b6a62" font-size="11" letter-spacing="1.6">SOURCE-GROUNDED RETRIEVAL → CITED REPORT DRAFT</text>
+  </g>
+
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="56" y="146" fill="#14171a" font-size="15" font-weight="600">ENGINEERING SOURCES</text>
+    <g fill="#eae7df" stroke="#cdc8ba">
+      <rect x="52" y="174" width="236" height="74"/>
+      <rect x="52" y="266" width="236" height="74"/>
+      <rect x="52" y="358" width="236" height="74"/>
+      <rect x="52" y="450" width="236" height="74"/>
+    </g>
+    <g fill="#14171a" font-size="14">
+      <text x="76" y="206">REPORTS + SPECS</text><text x="76" y="226" fill="#6b6a62" font-size="11">PDF · DOCX</text>
+      <text x="76" y="298">DATA TABLES</text><text x="76" y="318" fill="#6b6a62" font-size="11">XLSX · CSV</text>
+      <text x="76" y="390">DRAWING METADATA</text><text x="76" y="410" fill="#6b6a62" font-size="11">CAD · SHEETS</text>
+      <text x="76" y="482">FIELD NOTES</text><text x="76" y="502" fill="#6b6a62" font-size="11">OBSERVATIONS</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#1544c8" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M288 211H358"/><path d="M288 303H358"/><path d="M288 395H358"/><path d="M288 487H358"/>
+  </g>
+
+  <rect x="346" y="112" width="802" height="566" fill="#ffffff" fill-opacity=".62" stroke="#1544c8" stroke-width="2"/>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace">
+    <text x="374" y="146" fill="#1544c8" font-size="14" font-weight="600" letter-spacing="2">GOOGLE CLOUD DEPLOYMENT</text>
+
+    <rect x="374" y="170" width="274" height="430" fill="#eae7df" stroke="#b04a2f" stroke-width="2"/>
+    <text x="398" y="205" fill="#b04a2f" font-size="14" font-weight="600" letter-spacing="1.5">DOCKER CONTAINER</text>
+    <g fill="#f4f2ed" stroke="#cdc8ba">
+      <rect x="398" y="228" width="226" height="82"/>
+      <rect x="398" y="330" width="226" height="82"/>
+      <rect x="398" y="432" width="226" height="82"/>
+    </g>
+    <g fill="#14171a" font-size="13">
+      <text x="420" y="258">INGEST + PARSE</text><text x="420" y="281" fill="#6b6a62" font-size="10">NORMALIZE FILES + METADATA</text>
+      <text x="420" y="360">CHUNK + ENRICH</text><text x="420" y="383" fill="#6b6a62" font-size="10">SOURCE IDS · ACCESS CONTEXT</text>
+      <text x="420" y="462">RETRIEVAL API</text><text x="420" y="485" fill="#6b6a62" font-size="10">QUERY · RANK · RETURN EVIDENCE</text>
+    </g>
+
+    <rect x="710" y="170" width="390" height="132" fill="#eae7df" stroke="#cdc8ba"/>
+    <text x="736" y="204" fill="#1544c8" font-size="13" font-weight="600">SECURE PROJECT INDEX</text>
+    <text x="736" y="232" fill="#14171a" font-size="14">CHUNKS + METADATA + SOURCE LINKS</text>
+    <text x="736" y="260" fill="#6b6a62" font-size="10">PERMISSION-AWARE RETRIEVAL LAYER</text>
+
+    <rect x="710" y="330" width="390" height="160" fill="#eaf0ff" stroke="#1544c8" stroke-width="2"/>
+    <text x="736" y="366" fill="#1544c8" font-size="15" font-weight="600" letter-spacing="1.5">VERTEX AI</text>
+    <rect x="736" y="390" width="152" height="68" fill="#f4f2ed" stroke="#cdc8ba"/>
+    <rect x="920" y="390" width="154" height="68" fill="#f4f2ed" stroke="#cdc8ba"/>
+    <text x="756" y="419" fill="#14171a" font-size="12">EMBEDDINGS</text>
+    <text x="756" y="439" fill="#6b6a62" font-size="9">SEMANTIC MATCH</text>
+    <text x="940" y="419" fill="#14171a" font-size="12">GENERATION</text>
+    <text x="940" y="439" fill="#6b6a62" font-size="9">GROUNDED DRAFT</text>
+
+    <rect x="710" y="524" width="390" height="98" fill="#1544c8"/>
+    <text x="736" y="560" fill="#f4f2ed" font-size="14" font-weight="600">CITATION-AWARE REPORT DRAFT</text>
+    <text x="736" y="588" fill="#dce5ff" font-size="10">SOURCE PASSAGES ATTACHED · ENGINEER REVIEWS</text>
+  </g>
+
+  <g fill="none" stroke="#1544c8" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M648 270H710"/><path d="M648 474H686V236H710"/>
+    <path d="M905 302V330"/><path d="M905 490V524"/>
+    <path d="M710 410H676V268H710" stroke-dasharray="6 6"/>
+  </g>
+
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" font-size="10" fill="#6b6a62">
+    <text x="52" y="682">DEPLOYED PROTOTYPE · DOCKER + GOOGLE CLOUD + VERTEX AI</text>
+    <text x="52" y="706">PRIVATE ENGINEERING CONTENT STAYS OUT OF THE PUBLIC PORTFOLIO.</text>
+  </g>
+</svg>

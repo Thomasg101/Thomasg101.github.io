@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProjectSearch — Thomas Gao</title>
+  <meta name="description" content="ProjectSearch: a local-first engineering photo index that is searched in plain English by what is visible in the image, with a 3D building view and evidence-ranked floor inference.">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="canonical" href="https://thomasg101.github.io/projects/projectsearch.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Thomas Gao">
+  <meta property="og:url" content="https://thomasg101.github.io/projects/projectsearch.html">
+  <meta property="og:title" content="ProjectSearch">
+  <meta property="og:description" content="ProjectSearch: a local-first engineering photo index that is searched in plain English by what is visible in the image, with a 3D building view and evidence-ranked floor inference.">
+  <meta property="og:image" content="https://thomasg101.github.io/assets/og/projectsearch.jpg">
+  <meta property="og:image:alt" content="ProjectSearch — Thomas Gao">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ProjectSearch">
+  <meta name="twitter:description" content="ProjectSearch: a local-first engineering photo index that is searched in plain English by what is visible in the image, with a 3D building view and evidence-ranked floor inference.">
+  <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/projectsearch.jpg">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script src="./projectsearch-demo.js" defer></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "ProjectSearch",
+  "description": "ProjectSearch: a local-first engineering photo index that is searched in plain English by what is visible in the image, with a 3D building view and evidence-ranked floor inference.",
+  "url": "https://thomasg101.github.io/projects/projectsearch.html",
+  "image": "https://thomasg101.github.io/assets/og/projectsearch.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "inLanguage": "en"
+}
+  </script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../#projectsearch">← <span>Back to portfolio</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Software · Building envelope · 2026</p>
+          <h1 id="project-title">ProjectSearch</h1>
+          <p class="lead">Index an engineering photo share, then search it in plain English by what is <em>visible</em> in the image. Photos are never moved, copied, or renamed.</p>
+          <ul class="tags" aria-label="Technology stack">
+            <li>Python</li>
+            <li>FastAPI</li>
+            <li>SQLite FTS5</li>
+            <li>three.js</li>
+            <li>Vision models</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure">
+          <picture>
+        <source type="image/avif" srcset="../assets/projects/projectsearch-north-parapet-600.avif 600w, ../assets/projects/projectsearch-north-parapet-1200.avif 1200w" sizes="(max-width: 900px) 92vw, 640px">
+        <img src="../assets/projects/projectsearch-north-parapet-1200.jpg" srcset="../assets/projects/projectsearch-north-parapet-600.jpg 600w, ../assets/projects/projectsearch-north-parapet-1200.jpg 1200w" sizes="(max-width: 900px) 92vw, 640px" width="1400" height="933" alt="Blue liquid-applied waterproofing turned up a concrete parapet upstand over a black roof membrane" fetchpriority="high" decoding="async">
+      </picture>
+          <figcaption>An indexed frame. Search this by describing it — “blue waterproofing membrane at the north parapet” — rather than by remembering a file name.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>Local-first</strong><span>Photos stay where they are</span></li>
+        <li><strong>8 fields</strong><span>Per structured photo record</span></li>
+        <li><strong>4-stage</strong><span>Retrieval pipeline</span></li>
+        <li><strong>6 sources</strong><span>Ranked floor evidence</span></li>
+      </ul>
+
+      <section class="ps-demo" aria-labelledby="demo-title" data-ps-demo>
+        <div class="gallery-header">
+          <h2 id="demo-title">Try the search</h2>
+          <p>A working miniature of the real interface, running on four sample records. Type a description or pick a query — matching happens in your browser against the structured records below.</p>
+        </div>
+
+        <div class="ps-shell">
+          <div class="ps-bar">
+            <span class="ps-dot" aria-hidden="true"></span>
+            <span>127.0.0.1:8765 — Photo Intelligence</span>
+          </div>
+
+          <div class="ps-search">
+            <label class="ps-field">
+              <span class="ps-glyph" aria-hidden="true">⌕</span>
+              <span class="sr-only">Search the sample photo index</span>
+              <input type="search" data-ps-input placeholder="Describe what should be visible in the photo…" autocomplete="off" spellcheck="false">
+            </label>
+            <div class="ps-chips">
+              <span class="ps-chips-label">Try</span>
+              <button type="button" data-ps-query="blue waterproofing membrane at the north parapet">blue waterproofing at the north parapet</button>
+              <button type="button" data-ps-query="rooftop unit nameplate RTU-3">RTU-3 nameplate</button>
+              <button type="button" data-ps-query="base flashing lap lifting adhesion loss">flashing adhesion loss</button>
+              <button type="button" data-ps-query="roof hatch curb termination bar">roof hatch curb</button>
+            </div>
+          </div>
+
+          <div class="ps-stages" aria-label="Retrieval pipeline stages">
+            <span class="is-active">1 · Semantic — embedding cosine</span>
+            <span>2 · BM25 — SQLite FTS5</span>
+            <span>3 · Rank fusion</span>
+            <span>4 · AI rerank</span>
+          </div>
+
+          <p class="ps-count" data-ps-count role="status">4 records indexed · showing all</p>
+
+          <ol class="ps-results" data-ps-results></ol>
+
+          <p class="ps-empty" data-ps-empty hidden>Nothing in the sample index matches that. The real index searches an entire project share; this page carries four records.</p>
+        </div>
+        <p class="ps-note">Demonstration only: four records, matched in the browser against the same structured fields the real system writes. The deployed tool ranks with embeddings, BM25, fusion, and a reranking pass over a whole photo share.</p>
+      </section>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>The photo was always taken. Finding it again was the problem.</h3>
+              <p>Envelope work generates thousands of site photographs across review visits, and the useful ones are rarely labelled. A folder tree can tell you which project and roughly which day a photo belongs to; it cannot tell you which frame shows the debonded base flashing at the northeast corner.</p>
+              <p>The constraint that shaped everything: an engineering photo share is a working record. It cannot be reorganised, renamed, or copied into somebody's tool to make search convenient.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / What I built</h2>
+            <div>
+              <h3>A local index over photos that stay exactly where they are.</h3>
+              <ul>
+                <li>A read-only indexer that walks a share and writes one structured record per photo — nothing is moved, copied, or renamed.</li>
+                <li>A vision pass that describes what is visible: caption, setting, level, room, components, materials, conditions with estimated severity, and any verbatim text in the frame.</li>
+                <li>A per-field confidence rating, so a weak guess is visible as a weak guess instead of quietly becoming a fact.</li>
+                <li>A four-stage retrieval pipeline behind a plain-English query box.</li>
+                <li>A 3D building view that places every photo on a model of the real footprint.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>03 / How a search runs</h2>
+            <div>
+              <h3>Four stages, each one narrowing for a stated reason.</h3>
+              <ol class="step-list">
+                <li><strong>Semantic.</strong> Embed the query and rank records by cosine similarity, so a description matches a photo that uses none of the same words.</li>
+                <li><strong>Lexical.</strong> Run BM25 over SQLite FTS5, which is what actually finds “RTU-3” when someone types the tag stencilled on the unit.</li>
+                <li><strong>Fusion.</strong> Merge both rankings, because the two stages fail in different places and rarely fail together.</li>
+                <li><strong>Rerank.</strong> A final model pass re-orders the shortlist against the full structured record rather than the caption alone.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / Structured vision records</h2>
+            <div>
+              <h3>One record per photo, every field separately rated.</h3>
+              <p>Every indexed frame becomes a record with its own confidence per field. Low-confidence locations stay visible in the interface but are excluded from the index, so a guess never silently becomes a search result.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>05 / Building View and floor inference</h2>
+            <div>
+              <h3>Where a photo was taken, argued from ranked evidence.</h3>
+              <p>Every photo is placed on a three.js model built from the real OpenStreetMap footprint — a floor stack, one GPS marker per photo, orbit and fly-to, and a floor rail that cuts away everything above the level you are looking at.</p>
+              <p>Which floor a photo belongs to comes from six ranked evidence sources: a manual override, a level read in the photo itself, a suite number, the folder name, the kind of space, and a time-ordered walk inference. The interface always states which source it used, and the inference is deliberately timid — it backs off when GPS altitude disagrees with the evidence.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>06 / Runs anywhere, installs nothing</h2>
+            <div>
+              <h3>A launcher that survives a locked-down laptop.</h3>
+              <p>A launcher provisions a private Python through <code>uv</code>, so the tool runs without admin rights on a managed machine. Parallel tagging workers share a rate limiter that pauses <em>every</em> worker on HTTP 429, so a rate-limit storm never leaves holes in the index.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>07 / My role</h2>
+            <div>
+              <h3>Built during my Entuitive co-op, end to end.</h3>
+              <p>I shaped the use case, designed the record schema and the confidence model, implemented the indexer, the retrieval pipeline, the API, and the browser interface including the 3D building view, and packaged the launcher. The tool is being evaluated for engineering workflows; it is not presented here as a released product.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Stack</h2>
+            <ul><li>Python</li><li>FastAPI</li><li>SQLite FTS5</li><li>Vision + embedding models</li><li>three.js</li><li>uv launcher</li></ul>
+          </section>
+          <section>
+            <h2>Design principle</h2>
+            <p>Never touch the source share, and never let an uncertain field pass itself off as a certain one.</p>
+          </section>
+          <section>
+            <h2>Status</h2>
+            <p>Working prototype, being evaluated for engineering workflows.</p>
+          </section>
+          <section>
+            <h2>Repository</h2>
+            <p><a class="rail-link" href="https://github.com/Thomasg101/ProjectSearch" target="_blank" rel="noopener">github.com/Thomasg101/ProjectSearch ↗</a></p>
+          </section>
+        </aside>
+      </div>
+
+      <section class="gallery" aria-labelledby="records-title">
+        <div class="gallery-header">
+          <h2 id="records-title">Sample indexed records</h2>
+          <p>The four frames behind the search above, with the structured fields the indexer writes for each one.</p>
+        </div>
+        <div class="ps-records" data-ps-records></div>
+      </section>
+
+      <aside class="public-note">
+        <strong>Public-use note.</strong> The photographs on this page are representative envelope conditions used to demonstrate the index. Client project photos, file paths, site identifiers, and any private index content are excluded from this public page.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./engineering-retrieval-prototype.html"><small>← Previous project</small><strong>Engineering Retrieval &amp; Report Drafting</strong></a>
+        <a rel="next" href="./travers-solar-analysis.html"><small>Next project →</small><strong>Travers Solar: Capacity &amp; Temperature</strong></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Working prototype · 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div></footer>
+</body>
+</html>
