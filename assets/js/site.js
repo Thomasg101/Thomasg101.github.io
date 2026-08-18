@@ -877,6 +877,9 @@ class Portfolio {
      projection; the spread pass then guarantees clear air between neighbours. */
   layoutTags() {
     const sc = this.sc;
+    const landscapePhone = innerWidth > innerHeight && innerHeight <= 500 && innerWidth <= 960;
+    const mobile = innerWidth <= 760 || landscapePhone;
+    const cramped = mobile && innerHeight <= 740;
     const rect = el => (el ? el.getBoundingClientRect() : null);
     const navR = rect(this.topbar);
     let safeTop = navR ? navR.bottom + 14 : 14;
@@ -890,21 +893,36 @@ class Portfolio {
     if (this.stage === 'done' && !this.panelOpen) {
       titleR = rect(this.finaleTitle);
       const lR = rect(this.finaleLinks);
-      if (lR) safeBot = Math.min(safeBot, lR.top - 16);
+      if (lR) safeBot = Math.min(safeBot, lR.top - (cramped ? 6 : 16));
     }
 
-    const cols = { '1': [], '-1': [] };
+    /* A phone has no useful "side" of the tower: alternating cards across its
+       edges makes the labels collide and obscures the facade. Use the projected
+       centreline as one shared datum instead, while desktop keeps the elevation
+       drawing convention of tags on opposing sides. */
+    const cols = mobile ? { '0': [] } : { '1': [], '-1': [] };
     for (let i = 0; i < this.markers.length; i++) {
       const b = this.markers[i], m = MILES[i];
       const off = this.panelOpen || i > this.unlocked || this.stage === 'intro';
-      const a = off ? null : sc.project(14.6, m.y, 0);
-      const bb = off ? null : sc.project(-14.6, m.y, 0);
+      const a = off ? null : sc.project(mobile ? 0 : 14.6, m.y, 0);
+      const bb = mobile ? a : (off ? null : sc.project(-14.6, m.y, 0));
       if (off || !a || !bb || !(a.front || bb.front)) {
         b.style.opacity = '0';
         b.style.pointerEvents = 'none';
         b.tabIndex = -1;
         continue;
       }
+
+      if (mobile) {
+        const w = b.offsetWidth || 286, h = b.offsetHeight || 46;
+        const half = w / 2;
+        const x = Math.min(Math.max(a.x, 14 + half), innerWidth - 14 - half);
+        /* The tiny index offset gives equal projected elevations a deterministic
+           roof-to-foundation order before the spreading pass. */
+        cols['0'].push({ i, b, centered: true, x, y: a.y - i * .02, w, h });
+        continue;
+      }
+
       const right = m.side > 0;
       const pr = right ? (a.x >= bb.x ? a : bb) : (a.x <= bb.x ? a : bb);
       const w = b.offsetWidth || 250, h = b.offsetHeight || 45;
@@ -921,16 +939,53 @@ class Portfolio {
       if (titleR) {
         let l = Infinity, r = -Infinity;
         for (const c of col) {
-          l = Math.min(l, c.right ? c.x : c.x - c.w);
-          r = Math.max(r, c.right ? c.x + c.w : c.x);
+          l = Math.min(l, c.centered ? c.x - c.w / 2 : (c.right ? c.x : c.x - c.w));
+          r = Math.max(r, c.centered ? c.x + c.w / 2 : (c.right ? c.x + c.w : c.x));
         }
-        if (l < titleR.right + 12 && r > titleR.left - 12) top = Math.max(top, titleR.bottom + 16);
+        if (l < titleR.right + 12 && r > titleR.left - 12) {
+          top = Math.max(top, titleR.bottom + (cramped ? 6 : 16));
+        }
       }
-      this.spread(col, top, safeBot, 18);
+      if (landscapePhone) {
+        /* A landscape phone is too short for six 44px rows. Keep the whole set
+           centred on the tower as a compact two-row elevation index. */
+        const ordered = col.slice().sort((a, b) => a.i - b.i);
+        const lower = ordered.slice(0, 3), upper = ordered.slice(3);
+        const w = Math.max(...ordered.map(c => c.w));
+        const h = Math.max(...ordered.map(c => c.h));
+        const gapX = 8, gapY = 4;
+        const maxCols = Math.max(lower.length, upper.length);
+        const gridW = w * maxCols + gapX * Math.max(0, maxCols - 1);
+        const projectedX = ordered.reduce((sum, c) => sum + c.x, 0) / ordered.length;
+        const centerX = Math.min(Math.max(projectedX, 14 + gridW / 2), innerWidth - 14 - gridW / 2);
+        const gridH = upper.length ? h * 2 + gapY : h;
+        const minCy = top + gridH / 2, maxCy = safeBot - gridH / 2;
+        const centerY = minCy <= maxCy
+          ? Math.min(Math.max((top + safeBot) / 2, minCy), maxCy)
+          : (top + safeBot) / 2;
+        const placeRow = (row, y) => {
+          const rowW = row.length * w + Math.max(0, row.length - 1) * gapX;
+          const startX = centerX - rowW / 2 + w / 2;
+          row.forEach((c, i) => { c.x = startX + i * (w + gapX); c.y = y; });
+        };
+        if (upper.length) {
+          placeRow(upper, centerY - (h + gapY) / 2);
+          placeRow(lower, centerY + (h + gapY) / 2);
+        } else {
+          placeRow(lower, centerY);
+        }
+      } else {
+        this.spread(col, top, safeBot, mobile ? (cramped ? 2 : (innerHeight < 700 ? 4 : 10)) : 18);
+      }
       for (const c of col) {
-        c.b.style.flexDirection = c.right ? 'row' : 'row-reverse';
-        c.b.style.transform = 'translate(' + c.x.toFixed(1) + 'px,' + c.y.toFixed(1) + 'px) translate('
-          + (c.right ? '0' : '-100%') + ',-50%)';
+        if (c.centered) {
+          c.b.style.flexDirection = 'row';
+          c.b.style.transform = 'translate(' + c.x.toFixed(1) + 'px,' + c.y.toFixed(1) + 'px) translate(-50%,-50%)';
+        } else {
+          c.b.style.flexDirection = c.right ? 'row' : 'row-reverse';
+          c.b.style.transform = 'translate(' + c.x.toFixed(1) + 'px,' + c.y.toFixed(1) + 'px) translate('
+            + (c.right ? '0' : '-100%') + ',-50%)';
+        }
         c.b.style.opacity = this.read[c.i] ? '.74' : '1';
         c.b.style.pointerEvents = 'auto';
         c.b.tabIndex = 0;
