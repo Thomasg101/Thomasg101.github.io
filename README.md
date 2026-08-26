@@ -103,13 +103,13 @@ The rules that fall out of it:
 - **"All projects" from a case study** asks for `#projects`, which may be past
   the current lift. That is a deliberate jump, not a resume, so it tops the tower
   out as it always did — the same as any shared `#hash` link.
-- **Home / Back to the start** clears the snapshot; starting over means being
+- **Home** clears the snapshot; starting over means being
   forgotten.
 - `sessionStorage`, not `localStorage`: the memory lasts exactly as long as the
   tab, so a visitor returning tomorrow still breaks ground.
 
-**Home** in the top bar (and *Back to the start*) returns to the title card and
-resets the build. **Skip the build** jumps straight to the topped-out view with
+**Home** in the top bar returns to the title card and resets the build. **Skip
+the build** jumps straight to the topped-out view with
 every chapter unlocked, for readers who don't want to play through the sequence.
 It is offered twice — on the title card, and again in the top bar for as long as
 there is a build left to skip, because the decision to sit through a
