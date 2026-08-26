@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steel Frame Analysis &amp; Independent Verification — Thomas Gao</title>
+  <meta name="description" content="A two-bay steel sub-frame on a building under construction at Waterloo, idealised and solved in SAP2000 — then re-solved with a direct-stiffness solver written from scratch, which disagreed.">
+  <meta name="theme-color" content="#f4f2ed">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="canonical" href="https://thomasg101.github.io/projects/structural-frame-analysis.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Thomas Gao">
+  <meta property="og:url" content="https://thomasg101.github.io/projects/structural-frame-analysis.html">
+  <meta property="og:title" content="Steel Frame Analysis &amp; Independent Verification">
+  <meta property="og:description" content="A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
+  <meta property="og:image" content="https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg">
+  <meta property="og:image:alt" content="Steel Frame Analysis &amp; Independent Verification — Thomas Gao">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Steel Frame Analysis &amp; Independent Verification">
+  <meta name="twitter:description" content="A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
+  <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg">
+  <link rel="stylesheet" href="./project-detail.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Steel Frame Analysis & Independent Verification",
+  "description": "A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch.",
+  "url": "https://thomasg101.github.io/projects/structural-frame-analysis.html",
+  "image": "https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Thomas Gao",
+    "url": "https://thomasg101.github.io/"
+  },
+  "inLanguage": "en"
+}
+  </script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#content">Skip to project</a>
+
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="../">T. Gao <span class="brand-mark">▚</span> Civil / Code</a>
+      <div class="nav-actions">
+        <a class="back-link" href="../#projects">← <span>All projects</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="shell">
+      <section class="project-hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Structural · Analysis · 2026</p>
+          <h1 id="project-title">Steel Frame Analysis &amp; Verification</h1>
+          <p class="lead">A two-bay steel sub-frame on a building going up across campus — measured, idealised, solved in SAP2000, and then re-solved with a direct-stiffness solver I wrote from scratch. The two models did not agree, and finding out why was the point.</p>
+          <ul class="tags" aria-label="Tools and methods">
+            <li>SAP2000</li>
+            <li>Direct stiffness method</li>
+            <li>Python</li>
+            <li>Müller-Breslau</li>
+            <li>Influence lines</li>
+          </ul>
+        </div>
+
+        <figure class="media-figure">
+          <picture>
+            <source type="image/avif" srcset="../assets/projects/structural-frame-substructure-600.avif 600w, ../assets/projects/structural-frame-substructure-636.avif 636w" sizes="(max-width: 900px) 92vw, 640px">
+            <img src="../assets/projects/structural-frame-substructure-636.jpg" srcset="../assets/projects/structural-frame-substructure-600.jpg 600w, ../assets/projects/structural-frame-substructure-636.jpg 636w" sizes="(max-width: 900px) 92vw, 640px" width="636" height="471" alt="Erection steel on the Mathematics 4 building with the analysed two-bay sub-frame outlined in orange" fetchpriority="high" decoding="async">
+          </picture>
+          <figcaption>Mathematics 4, University of Waterloo, March 2026. The orange outline marks the sub-frame taken out of the building for analysis; red marks the interior bay.</figcaption>
+        </figure>
+      </section>
+
+      <ul class="facts-grid" aria-label="Project facts">
+        <li><strong>12 members</strong><span>2 bays × 2 storeys</span></li>
+        <li><strong>20 / 20</strong><span>Closed-form checks passed</span></li>
+        <li><strong>4.7&thinsp;%</strong><span>Total load vs SAP2000</span></li>
+        <li><strong>1.4 kN</strong><span>Unexplained reaction split</span></li>
+      </ul>
+
+      <div class="project-layout">
+        <article class="project-content">
+          <section class="case-section">
+            <h2>01 / Context</h2>
+            <div>
+              <h3>A structure you can walk up to teaches more than one from a textbook.</h3>
+              <p>For CIVE 303 Structural Analysis our team had to choose a real structure, idealise it, and analyse it. We picked the erection steel on the southeast elevation of the Mathematics 4 building, then under construction on the Waterloo campus — close enough to photograph and measure, and simple enough to defend as a plane frame.</p>
+              <p>The choice did most of the teaching. Standing under it, the thing being analysed was not a finished building at all: bare steel, no slabs, no cladding, no final bracing. It was a temporary condition, and temporary conditions are where structures are most exposed.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>02 / Idealisation</h2>
+            <div>
+              <h3>Every assumption forced into the open.</h3>
+              <p>Reducing an elevation of erection steel to twelve members meant committing to a set of claims about a real building: where the sub-frame could honestly be cut out of the structure, which connections behaved as rigid, whether the bases could be taken as fixed, and what the frame was actually carrying on the day we photographed it.</p>
+              <ul>
+                <li>Geometry: 7.5 m in two bays (5.0 m and 2.5 m), 8.0 m in two storeys of 4.0 m.</li>
+                <li>Members: W16×67 base beams, W12×22 and W14×22 floor beams, HSS 4×4×1/8 columns.</li>
+                <li>Material: structural steel, <em>E</em> = 200 GPa, unit weight 78.5 kN/m³.</li>
+                <li>Restraint: three fixed bases, rigid joints throughout, no internal hinges or moment releases identified.</li>
+              </ul>
+            </div>
+          </section>
+
+          <div class="gallery-grid">
+            <figure class="media-figure">
+              <picture>
+                <source type="image/avif" srcset="../assets/projects/structural-frame-site-600.avif 600w, ../assets/projects/structural-frame-site-619.avif 619w" sizes="(max-width: 900px) 92vw, 380px">
+                <img src="../assets/projects/structural-frame-site-619.jpg" srcset="../assets/projects/structural-frame-site-600.jpg 600w, ../assets/projects/structural-frame-site-619.jpg 619w" sizes="(max-width: 900px) 92vw, 380px" width="619" height="464" alt="The Mathematics 4 building under construction, steel frame exposed above the ground floor" loading="lazy" decoding="async">
+              </picture>
+              <figcaption><span>01 / Site</span> The structure as found — erection steel with no slabs, cladding or final bracing in place.</figcaption>
+            </figure>
+            <figure class="media-figure">
+              <picture>
+                <source type="image/avif" srcset="../assets/projects/structural-frame-idealization-600.avif 600w, ../assets/projects/structural-frame-idealization-1000.avif 1000w" sizes="(max-width: 900px) 92vw, 380px">
+                <img src="../assets/projects/structural-frame-idealization-1000.jpg" srcset="../assets/projects/structural-frame-idealization-600.jpg 600w, ../assets/projects/structural-frame-idealization-1000.jpg 1000w" sizes="(max-width: 900px) 92vw, 380px" width="1000" height="1003" alt="Hand-drawn plane frame idealisation showing nodes A to I, member labels, dimensions and three fixed supports" loading="lazy" decoding="async">
+              </picture>
+              <figcaption><span>02 / Idealisation</span> The plane frame that came out of it — nine nodes, twelve members, three fixed bases.</figcaption>
+            </figure>
+          </div>
+
+          <section class="case-section">
+            <h2>03 / Analysis</h2>
+            <div>
+              <h3>Self-weight, influence lines, then live load placed where it hurts.</h3>
+              <p>The team analysis ran in SAP2000 across three load conditions, each answering a different question about the frame.</p>
+              <ol class="step-list">
+                <li><strong>Self-weight.</strong> Deflected shape, axial force, shear and bending moment for all twelve members, plus the three support reactions.</li>
+                <li><strong>Influence lines.</strong> The reaction at support B, developed by the Müller-Breslau principle: release the restraint, impose a unit displacement, and read the deflected shape of the released structure as the influence line.</li>
+                <li><strong>Live load.</strong> A 10 kN/m load placed only on the spans the influence line identified, to produce the maximum effect at B — then over all members, for comparison.</li>
+              </ol>
+              <p>The influence-line step is the part that changed how I read a frame. Müller-Breslau turns a question about load placement into a question about shape, which is far easier to reason about — and it makes the answer visible rather than computed.</p>
+            </div>
+          </section>
+
+          <section class="case-section">
+            <h2>04 / Verification</h2>
+            <div>
+              <h3>I was not satisfied that I knew what the software had done.</h3>
+              <p>So I wrote a plane-frame solver of my own, in Python, by the direct stiffness method: local element stiffness matrices, transformation into global coordinates, fixed-end forces for distributed and self-weight loading, moment releases, assembly, partition by boundary condition, and recovery of member end forces and internal-force diagrams.</p>
+              <p>Writing it exposed every convention that commercial software applies silently — sign conventions, release condensation, how a global self-weight load resolves onto a member's local axes. One sign error in that last step made 4.3 kN of vertical load disappear from the model. It was caught not by inspection but by a global equilibrium check, which is exactly why the check exists.</p>
+              <p>The solver reproduces eight closed-form cases — cantilever under point and distributed load, simply supported and fixed-fixed beams, propped cantilever, pin-jointed bar, moment release, and portal sway — across 20 assertions, to machine precision. On the M4 frame, global equilibrium closes to about 1 part in 10<sup>14</sup>.</p>
+            </div>
+          </section>
+
+          <div class="gallery-grid">
+            <figure class="media-figure">
+              <picture>
+                <source type="image/avif" srcset="../assets/projects/structural-frame-deformed-600.avif 600w, ../assets/projects/structural-frame-deformed-1040.avif 1040w" sizes="(max-width: 900px) 92vw, 380px">
+                <img src="../assets/projects/structural-frame-deformed-1040.jpg" srcset="../assets/projects/structural-frame-deformed-600.jpg 600w, ../assets/projects/structural-frame-deformed-1040.jpg 1040w" sizes="(max-width: 900px) 92vw, 380px" width="1040" height="1127" alt="Deflected shape of the frame under self-weight, drawn by the author's own solver at 5000x scale" loading="lazy" decoding="async">
+              </picture>
+              <figcaption><span>03 / Deflected shape</span> Self-weight, drawn by my solver at ×5,000. Largest nodal deflection 0.093 mm.</figcaption>
+            </figure>
+            <figure class="media-figure">
+              <picture>
+                <source type="image/avif" srcset="../assets/projects/structural-frame-moment-600.avif 600w, ../assets/projects/structural-frame-moment-960.avif 960w" sizes="(max-width: 900px) 92vw, 380px">
+                <img src="../assets/projects/structural-frame-moment-960.jpg" srcset="../assets/projects/structural-frame-moment-600.jpg 600w, ../assets/projects/structural-frame-moment-960.jpg 960w" sizes="(max-width: 900px) 92vw, 380px" width="960" height="1099" alt="Bending moment diagram for the frame under self-weight, drawn by the author's own solver" loading="lazy" decoding="async">
+              </picture>
+              <figcaption><span>04 / Bending moment</span> Same load case, same solver. Governing moment 2.08 kN·m in the base beam.</figcaption>
+            </figure>
+          </div>
+
+          <section class="case-section">
+            <h2>05 / The disagreement</h2>
+            <div>
+              <h3>Total load agreed. The load path did not.</h3>
+              <p>Pointed at our own frame, the solver put the total gravity reaction within 4.7&thinsp;% of the SAP2000 model — 14.55 kN against 15.26 kN. But it distributed that load to the three supports differently, by up to 1.4 kN, which is a large fraction of a small number.</p>
+              <p>I could not close the gap. A parametric scan over column area and second moment, across the whole plausible range for the section, does not reproduce the SAP2000 distribution from the properties our report tabulated. Two solutions that both satisfy equilibrium but split the load differently are not both describing the same structure.</p>
+              <p>The reading I take from it is that the member property table we submitted and the model we actually ran were not the same model. Nothing in the SAP2000 output said so — it looked entirely reasonable on its own, which is the part worth remembering.</p>
+            </div>
+          </section>
+
+          <figure class="media-figure wide">
+            <picture>
+              <source type="image/avif" srcset="../assets/projects/structural-frame-reactions-600.avif 600w, ../assets/projects/structural-frame-reactions-1176.avif 1176w" sizes="(max-width: 900px) 92vw, 640px">
+              <img src="../assets/projects/structural-frame-reactions-1176.jpg" srcset="../assets/projects/structural-frame-reactions-600.jpg 600w, ../assets/projects/structural-frame-reactions-1176.jpg 1176w" sizes="(max-width: 900px) 92vw, 640px" width="1176" height="683" alt="Bar chart comparing vertical support reactions from the author's solver and from SAP2000 at supports A, B and C" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><span>05 / Independent check</span> Vertical reactions, self-weight. Two solvers, one frame. The totals agree; the split does not.</figcaption>
+          </figure>
+
+          <section class="case-section">
+            <h2>06 / Outcome</h2>
+            <div>
+              <h3>The check is the deliverable.</h3>
+              <p>A clean match would have taught me less. What the exercise actually produced is a working analysis tool I understand line by line, and a concrete demonstration that a plausible-looking result from commercial software can still be wrong — or right for a model that is not the one you documented.</p>
+              <p>That is the habit I want to carry into structural practice: run the second solution, and treat the disagreement as information rather than as an inconvenience to be smoothed away.</p>
+            </div>
+          </section>
+        </article>
+
+        <aside class="project-rail" aria-label="Project summary">
+          <section>
+            <h2>Role</h2>
+            <p>Team member on the CIVE 303 analysis — field measurement, idealisation and SAP2000 modelling. The Python solver, the verification suite and the reconciliation study are my own independent work.</p>
+          </section>
+          <section>
+            <h2>Methods</h2>
+            <ul>
+              <li>Direct stiffness method</li>
+              <li>Plane frame idealisation</li>
+              <li>Müller-Breslau influence lines</li>
+              <li>Live-load placement</li>
+              <li>Closed-form verification</li>
+              <li>Equilibrium checking</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Tools</h2>
+            <ul>
+              <li>SAP2000</li>
+              <li>Python · NumPy</li>
+              <li>Matplotlib</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Design principle</h2>
+            <p>An idealisation is a claim about a real building. Nothing in the software will check it for you.</p>
+          </section>
+        </aside>
+      </div>
+
+      <aside class="public-note">
+        <strong>Attribution note.</strong> The CIVE 303 mini-project was team work — field selection, idealisation and the SAP2000 model were produced with three classmates, and the course figures are reproduced here as team output. The Python solver, its verification suite, the comparison against the SAP2000 reactions and the conclusions drawn from that comparison are mine alone. Course deliverables and classmates' names are not reproduced.
+      </aside>
+
+      <nav class="project-pagination" aria-label="More projects">
+        <a rel="prev" href="./grand-river-watershed-analysis.html"><small>← Previous project</small><strong>Grand River Watershed Analysis</strong></a>
+        <a rel="next" href="./engineering-retrieval-prototype.html"><small>Next project →</small><strong>Engineering Retrieval &amp; Report Drafting</strong></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Project record · Rev. 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
+  </footer>
+</body>
+</html>

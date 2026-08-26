@@ -52,7 +52,7 @@ normally.
 | `assets/projects/`, `assets/photography/`, `assets/profile/` | Imagery, each with AVIF + JPEG derivatives at two widths. |
 | `assets/og-image.jpg`, `assets/og/` | Social cards — one for the site, one per case study (generated). |
 | `assets/fallback-tower.svg` | Flat elevation shown when WebGL is unavailable (generated). |
-| `assets/favicon.svg` | Icon (generated). |
+| `assets/favicon.svg`, `favicon.ico` | Wide-flange section mark (generated). |
 | `tools/` | Regeneration scripts — see below. |
 | `docs/projectsearch-sync.md` | Notes on what the ProjectSearch section was sourced from. |
 
@@ -109,10 +109,18 @@ The rules that fall out of it:
   tab, so a visitor returning tomorrow still breaks ground.
 
 **Home** in the top bar (and *Back to the start*) returns to the title card and
-resets the build. **Skip the build** on the title card jumps straight to the
-topped-out view with every chapter unlocked, for readers who don't want to play
-through the sequence. Once topped out, chapters page with the panel buttons or
-the left/right arrow keys.
+resets the build. **Skip the build** jumps straight to the topped-out view with
+every chapter unlocked, for readers who don't want to play through the sequence.
+It is offered twice — on the title card, and again in the top bar for as long as
+there is a build left to skip, because the decision to sit through a
+forty-second sequence is one a reader usually makes *during* it. The top-bar
+control removes itself once the tower is topped out. Once topped out, chapters
+page with the panel buttons or the left/right arrow keys.
+
+Skipping mid-build goes through `jumpToEnd()`, which calls the scene's
+`finishBuild()` rather than `setProgress(1)`. The latter leaves the camera tween
+still running, and that tween owns `p` on every frame — so the tower would crawl
+back down under a reader who had just asked to skip.
 
 ## Design and accessibility
 

@@ -35,7 +35,8 @@ try {
 <meta name="twitter:image" content="https://thomasg101.github.io/assets/og-image.jpg">
 
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./assets/favicon.svg">
+<link rel="alternate icon" href="./favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="apple-touch-icon" href="./assets/favicon-180.png">
 
 <link rel="preload" href="./assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -144,6 +145,7 @@ try {
     </div>
     <div class="top-links">
       <span class="nav-lvl">LVL <b id="lvl">00</b>/12</span>
+      <button type="button" class="topbar-skip" data-skip title="Top the tower out and open every chapter">Skip the build &rarr;</button>
       <a class="link-secondary" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
       <a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
       <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
@@ -378,7 +380,7 @@ try {
           <ul>
             <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3, and Ubakus &mdash; effective U-values and linear (&psi;) and point (&chi;) transmittance for BC Energy Step Code, NECB, and ASHRAE 90.1 compliance. Junction details across several project teams, most modelled in both existing and retrofit configurations.</li>
             <li>Site Review Reports documenting construction conformance &mdash; annotated photo logs, deficiency registers, follow-up tracking.</li>
-            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients &mdash; each with a 30-year capital renewal cost model.</li>
+            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients &mdash; component inventories, condition ratings, and 30-year capital renewal cost models.</li>
             <li>Built ProjectSearch, a local-first photo and document retrieval prototype being evaluated for engineering workflows.</li>
           </ul>
         </article>
@@ -392,35 +394,30 @@ try {
           </ul>
         </article>
 
-        <!-- Two co-op terms at one employer, kept under a single heading so the
-             dates read as sequential placements rather than overlapping jobs. -->
-        <div class="employer">
-          <div class="employer-head">
-            <h3>Green Infrastructure Partners</h3>
-            <span>Two co-op terms</span>
-          </div>
-          <article class="role">
-            <div class="role-meta"><b>Project Coordinator</b><span>Jan &ndash; May 2025 &middot; Toronto, ON</span></div>
-            <ul>
-              <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line &mdash; diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing, tieback anchor testing. Tracked RFIs, RFQs, and submittals across the below-grade scope.</li>
-              <li>Sequenced excavation and support-of-excavation to MTO, CSA, and Ministry of Labour requirements &mdash; field reports, as-builts, and quantity summaries.</li>
-            </ul>
-          </article>
-          <article class="role">
-            <div class="role-meta"><b>Quality Control Technician</b><span>May &ndash; Aug 2024 &middot; Ontario</span></div>
-            <ul>
-              <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM, and AASHTO standards &mdash; Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
-              <li>Independently managed QC for MTO <b>Highway 17 and 61</b> rehabilitation near Thunder Bay; mix optimization through gradation, binder content, and foaming parameter analysis.</li>
-            </ul>
-          </article>
-        </div>
+        <article class="role">
+          <div class="role-meta"><b>Green Infrastructure Partners</b><span>Jan &ndash; May 2025 &middot; Toronto, ON</span></div>
+          <h3>Project Coordinator <span>&mdash; Co-op</span></h3>
+          <ul>
+            <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line &mdash; diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing, tieback anchor testing. Tracked RFIs, RFQs, and submittals across the below-grade scope.</li>
+            <li>Sequenced excavation and support-of-excavation to MTO, CSA, and Ministry of Labour requirements &mdash; field reports, as-builts, and quantity summaries.</li>
+          </ul>
+        </article>
+
+        <article class="role">
+          <div class="role-meta"><b>Green Infrastructure Partners</b><span>May &ndash; Aug 2024 &middot; Thunder Bay, ON</span></div>
+          <h3>Quality Control Technician <span>&mdash; Co-op</span></h3>
+          <ul>
+            <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM, and AASHTO standards &mdash; Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
+            <li>Independently managed QC for MTO <b>Highway 17 and 61</b> rehabilitation near Thunder Bay; mix optimization through gradation, binder content, and foaming parameter analysis.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
     <!-- 04 Projects -->
     <section class="chapter" data-chapter="projects" aria-labelledby="projects-title">
       <h2 id="projects-title">Selected work</h2>
-      <p class="chapter-intro">Nine documented case studies spanning field delivery, building science, academic analysis, published energy research, and engineering software. Open any card for the evidence, method, role, and outcome.</p>
+      <p class="chapter-intro">Nine documented case studies spanning structural analysis, field delivery, building science, published energy research, and engineering software. Open any card for the evidence, method, role, and outcome.</p>
 
       <div class="project-archive">
         <section class="project-group" aria-labelledby="flagship-projects">
@@ -511,8 +508,28 @@ try {
         </section>
 
         <section class="project-group" aria-labelledby="academic-projects">
-          <div class="project-group-head"><h3 id="academic-projects">Academic &amp; design</h3><span>03 documented</span></div>
+          <div class="project-group-head"><h3 id="academic-projects">Structural &amp; academic</h3><span>03 documented</span></div>
           <div class="project-grid">
+
+            <article class="project-card"><a href="./projects/structural-frame-analysis.html" aria-label="View the Steel Frame Analysis and Independent Verification case study">
+              <div class="project-media">
+                <picture>
+                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
+                          srcset="./assets/projects/structural-frame-substructure-600.avif 600w, ./assets/projects/structural-frame-substructure-636.avif 636w">
+                  <img src="./assets/projects/structural-frame-substructure-636.jpg"
+                       srcset="./assets/projects/structural-frame-substructure-600.jpg 600w, ./assets/projects/structural-frame-substructure-636.jpg 636w"
+                       sizes="(max-width: 760px) 92vw, 280px" width="636" height="471" loading="lazy" decoding="async"
+                       alt="Erection steel on a building under construction with the analysed two-bay sub-frame outlined">
+                </picture>
+              </div>
+              <div class="project-body">
+                <div class="project-meta"><span>Structural &middot; Analysis</span><span>2026</span></div>
+                <h4>Steel Frame Analysis &amp; Verification</h4>
+                <p>A two-bay steel sub-frame idealised from a building under construction and solved in SAP2000 &mdash; then re-solved with a direct-stiffness solver I wrote, which disagreed.</p>
+                <div class="project-tags"><span>SAP2000</span><span>Direct stiffness</span><span>Influence lines</span></div>
+                <div class="project-cta"><span>Course + independent work</span><span>View &#8599;</span></div>
+              </div>
+            </a></article>
 
             <article class="project-card"><a href="./projects/residence-site-redevelopment.html" aria-label="View Residence Site Redevelopment case study">
               <div class="project-media">
@@ -554,25 +571,6 @@ try {
               </div>
             </a></article>
 
-            <article class="project-card"><a href="./projects/soil-characterization-matlab.html" aria-label="View Soil Characterization in MATLAB case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/soil-characterization-matlab-600.avif 600w, ./assets/projects/soil-characterization-matlab-818.avif 818w">
-                  <img src="./assets/projects/soil-characterization-matlab-818.jpg"
-                       srcset="./assets/projects/soil-characterization-matlab-600.jpg 600w, ./assets/projects/soil-characterization-matlab-818.jpg 818w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="818" height="856" loading="lazy" decoding="async"
-                       alt="MATLAB code authored by Thomas Gao for a liquid-limit semilog regression">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Academic &middot; Geo</span><span>2025</span></div>
-                <h4>Soil Characterization in MATLAB</h4>
-                <p>Authored semilog liquid-limit regression paired with spreadsheet sieve analysis across standard sieve sizes from 63 mm to 75 &micro;m.</p>
-                <div class="project-tags"><span>MATLAB</span><span>Regression</span><span>Atterberg limits</span></div>
-                <div class="project-cta"><span>Laboratory analysis</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
 
           </div>
         </section>
@@ -716,21 +714,31 @@ try {
 
       <div class="skill-stack">
         <div class="skill-group">
+          <div class="skill-group-title">Structural</div>
+          <div class="skill-tags">
+            <a href="./projects/structural-frame-analysis.html">SAP2000</a>
+            <a href="./projects/structural-frame-analysis.html">Direct stiffness (Python)</a>
+            <span>SkyCiv</span><span>Rhino</span><span>Grasshopper</span>
+          </div>
+          <p>Plane-frame and truss analysis &middot; influence lines &middot; load-path reasoning &middot; hand verification of software output</p>
+        </div>
+        <div class="skill-group">
           <div class="skill-group-title">Software</div>
           <div class="skill-tags">
             <a href="./projects/residence-site-redevelopment.html">AutoCAD</a>
             <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>
             <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>
-            <a href="./projects/soil-characterization-matlab.html">Excel (advanced)</a>
+            <a href="./projects/highway-design-pavement-qc.html">Excel (advanced)</a>
             <a href="./projects/travers-solar-analysis.html">PVSyst</a>
-            <span>Revit</span><span>Bluebeam Revu</span><span>SAP2000</span><span>S-FRAME</span>
+            <span>Revit</span><span>Bluebeam Revu</span>
           </div>
         </div>
         <div class="skill-group">
           <div class="skill-group-title">Programming</div>
           <div class="skill-tags">
             <a class="is-accent" href="./projects/travers-solar-analysis.html">Python</a>
-            <a class="is-accent" href="./projects/soil-characterization-matlab.html">MATLAB</a>
+            <a class="is-accent" href="./projects/structural-frame-analysis.html">NumPy</a>
+            <span class="is-accent">MATLAB</span>
             <a class="is-accent" href="./projects/projectsearch.html">SQL</a>
             <span class="is-accent">VBA</span>
           </div>
@@ -752,7 +760,6 @@ try {
             <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>
             <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>
             <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>
-            <span>WUFI</span>
           </div>
           <p>Thermal bridging and condensation analysis &middot; air and vapour barrier systems &middot; EIFS &middot; PMMA and SBS waterproofing</p>
         </div>

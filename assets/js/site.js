@@ -310,7 +310,7 @@ class Portfolio {
 
   bindEvents() {
     $('[data-start]').addEventListener('click', () => this.start());
-    $('[data-skip]').addEventListener('click', () => this.skipToEnd());
+    $$('[data-skip]').forEach(el => el.addEventListener('click', () => this.skipToEnd()));
     $$('[data-home]').forEach(b => b.addEventListener('click', () => this.goHome()));
     this.closeBtn.addEventListener('click', () => this.closePanel());
     this.contBtn.addEventListener('click', () => this.advance());
@@ -436,7 +436,13 @@ class Portfolio {
   jumpToEnd() {
     this.stage = 'done';
     this.unlocked = MILES.length - 1;
-    if (this.sc) { this.sc.startBuild(); this.sc.setProgress(1); }
+    /* finishBuild also cancels a camera move still running, which matters now
+       that the build can be skipped from inside itself and not only from the
+       title card. */
+    if (this.sc) {
+      if (this.sc.finishBuild) this.sc.finishBuild();
+      else { this.sc.startBuild(); this.sc.setProgress(1); }
+    }
     this.showFinale(true);
     this.syncRail();
     this.setStatus('Topped out · EL +40.8 m — every chapter is open');
@@ -819,6 +825,9 @@ class Portfolio {
   /* ---------------------------------------------------------------- rail -- */
 
   syncRail() {
+    /* One place that publishes the build stage to CSS. The skip control in the
+       top bar is only useful while there is still a build left to skip. */
+    document.documentElement.dataset.stage = this.stage;
     if (this.rail) {
       this.rail.style.display = (this.stage !== 'intro' && innerWidth >= 760) ? 'flex' : 'none';
     }

@@ -19,7 +19,12 @@ import os
 import pathlib
 import re
 import subprocess
+import shutil
 import tempfile
+
+
+def _have(cmd):
+    return shutil.which(cmd) is not None
 
 W, H = 1200, 630
 
@@ -99,10 +104,9 @@ def build_content(title, kicker, tagline):
         p.append(f"BT {rgb(MUTED)} rg /F2 25 Tf 80 {rule_y - 44 - i * 34} Td "
                  f"({pdf_text(line)}) Tj ET")
 
-    # Skyline mark, mirroring the favicon, anchored to the right edge.
-    for x, y, w, h in [(880, 120, 44, 150), (946, 120, 44, 250), (1012, 120, 44, 196)]:
+    # Wide-flange section, mirroring the favicon, anchored to the right edge.
+    for x, y, w, h in [(895, 100, 150, 28), (952, 128, 36, 114), (895, 242, 150, 28)]:
         p.append(f"{rgb(ACCENT)} rg {x} {y} {w} {h} re f")
-    p.append(f"{rgb(ACCENT)} rg 866 100 224 6 re f")
     return "\n".join(p)
 
 
@@ -137,10 +141,18 @@ def render(content_str, out_path):
         fh.write(build_pdf(content_str))
         pdf_path = fh.name
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
-    subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "86",
-                    pdf_path, "--out", out_path], check=True, capture_output=True)
-    subprocess.run(["sips", "--resampleWidth", str(W), out_path],
-                   check=True, capture_output=True)
+    if _have("sips"):
+        subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "86",
+                        pdf_path, "--out", out_path], check=True, capture_output=True)
+        subprocess.run(["sips", "--resampleWidth", str(W), out_path],
+                       check=True, capture_output=True)
+    else:
+        # Same card, rasterised with poppler where sips is not available.
+        stem = out_path[:-4] if out_path.endswith(".jpg") else out_path
+        subprocess.run(["pdftoppm", "-jpeg", "-jpegopt", "quality=86", "-r", "72",
+                        "-scale-to-x", str(W), "-scale-to-y", str(H),
+                        "-singlefile", pdf_path, stem],
+                       check=True, capture_output=True)
     os.unlink(pdf_path)
     return os.path.getsize(out_path)
 

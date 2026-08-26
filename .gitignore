@@ -11,3 +11,10 @@ uploads/
 # Local tooling — absolute, machine-specific paths
 .claude/settings.local.json
 .claude/launch.json
+
+# Scholarship package and working scratch — personal documents (transcript,
+# completed application form). Never publish these from a GitHub Pages repo.
+output/
+tmp/
+_to_delete/
+_site_snapshot.tgz

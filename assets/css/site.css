@@ -346,6 +346,29 @@ img { max-width: 100%; }
 }
 .nav-lvl b { color: var(--fg); font-weight: 400; }
 
+/* Skip the build, offered again inside the build ------------------------- */
+/* The title card already offers this, but the decision to sit through a
+   40-second sequence is one a reader makes *during* it, not before. This is
+   the same action, kept available until the tower is topped out — at which
+   point there is nothing left to skip and it removes itself. */
+.topbar-skip {
+  font-family: var(--mono); font-size: var(--fs-mono);
+  letter-spacing: var(--track-label); text-transform: uppercase;
+  color: var(--muted); background: none;
+  border: 1px solid color-mix(in oklab, var(--muted) 45%, transparent);
+  padding: 7px 13px; cursor: pointer; white-space: nowrap;
+  transition: color .25s ease, border-color .25s ease, background-color .25s ease;
+}
+.topbar-skip:hover,
+.topbar-skip:focus-visible { color: var(--accent); border-color: var(--accent); }
+
+:root[data-stage="done"] .topbar-skip,
+:root[data-stage="intro"] .topbar-skip { display: none; }
+
+@media (max-width: 900px) {
+  .topbar-skip { padding: 6px 10px; }
+}
+
 /* Chapter rail ----------------------------------------------------------- */
 
 .rail {

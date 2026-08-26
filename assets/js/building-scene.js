@@ -238,6 +238,10 @@ class BuildingScene extends HTMLElement {
   /* ---- guided (click-through) mode API ---- */
   enterGuided() { this.guided = true; this.intro = true; }
   startBuild() { this.intro = false; }
+  /* Jump straight to the topped-out tower. Distinct from setProgress(1), which
+     leaves any camera move still in flight — that tween owns `p` on every frame
+     and would drag the building back down under a reader who asked to skip. */
+  finishBuild() { this.tw = null; this.intro = false; this.p = 1; }
   // clear the site back to the cinematic empty-lot view so the build can run again
   resetBuild() {
     this.tw = null;
