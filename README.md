@@ -1,9 +1,12 @@
-# Thomas Gao — Civil Engineering Portfolio
+# Thomas Gao — Portfolio
 
-An interactive portfolio for a University of Waterloo civil engineering student
-working between field practice and software. The homepage builds a twelve-storey
-tower in WebGL; every few lifts a marker opens a chapter of the resume. Nine
-standalone case-study pages sit behind it.
+A portfolio for a University of Waterloo civil engineering student working across
+structural analysis, building envelope, and software for engineering teams.
+
+The homepage draws one building in WebGL and reads it three ways as you scroll:
+as a frame on its foundations (structure), as an exterior thermogram (envelope),
+and as a wireframe and point cloud with photo pins (code). The resume content
+follows on a plain surface, and nine standalone case-study pages sit behind it.
 
 Static site. No build step, no framework, no third-party requests at runtime.
 
@@ -40,114 +43,77 @@ normally.
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Homepage. All content is real HTML — it reads as a document with JavaScript off. |
-| `assets/css/site.css` | Homepage styles. Light palette only. |
-| `assets/css/fonts.css` | Self-hosted IBM Plex faces (generated). |
-| `assets/js/site.js` | Homepage controller — chapters, routing, session state, marker layout. |
-| `assets/js/building-scene.js` | Three.js construction sequence and milestone markers. Imported lazily by `site.js`. |
+| `index.html` | Homepage. All content is real HTML and reads as a document with JavaScript or WebGL off. |
+| `assets/css/site.css` | Homepage styles. The palette and type decisions are documented at the top. |
+| `assets/css/fonts.css` | Self-hosted Archivo (variable) and IBM Plex Mono (generated). |
+| `assets/js/main.js` | Page controller: maps scroll position to the model, wires the three controls. |
+| `assets/js/scene.js` | The Three.js building: geometry, the single shader, camera. Knows nothing about the page. |
 | `assets/js/vendor/three.module.min.js` | Vendored Three.js 0.160.0. |
 | `projects/` | Nine case studies plus two redirect stubs for the merged solar URLs. |
-| `projects/project-detail.css` | Shared case-study styles. |
+| `projects/project-detail.css` | Shared case-study styles, on the homepage palette. |
 | `projects/projectsearch-demo.js` | Four-record search demonstration on the ProjectSearch page. |
 | `assets/projects/`, `assets/photography/`, `assets/profile/` | Imagery, each with AVIF + JPEG derivatives at two widths. |
-| `assets/og-image.jpg`, `assets/og/` | Social cards — one for the site, one per case study (generated). |
-| `assets/fallback-tower.svg` | Flat elevation shown when WebGL is unavailable (generated). |
+| `assets/og-image.jpg`, `assets/og/` | Social cards: one for the site, one per case study (generated). |
 | `assets/favicon.svg`, `favicon.ico` | Wide-flange section mark (generated). |
-| `tools/` | Regeneration scripts — see below. |
+| `tools/` | Regeneration scripts, see below. |
 | `docs/projectsearch-sync.md` | Notes on what the ProjectSearch section was sourced from. |
 
 ## Regenerating assets
 
 ```sh
 ./tools/build-images.sh          # AVIF + JPEG derivatives for every image
-python3 tools/fetch-fonts.py     # re-download the IBM Plex latin subset
+python3 tools/fetch-fonts.py     # re-download Archivo + Plex Mono, latin subset
 python3 tools/make-og-image.py   # rebuild every 1200x630 Open Graph card
-python3 tools/make-fallback-tower.py  # rebuild the no-WebGL elevation
 python3 tools/build-sitemap.py   # rebuild sitemap.xml from pages on disk
 ```
 
 `tools/update-project-pages.py` and `tools/simplify-project-css.py` were one-off
 migrations; they are kept for reference and are safe no-ops now.
 
-## Guided chapters
+## How the homepage works
 
-The tower rises through six selectable milestones:
+The page is an ordinary scrolling document; scrolling is never taken over and
+nothing is gated behind an animation. Each section carries a `data-scene`
+name, and `main.js` holds one preset per name (camera, cladding on or off,
+foundations, thermal view, dissolve, ground colour). Between two sections the
+presets are blended by scroll position, so the reader sets the pace.
 
-1. Education
-2. ProjectSearch
-3. Experience
-4. Projects
-5. Photography
-6. Skills
+| Section | `data-scene` | What the model does |
+| --- | --- | --- |
+| Hero | `hero` | Complete building. The only timed animation on the site: a 1.5 s assembly on load. |
+| Structure | `structure` | Cladding flies off; caissons, pile caps and shoring grow down. Slider applies lateral drift. |
+| Envelope | `envelope` | Cladding returns and a thermogram sweeps up it. Switch toggles as-built / retrofit. |
+| Code | `code` | Solid dissolves to outlines and points. Query chips select a photo pin. |
+| Work, experience, education, photos | `cover` | Opaque surface over the model; rendering pauses while it is covered. |
+| Contact | `contact` | The building reassembles in daylight. |
 
-Hash routes such as `#projects` and `#photography` open a chapter directly, so
-links from the case-study pages land in the right place. Moving between chapters
-pushes history, so Back and Forward step through chapters rather than leaving the
-site.
-
-### Resuming after a case study
-
-Clicking through to a case study is a real navigation, so Back reloads the
-homepage from scratch. A snapshot in `sessionStorage` (`tg.portfolio.v1`) is what
-lets it come back to the same tower rather than a finished one: build stage,
-which markers are unlocked and which have been read, the open chapter, its scroll
-offset, and the selected ProjectSearch query. The opening curtain is skipped on a
-resumed load.
-
-The rules that fall out of it:
-
-- **Back from a case study** restores the build exactly where it was — mid-build
-  stays mid-build, with *Continue construction* still waiting.
-- **A lift still animating** when the reader left counts as finished, rather than
-  replaying a camera move they already watched.
-- **"All projects" from a case study** asks for `#projects`, which may be past
-  the current lift. That is a deliberate jump, not a resume, so it tops the tower
-  out as it always did — the same as any shared `#hash` link.
-- **Home** clears the snapshot; starting over means being
-  forgotten.
-- `sessionStorage`, not `localStorage`: the memory lasts exactly as long as the
-  tab, so a visitor returning tomorrow still breaks ground.
-
-**Home** in the top bar returns to the title card and resets the build. **Skip
-the build** jumps straight to the topped-out view with
-every chapter unlocked, for readers who don't want to play through the sequence.
-It is offered twice — on the title card, and again in the top bar for as long as
-there is a build left to skip, because the decision to sit through a
-forty-second sequence is one a reader usually makes *during* it. The top-bar
-control removes itself once the tower is topped out. Once topped out, chapters
-page with the panel buttons or the left/right arrow keys.
-
-Skipping mid-build goes through `jumpToEnd()`, which calls the scene's
-`finishBuild()` rather than `setProgress(1)`. The latter leaves the camera tween
-still running, and that tween owns `p` on every frame — so the tower would crawl
-back down under a reader who had just asked to skip.
+- **Wide screens (900 px and up):** the model fills the window behind the text
+  and sits right of the text column. Text fades near the top and bottom of the
+  window so the ground can change colour with nothing on it.
+- **Narrow screens:** the model is pinned to the top 44% of the screen and the
+  text scrolls beneath it, so the controls and the thing they control are
+  always visible together. Dragging the model sideways turns it.
+- Anchors `#structure`, `#envelope`, `#code`, `#projects`, `#experience`,
+  `#education`, `#skills`, `#photography`, `#projectsearch` and `#contact` all
+  resolve, so links from the case-study pages land in the right place.
+- The thermal and drift views are labelled on the page as illustrative. They
+  are a drawing of the idea, not analysis output.
 
 ## Design and accessibility
 
-- IBM Plex Sans and IBM Plex Mono, self-hosted, latin subset only.
-- Warm paper, drafting-blue, and nature-green palette. **Light mode only** —
-  there is no dark theme and no theme switch anywhere on the site.
-- 11px type floor. Body copy in the chapter panels is 14px.
-- Every image ships AVIF and JPEG at two widths with `srcset`/`sizes`, and
-  carries intrinsic `width`/`height` so nothing shifts as it loads.
-- Keyboard-accessible milestones; locked chapters are genuinely `disabled`
-  rather than just unclickable.
-- Escape closes a panel, focus returns to where it came from, and a polite live
-  region announces build progress.
-- `prefers-reduced-motion` skips the build sequence entirely and lands on the
-  finished tower instead of playing a long camera move.
-- The build narration is on screen as well as in the live region — the same
-  sentence, with the visible copy `aria-hidden` so it is not announced twice.
-- The chapter rail marks the open chapter with `aria-current`.
-- three.js is imported on idle rather than up front. Nothing of the model is
-  visible behind the opaque title card, so 670 KB used to be spent before the
-  reader had decided they wanted it. If it never arrives — no WebGL, a blocked
-  CDN-free vendor file, a six-second timeout — the scene layer shows
-  `assets/fallback-tower.svg`, a flat elevation of the same building, so the
-  fallback reads as a decision rather than a failure.
-- Scrolling the title card scrolls the title card. The build only starts once
-  the card has been read to the end, which matters on phones where it overflows.
-- Case-study pages have a print stylesheet.
+- Archivo (one variable file, set wide for headings) and IBM Plex Mono for the
+  search query only. Self-hosted, latin subset.
+- Palette: concrete, paper, graphite, red oxide by day; night, the infrared
+  ramp and a pale phosphor blue for the thermal and data readings.
+- Every image ships AVIF and JPEG with intrinsic `width`/`height`.
+- All controls are native elements (range input, radio group, buttons) with
+  visible focus; the retrofit note and search result are live regions.
+- The model and its labels are `aria-hidden`; the same facts are in the text.
+- `prefers-reduced-motion` skips the opening assembly, the idle camera drift
+  and the point twinkle, and snaps between states instead of easing.
+- Without WebGL or JavaScript the sections fall back to solid grounds and the
+  page reads top to bottom.
+- Case-study pages have a print stylesheet; the homepage prints as text.
 
 ## Content and privacy notes
 

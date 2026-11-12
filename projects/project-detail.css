@@ -1,18 +1,19 @@
 :root {
-  --bg: #f4f2ed;
-  --panel: #eae7df;
-  --panel-strong: #ded9cc;
-  --fg: #14171a;
-  --muted: #6b6a62;
-  --line: #cdc8ba;
-  --accent: #1544c8;
-  --accent-ink: #0f359f;
-  --accent-soft: rgba(21, 68, 200, 0.09);
-  --accent-2: #b04a2f;
-  --grid: rgba(21, 68, 200, 0.065);
+  /* Shares the homepage palette: paper ground, graphite ink, red-oxide accent. */
+  --bg: #f1f2ef;
+  --panel: #e3e5e2;
+  --panel-strong: #d5d8d4;
+  --fg: #121518;
+  --muted: #535a5c;
+  --line: #c6cac6;
+  --accent: #a8361f;
+  --accent-ink: #872a17;
+  --accent-soft: rgba(168, 54, 31, 0.09);
+  --accent-2: #6b1a8f;
+  --grid: transparent;
   --media-bg: #fbfbf8;
-  --shadow: rgba(20, 23, 26, 0.12);
-  --sans: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --shadow: rgba(18, 21, 24, 0.12);
+  --sans: "Archivo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   color-scheme: light;
 }
@@ -1429,7 +1430,7 @@ main {
     --fg: #111;
     --muted: #444;
     --line: #bbb;
-    --accent: #1544c8;
+    --accent: #a8361f;
     --media-bg: #fff;
     color-scheme: light;
   }
@@ -1447,4 +1448,25 @@ main {
   .project-rail {
     position: static;
   }
+}
+
+/* Homepage typography carried over: wide Archivo for names and headings. */
+h1, h2 { font-stretch: 118%; letter-spacing: -0.03em; }
+h3 { font-stretch: 106%; }
+.brand { font-family: var(--sans); font-weight: 750; font-stretch: 118%; letter-spacing: -0.01em; text-transform: none; font-size: 1.0625rem; }
+
+/* Archivo runs wider than the face these sizes were set for. Headlines keep
+   normal width and a smaller ceiling so one long word still fits its column. */
+.project-hero h1,
+.hero h1 {
+  font-size: clamp(38px, 4.9vw, 72px);
+  font-stretch: 108%;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+@media (max-width: 760px) {
+  .project-hero h1,
+  .hero h1 { font-size: clamp(32px, 9.4vw, 52px); }
 }

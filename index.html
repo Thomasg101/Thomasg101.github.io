@@ -2,44 +2,35 @@
 <html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-document.documentElement.classList.remove('no-js');
-/* Inline and before the stylesheet on purpose: a reader coming back from a case
-   study has already watched the opening curtain once this session, and finding
-   out about it after first paint would mean watching it flash. */
-try {
-  var s = sessionStorage.getItem('tg.portfolio.v1');
-  if (s && JSON.parse(s).started) document.documentElement.classList.add('is-resumed');
-} catch (e) {}
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.className = 'js';</script>
 
-<title>Thomas Gao — Civil Engineering, Building Science &amp; Software</title>
-<meta name="description" content="Civil engineering portfolio of Thomas Gao: envelope thermal modelling, deep foundations on the Ontario Line, MTO pavement QC, published solar research, and engineering software.">
+<title>Thomas Gao — Structure, Envelope, Code</title>
+<meta name="description" content="Thomas Gao is a University of Waterloo civil engineering student working across structural analysis, building envelope, and AI software for engineering teams. Open to co-op roles, January to April 2027.">
 <link rel="canonical" href="https://thomasg101.github.io/">
-<meta name="theme-color" content="#f4f2ed">
+<meta name="theme-color" content="#e3e5e2">
 <meta name="author" content="Thomas Gao">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Thomas Gao">
 <meta property="og:url" content="https://thomasg101.github.io/">
-<meta property="og:title" content="Thomas Gao — Civil Engineering, Building Science &amp; Software">
-<meta property="og:description" content="Envelope thermal modelling, deep foundations on the Ontario Line, MTO pavement QC, published solar research, and the tools that make those teams faster.">
+<meta property="og:title" content="Thomas Gao — Structure, Envelope, Code">
+<meta property="og:description" content="Structural analysis, building envelope, and AI software for engineering teams. One building, read three ways.">
 <meta property="og:image" content="https://thomasg101.github.io/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Thomas Gao — Civil Engineering, Building Science and Software">
+<meta property="og:image:alt" content="Thomas Gao — Structure, Envelope, Code">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Thomas Gao — Civil Engineering, Building Science &amp; Software">
-<meta name="twitter:description" content="Envelope thermal modelling, deep foundations on the Ontario Line, MTO pavement QC, published solar research, and engineering software.">
+<meta name="twitter:title" content="Thomas Gao — Structure, Envelope, Code">
+<meta name="twitter:description" content="Structural analysis, building envelope, and AI software for engineering teams.">
 <meta name="twitter:image" content="https://thomasg101.github.io/assets/og-image.jpg">
 
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="./favicon.ico" sizes="16x16 32x32 48x48 64x64">
 <link rel="apple-touch-icon" href="./assets/favicon-180.png">
 
-<link rel="preload" href="./assets/fonts/IBMPlexSans-600.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./assets/fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="./assets/js/vendor/three.module.min.js">
 <link rel="stylesheet" href="./assets/css/fonts.css">
 <link rel="stylesheet" href="./assets/css/site.css">
 
@@ -53,8 +44,8 @@ try {
   "jobTitle": "Civil Engineering Student",
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Waterloo" },
   "knowsAbout": [
-    "Building envelope", "Thermal bridging", "Deep foundations",
-    "Pavement quality control", "Python", "Engineering software"
+    "Structural analysis", "Building envelope", "Thermal bridging", "Deep foundations",
+    "Python", "Retrieval-augmented generation", "Engineering software"
   ],
   "sameAs": [
     "https://github.com/Thomasg101",
@@ -65,745 +56,414 @@ try {
 </head>
 
 <body>
+<a class="skip" href="#structure">Skip to content</a>
 
-<!-- Opening curtain ---------------------------------------------------- -->
-<div class="curtain" aria-hidden="true">
-  <div class="curtain-inner">
-    <div class="curtain-mark">Site mobilisation &middot; 2026</div>
-    <div class="curtain-rule"></div>
-    <div class="curtain-mark curtain-mark--lead">T. Gao &middot; Civil / Code</div>
+<!-- The model. Fixed behind the story on wide screens, pinned to the top of
+     the screen on narrow ones. Everything in here is decoration to a screen
+     reader: the same facts are in the text beside it. -->
+<div class="stage" id="stage" aria-hidden="true">
+  <canvas id="scene"></canvas>
+  <div class="tags" id="tags">
+    <span class="tag" data-anchor="brace" data-scene="structure">Braced bay</span>
+    <span class="tag" data-anchor="core" data-scene="structure">Concrete core</span>
+    <span class="tag" data-anchor="caisson" data-scene="structure">Caissons</span>
+    <span class="tag" data-anchor="shoring" data-scene="structure">Soldier piles and lagging</span>
+    <span class="tag" data-anchor="slab" data-scene="envelope">Slab edge</span>
+    <span class="tag" data-anchor="balcony" data-scene="envelope">Balcony slab</span>
+    <span class="tag" data-anchor="parapet" data-scene="envelope">Parapet</span>
+    <span class="tag tag--pin" data-anchor="pin" data-scene="code" id="pin-tag">Main roof, north parapet</span>
   </div>
 </div>
 
-<!-- 3D construction scene ---------------------------------------------- -->
-<div class="scene-layer" aria-hidden="true"><building-scene></building-scene></div>
-
-<!-- Title card ---------------------------------------------------------- -->
-<header class="hero" id="hero" data-screen-label="Title card">
-  <div class="masthead">
-    <span class="brand">T. Gao <span class="brand-mark">&#9626;</span> Civil / Code</span>
-    <div class="top-links">
-      <a class="link-secondary" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
-      <a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
-      <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
-    </div>
-  </div>
-
-  <div class="hero-body">
-    <div class="hero-portrait">
-      <div class="hero-portrait-frame">
-        <picture>
-          <source type="image/avif" sizes="(max-width: 640px) 58vw, (max-width: 1500px) 24vw, 360px"
-                  srcset="./assets/profile/thomas-gao-nature-portrait-400.avif 400w,
-                          ./assets/profile/thomas-gao-nature-portrait-800.avif 800w">
-          <img class="portrait-image"
-               src="./assets/profile/thomas-gao-nature-portrait-800.jpg"
-               srcset="./assets/profile/thomas-gao-nature-portrait-400.jpg 400w,
-                       ./assets/profile/thomas-gao-nature-portrait-800.jpg 800w"
-               sizes="(max-width: 640px) 58vw, (max-width: 1500px) 24vw, 360px"
-               width="800" height="1066" fetchpriority="high" decoding="async"
-               alt="Thomas Gao in a navy suit, framed by grass and native foliage">
-        </picture>
-        <div class="portrait-tag">Portrait &middot; Field notes</div>
-      </div>
-    </div>
-
-    <div class="hero-copy">
-      <p class="hero-kicker">
-        <span class="hero-kicker-dot" aria-hidden="true"></span>
-        <span class="hero-kicker-text">On exchange in Singapore &middot; Waterloo, ON &middot; Available for co-op Jan&ndash;Apr 2027</span>
-      </p>
-      <div class="hero-title-clip"><h1 class="hero-title">Thomas Gao</h1></div>
-      <div class="hero-rule" aria-hidden="true"></div>
-      <p class="hero-lead">Civil engineering student working the seam between <em>field practice</em> and <em>software</em> &mdash; envelope thermal modelling, deep foundations on the Ontario Line, MTO pavement QC, and the tools that make those teams faster.</p>
-      <p class="hero-sub">Behind this card is an empty site. Scroll to break ground &mdash; the tower goes up twelve storeys, and every few lifts a marker opens a chapter: education in the foundations, the resume in the frame.</p>
-      <div class="hero-chips">
-        <span>BASc Civil &middot; Waterloo '28</span>
-        <span>GPA 4.0 / 4.0</span>
-        <span>4 co-op terms</span>
-        <span>First-author paper &middot; <em>Processes</em> 2026</span>
-        <span class="is-accent">Python &middot; SQL &middot; MATLAB</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-actions">
-    <button type="button" class="hero-start" data-start>Scroll to break ground <span class="hero-start-glyph" aria-hidden="true">&darr;</span></button>
-    <button type="button" class="hero-skip" data-skip>Skip the build &mdash; show everything &rarr;</button>
-  </div>
+<header class="nav" id="nav">
+  <a class="nav-name" href="#top">Thomas Gao</a>
+  <nav class="nav-links" aria-label="Sections">
+    <a class="nav-chapter" href="#structure">Structure</a>
+    <a class="nav-chapter" href="#envelope">Envelope</a>
+    <a class="nav-chapter" href="#code">Code</a>
+    <a href="#projects">Work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="nav-cv" href="./Thomas-Gao-Resume.pdf">Resume</a>
 </header>
 
-<!-- Top bar (after launch) ---------------------------------------------- -->
-<nav class="topbar" id="topbar" aria-label="Portfolio" aria-hidden="true" inert>
-  <div class="topbar-progress" id="progress" aria-hidden="true"></div>
-  <div class="topbar-row">
-    <div class="topbar-left">
-      <button type="button" class="home-btn" data-home title="Return to the title card and replay the build">
-        <span class="home-btn-glyph" aria-hidden="true">&#8634;</span> Home
-      </button>
-      <span class="brand">T. Gao <span class="brand-mark">&#9626;</span> Civil / Code</span>
+<main>
+
+<!-- Hero -------------------------------------------------------------------- -->
+<section class="scene hero" id="top" data-scene="hero" data-ground="light">
+  <div class="beat hero-copy">
+    <h1><span>Structure.</span> <span>Envelope.</span> <span>Code.</span></h1>
+    <p class="hero-lede">I'm Thomas Gao, a civil engineering student at the University of Waterloo. Four co-op terms have taken me from caisson rigs on the Ontario Line to thermal models of building envelopes, and I write the software that ties the work together.</p>
+    <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to co-op roles, January to April 2027</p>
+    <div class="actions">
+      <a class="btn btn--solid" href="#projects">See the work</a>
+      <a class="btn" href="./Thomas-Gao-Resume.pdf">Resume (PDF)</a>
     </div>
-    <div class="top-links">
-      <span class="nav-lvl">LVL <b id="lvl">00</b>/12</span>
-      <button type="button" class="topbar-skip" data-skip title="Top the tower out and open every chapter">Skip the build &rarr;</button>
-      <a class="link-secondary" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
-      <a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
-      <a class="pdf-link" href="./Thomas-Gao-Resume.pdf" download>PDF &darr;</a>
+    <ul class="hero-facts">
+      <li><strong>4.0 GPA</strong> in Civil Engineering at Waterloo, class of 2028</li>
+      <li><strong>Four co-op terms</strong> at Entuitive, Brown Beattie and Green Infrastructure Partners</li>
+      <li><strong>First-author paper</strong> in <em>Processes</em>, 2026</li>
+    </ul>
+  </div>
+  <p class="hero-cue" aria-hidden="true">Scroll to take the building apart</p>
+</section>
+
+<!-- Structure --------------------------------------------------------------- -->
+<section class="scene chapter" id="structure" data-scene="structure" data-ground="light">
+  <div class="beat">
+    <h2>Start with the frame.</h2>
+    <p class="lede">Take the cladding off and a building is a load path: slab to beam, beam to column, column to caisson. I have worked on it from both ends, in the analysis model and in the ground.</p>
+
+    <div class="control">
+      <label class="control-label" for="sway">Push the frame sideways</label>
+      <input class="slider" type="range" id="sway" min="0" max="100" value="0" step="1">
+      <p class="note">Lateral drift, exaggerated so the deflected shape is visible. An illustrative model, not a design.</p>
     </div>
+
+    <ul class="proof">
+      <li><a href="./projects/structural-frame-analysis.html">
+        <strong>Steel frame analysis and verification</strong>
+        <span>A two-bay sub-frame solved in SAP2000, then re-solved with a direct-stiffness solver I wrote. The two disagreed, and the case study explains why.</span>
+      </a></li>
+      <li><a href="./projects/deep-foundations-soe.html">
+        <strong>Deep foundations at Pape Station</strong>
+        <span>Coordinated diaphragm walls, caissons, soldier piles and lagging, and load testing on the Ontario Line.</span>
+      </a></li>
+    </ul>
   </div>
+</section>
 
-  <!-- The site log. This carries the same text as the #status live region at the
-       bottom of the document, which stays sr-only — announcing it twice would be
-       worse than not announcing it at all. It lives inside the topbar so that
-       layoutTags() picks up the extra height in its safe area for free. -->
-  <p class="topbar-build" id="build-line" aria-hidden="true"></p>
-</nav>
+<!-- Envelope ---------------------------------------------------------------- -->
+<section class="scene chapter" id="envelope" data-scene="envelope" data-ground="dark">
+  <div class="beat">
+    <h2>Then the skin.</h2>
+    <p class="lede">The envelope decides where the heat goes. At Entuitive I modelled junction details in Flixo, THERM and HEAT3 to get effective U-values and linear and point transmittances for BC Energy Step Code, NECB and ASHRAE 90.1, most of them twice: as built and as retrofitted.</p>
 
-<!-- Chapter rail --------------------------------------------------------- -->
-<div class="rail" id="rail">
-  <button type="button" data-rail="0" disabled>01 Education</button>
-  <button type="button" data-rail="1" disabled>02 ProjectSearch</button>
-  <button type="button" data-rail="2" disabled>03 Experience</button>
-  <button type="button" data-rail="3" disabled>04 Projects</button>
-  <button type="button" data-rail="4" disabled>05 Photography</button>
-  <button type="button" data-rail="5" disabled>06 Skills</button>
-  <button type="button" data-rail="6" disabled>07 Topped out</button>
-</div>
+    <div class="control">
+      <div class="segmented" role="radiogroup" aria-label="Envelope condition">
+        <label><input type="radio" name="retrofit" value="0" checked><span>As built</span></label>
+        <label><input type="radio" name="retrofit" value="1"><span>Retrofit</span></label>
+      </div>
+      <div class="legend" aria-hidden="true"><span>Colder surface</span><i></i><span>Warmer surface</span></div>
+      <p class="note" id="retrofit-note" role="status">As built: slab edges, balconies and parapets run straight through the insulation, so that is where the heat leaves.</p>
+      <p class="note">An exterior thermogram of the model on a cold night. Illustrative, not project data.</p>
+    </div>
 
-<!-- Elevation markers ---------------------------------------------------- -->
-<div class="markers" id="markers">
-  <button type="button" class="marker" data-marker="0" aria-label="Open Education">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">01<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Foundations &middot; EL +0.0</span>
-        <span class="marker-name">Education</span>
-      </span>
-    </span>
-  </button>
-  <button type="button" class="marker" data-marker="1" aria-label="Open ProjectSearch">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">02<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Levels 01&ndash;03 &middot; EL +10.2</span>
-        <span class="marker-name">ProjectSearch</span>
-      </span>
-    </span>
-  </button>
-  <button type="button" class="marker" data-marker="2" aria-label="Open Experience">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">03<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Levels 04&ndash;07 &middot; EL +23.8</span>
-        <span class="marker-name">Experience</span>
-      </span>
-    </span>
-  </button>
-  <button type="button" class="marker" data-marker="3" aria-label="Open Projects">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">04<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Levels 08&ndash;10 &middot; EL +34.0</span>
-        <span class="marker-name">Projects</span>
-      </span>
-    </span>
-  </button>
-  <button type="button" class="marker" data-marker="4" aria-label="Open Photography">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">05<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Levels 10&ndash;11 &middot; EL +37.4</span>
-        <span class="marker-name">Photography</span>
-      </span>
-    </span>
-  </button>
-  <button type="button" class="marker" data-marker="5" aria-label="Open Skills">
-    <span class="marker-leader" aria-hidden="true"></span>
-    <span class="marker-card">
-      <span class="marker-num">06<span class="marker-ring" aria-hidden="true"></span></span>
-      <span class="marker-text">
-        <span class="marker-el">Roof level &middot; EL +40.8</span>
-        <span class="marker-name">Skills &amp; tools</span>
-      </span>
-    </span>
-  </button>
-</div>
-
-<!-- Chapter panel -------------------------------------------------------- -->
-<aside class="panel" id="panel" role="dialog" aria-label="Portfolio chapter" aria-hidden="true" inert>
-  <div class="panel-head">
-    <span class="panel-kicker" id="panel-kicker">Level</span>
-    <button type="button" class="panel-close" id="panel-close" aria-label="Close chapter">&times;</button>
+    <ul class="proof">
+      <li><a href="./projects/envelope-thermal-bridge-studies.html">
+        <strong>Envelope thermal-bridge studies</strong>
+        <span>2D steady-state studies of roof-to-wall and balcony-slab junctions across existing and retrofit insulation.</span>
+      </a></li>
+      <li><a href="#experience">
+        <strong>Restoration field review at Brown Beattie</strong>
+        <span>Waterproofing and concrete repair inspections, from tender review through substantial performance.</span>
+      </a></li>
+    </ul>
   </div>
+</section>
 
-  <div class="panel-body" id="panel-body">
+<!-- Code -------------------------------------------------------------------- -->
+<section class="scene chapter" id="code" data-scene="code" data-ground="dark">
+  <div class="beat">
+    <h2>Then the data.</h2>
+    <p class="lede">A project leaves behind thousands of site photos and reports that nobody can search. I build the tools that read them: vision models that tag what is in a photo, hybrid retrieval that finds it, and language models that draft from cited sources.</p>
 
-    <!-- 01 Education -->
-    <section class="chapter" data-chapter="edu" aria-labelledby="edu-title">
-      <p class="chapter-lede">Foundations first &mdash; the footing everything else bears on.</p>
-      <h2 id="edu-title">Bachelor of Applied Science, Civil Engineering</h2>
-      <div class="chapter-meta">University of Waterloo &middot; Expected 2028 &middot; Waterloo, ON</div>
-      <div class="stat-grid">
-        <div class="stat">
-          <div class="stat-value">4.0</div>
-          <div class="stat-label">Cumulative GPA</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">2024</div>
-          <div class="stat-label">President's Scholarship of Distinction</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value is-accent">4</div>
-          <div class="stat-label">Co-op terms completed</div>
+    <div class="control search" id="projectsearch">
+      <p class="control-label">ProjectSearch: find a site photo by what is visible in it</p>
+      <p class="query"><span class="query-mark" aria-hidden="true">&gt;</span><span id="query">blue waterproofing membrane at the north parapet</span></p>
+      <div class="chips" role="group" aria-label="Sample queries">
+        <button type="button" class="chip" data-query="0" aria-pressed="true">North parapet</button>
+        <button type="button" class="chip" data-query="1" aria-pressed="false">RTU-3 nameplate</button>
+        <button type="button" class="chip" data-query="2" aria-pressed="false">Adhesion loss</button>
+        <button type="button" class="chip" data-query="3" aria-pressed="false">Roof hatch curb</button>
+      </div>
+      <div class="hit" id="hit" role="status">
+        <img id="hit-img" src="./assets/projects/projectsearch-north-parapet-600.jpg" width="600" height="400" loading="lazy" decoding="async"
+             alt="Blue liquid-applied waterproofing turned up a concrete parapet upstand">
+        <div>
+          <p class="hit-head"><span id="hit-loc">Main roof, north parapet</span><span id="hit-pct">96% match</span></p>
+          <p id="hit-text">Blue liquid-applied waterproofing turned up the north parapet upstand, terminating on concrete.</p>
         </div>
       </div>
+      <p class="note">Four sample records. The real tool pins every photo to a 3D model of the building, as the model here does. Built during my Entuitive co-op and being evaluated for engineering workflows.</p>
+    </div>
 
-      <!-- Waterloo alternates four-month study and work blocks, so a reader
-           looking at the experience dates should not have to wonder what fills
-           the gaps between them. This says it once, plainly. -->
-      <div class="section-block">
-        <div class="section-label">Current term &middot; Fall 2026</div>
-        <p><strong>International exchange in Singapore.</strong> Waterloo runs on alternating four-month blocks &mdash; every term is either academic or a co-op placement, with no gaps between them. This one is a study term abroad; the next work term runs January to April 2027.</p>
-      </div>
+    <ul class="proof">
+      <li><a href="./projects/projectsearch.html">
+        <strong>ProjectSearch</strong>
+        <span>Embeddings, BM25 over SQLite FTS5, rank fusion and an AI rerank, with a 3D building view and ranked floor evidence.</span>
+      </a></li>
+      <li><a href="./projects/engineering-retrieval-prototype.html">
+        <strong>Engineering retrieval and report drafting</strong>
+        <span>A citation-first RAG prototype over engineering documents and CAD metadata, on Vertex AI and Google Cloud.</span>
+      </a></li>
+      <li><a href="./projects/travers-solar-analysis.html">
+        <strong>Travers Solar: capacity and temperature</strong>
+        <span>First-author paper. Automated ASTM E2848 capacity testing and a physics-first residual model in Python.</span>
+      </a></li>
+    </ul>
+  </div>
+</section>
 
-      <div class="section-block">
-        <div class="section-label">Peer-reviewed publication &middot; First author</div>
-        <p>Gao, T., <em>et al.</em> Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta &mdash; <em>Processes</em> 2026, 14(7), 1078.</p>
-        <div class="link-row">
-          <a class="btn-outline" href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Read on MDPI &#8599;</a>
-          <a class="btn-ghost" href="./projects/travers-solar-analysis.html">Case study &rarr;</a>
-        </div>
-      </div>
-    </section>
+<!-- Everything a recruiter came for, on a plain surface --------------------- -->
+<div class="cover" id="cover" data-scene="cover" data-ground="light">
 
-    <!-- 02 ProjectSearch -->
-    <section class="chapter" data-chapter="flagship" aria-labelledby="ps-title">
-      <h2 id="ps-title">ProjectSearch</h2>
-      <p class="chapter-intro">Flagship &mdash; index an engineering photo share, then search it in plain English by what is <em>visible</em> in the image. Photos are never moved, copied, or renamed. Built during my Entuitive co-op and being evaluated for engineering workflows.</p>
+  <section class="block" id="projects" aria-labelledby="projects-title">
+    <div class="block-head">
+      <h2 id="projects-title">Selected work</h2>
+      <p>Nine case studies. Each sets out the evidence, the method, my role and the outcome.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter case studies">
+      <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-filter="structure" aria-pressed="false">Structure</button>
+      <button type="button" class="chip" data-filter="envelope" aria-pressed="false">Envelope</button>
+      <button type="button" class="chip" data-filter="code" aria-pressed="false">Code</button>
+      <button type="button" class="chip" data-filter="civil" aria-pressed="false">Civil and field</button>
+    </div>
 
-      <div class="demo-shell">
-        <div class="demo-bar">
-          <span class="demo-dot" aria-hidden="true"></span>
-          <span>127.0.0.1:8765 &mdash; Photo Intelligence</span>
+    <ul class="work" id="work">
+      <li class="card" data-tags="structure code"><a href="./projects/structural-frame-analysis.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/structural-frame-substructure-600.avif 600w, ./assets/projects/structural-frame-substructure-636.avif 636w">
+          <img src="./assets/projects/structural-frame-substructure-636.jpg" width="636" height="471" loading="lazy" decoding="async" alt="Erection steel on a building under construction with the analysed two-bay sub-frame outlined">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Structure</span><span>2026</span></p>
+          <h3>Steel frame analysis and verification</h3>
+          <p>A two-bay steel sub-frame solved in SAP2000, then re-solved with a direct-stiffness solver I wrote, which disagreed.</p>
         </div>
-        <div class="demo-search">
-          <div class="demo-query">
-            <span class="demo-query-glyph" aria-hidden="true">&#8981;</span>
-            <span id="demo-query">blue waterproofing membrane at the north parapet</span>
-            <span class="demo-caret" aria-hidden="true">&#9612;</span>
-          </div>
-          <div class="demo-chip-row">
-            <span class="demo-chip-label">Run a query</span>
-            <button type="button" class="demo-chip" data-demo="0" aria-pressed="true">North parapet</button>
-            <button type="button" class="demo-chip" data-demo="1" aria-pressed="false">RTU-3 nameplate</button>
-            <button type="button" class="demo-chip" data-demo="2" aria-pressed="false">Adhesion loss</button>
-            <button type="button" class="demo-chip" data-demo="3" aria-pressed="false">Roof hatch curb</button>
-          </div>
-          <div class="demo-stages" aria-label="Retrieval pipeline stages">
-            <span class="is-active">1 &middot; Semantic &mdash; embedding cosine</span>
-            <span>2 &middot; BM25 &mdash; SQLite FTS5</span>
-            <span>3 &middot; Rank fusion</span>
-            <span>4 &middot; AI rerank</span>
-          </div>
-        </div>
-        <div class="demo-results" id="demo-results" role="status" aria-live="polite">
-          <div class="demo-hit">
-            <picture>
-              <source type="image/avif" srcset="./assets/projects/projectsearch-north-parapet-600.avif">
-              <img src="./assets/projects/projectsearch-north-parapet-600.jpg" width="600" height="400"
-                   loading="lazy" decoding="async"
-                   alt="Blue liquid-applied waterproofing turned up a concrete parapet upstand">
-            </picture>
-            <div>
-              <div class="demo-hit-head"><span>Main roof &middot; N parapet</span><span>96%</span></div>
-              <p>Blue liquid-applied waterproofing turned up the north parapet upstand, terminating on concrete.</p>
-            </div>
-          </div>
-          <div class="demo-hit">
-            <picture>
-              <source type="image/avif" srcset="./assets/projects/projectsearch-flashing-adhesion-600.avif">
-              <img src="./assets/projects/projectsearch-flashing-adhesion-600.jpg" width="600" height="400"
-                   loading="lazy" decoding="async"
-                   alt="EPDM base flashing with a debonded lap lifting away from the substrate">
-            </picture>
-            <div>
-              <div class="demo-hit-head"><span>Main roof &middot; NE corner</span><span>61%</span></div>
-              <p>Base flashing lap &mdash; adhesion loss, severity estimated moderate.</p>
-            </div>
-          </div>
-        </div>
-        <p class="demo-note">Demonstration of the real interface on four sample records.</p>
-      </div>
+      </a></li>
 
-      <div class="feature-grid">
-        <div class="feature">
-          <div class="feature-title">Structured vision records</div>
-          <p>One record per photo: caption, setting, level, room, components, materials, conditions with estimated severity, verbatim visible text &mdash; each with its own confidence rating. Low-confidence locations stay visible but are excluded from the index.</p>
+      <li class="card" data-tags="structure civil"><a href="./projects/deep-foundations-soe.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/deep-foundations-pape-600.avif 600w, ./assets/projects/deep-foundations-pape-1077.avif 1077w">
+          <img src="./assets/projects/deep-foundations-pape-600.jpg" width="1077" height="808" loading="lazy" decoding="async" alt="Excavation and support-wall detail during foundation work at Pape Station">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Structure, field</span><span>2025</span></p>
+          <h3>Deep foundations and support of excavation</h3>
+          <p>Field coordination across diaphragm walls, caissons, soldier pile and lagging, testing, quantities and as-builts.</p>
         </div>
-        <div class="feature">
-          <div class="feature-title">Building View &middot; 3D</div>
-          <p>Every photo placed on a three.js model built from the real OpenStreetMap footprint &mdash; floor stack, one GPS marker per photo, orbit and fly-to, and a floor rail that cuts away everything above it.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-title">Floor inference</div>
-          <p>Six ranked evidence sources &mdash; manual override, level read in the photo, suite number, folder name, kind of space, time-ordered walk inference &mdash; and the UI always states which one it used. Deliberately timid: backs off when GPS altitude disagrees.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-title">Runs anywhere, installs nothing</div>
-          <p>A launcher provisions a private Python through <code>uv</code> &mdash; no admin rights. Parallel tagging workers share a rate limiter that pauses <em>every</em> worker on HTTP 429, so a rate-limit storm never leaves holes in the index.</p>
-        </div>
-      </div>
+      </a></li>
 
-      <div class="link-row">
-        <a class="btn-accent" href="./projects/projectsearch.html">Full case study &rarr;</a>
-        <a class="btn-outline" href="https://github.com/Thomasg101/ProjectSearch" target="_blank" rel="noopener">View repository &#8599;</a>
-      </div>
-    </section>
+      <li class="card" data-tags="envelope"><a href="./projects/envelope-thermal-bridge-studies.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/thermal-bridge-full-600.avif 600w, ./assets/projects/thermal-bridge-full-933.avif 933w">
+          <img src="./assets/projects/thermal-bridge-full-600.jpg" width="933" height="808" loading="lazy" decoding="async" alt="Flixo roof-to-wall junction model with insulation and structural layers">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Envelope</span><span>2026</span></p>
+          <h3>Envelope thermal-bridge studies</h3>
+          <p>2D steady-state studies of roof-to-wall and balcony-slab junctions across existing and retrofit insulation.</p>
+        </div>
+      </a></li>
 
-    <!-- 03 Experience -->
-    <section class="chapter" data-chapter="work" aria-labelledby="work-title">
-      <div class="work-head">
-        <h2 id="work-title">Four terms, four disciplines</h2>
-        <span>2024 &rarr; 2026</span>
-      </div>
-      <p class="chapter-intro">Waterloo alternates four-month study and work blocks, so the dates below interleave with academic terms rather than leaving gaps. Each entry describes the scope of the work, not credit for its outcomes.</p>
+      <li class="card" data-tags="code envelope"><a href="./projects/projectsearch.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/projectsearch-north-parapet-600.avif 600w, ./assets/projects/projectsearch-north-parapet-1200.avif 1200w">
+          <img src="./assets/projects/projectsearch-north-parapet-600.jpg" width="1200" height="799" loading="lazy" decoding="async" alt="Blue liquid-applied waterproofing turned up a concrete parapet upstand">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Code, AI</span><span>2026</span></p>
+          <h3>ProjectSearch</h3>
+          <p>Index an engineering photo share, then search it in plain English by what is visible in the image.</p>
+        </div>
+      </a></li>
 
-      <div class="role-list">
-        <article class="role is-current">
-          <div class="role-meta"><b>Entuitive</b><span>May &ndash; Aug 2026 &middot; Vancouver, BC</span></div>
-          <h3>Building Envelope Specialist <span>&mdash; Co-op</span></h3>
+      <li class="card" data-tags="code"><a href="./projects/engineering-retrieval-prototype.html">
+        <picture>
+          <img src="./assets/projects/rag-query-flow.svg" width="800" height="500" loading="lazy" decoding="async" alt="One engineering question routed through ranked evidence into a cited draft">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Code, AI</span><span>2026</span></p>
+          <h3>Engineering retrieval and report drafting</h3>
+          <p>A deployed, citation-first RAG prototype for engineering documents and CAD metadata, containerised for Google Cloud.</p>
+        </div>
+      </a></li>
+
+      <li class="card" data-tags="code"><a href="./projects/travers-solar-analysis.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/pv-temperature-parity-600.avif 600w, ./assets/projects/pv-temperature-parity-802.avif 802w">
+          <img src="./assets/projects/pv-temperature-parity-600.jpg" width="802" height="613" loading="lazy" decoding="async" alt="Measured versus predicted PV module temperatures for baseline and residual models">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Code, research</span><span>2026</span></p>
+          <h3>Travers Solar: capacity and temperature</h3>
+          <p>Automated ASTM E2848 capacity-test selection and a physics-first residual temperature model, published in <em>Processes</em>.</p>
+        </div>
+      </a></li>
+
+      <li class="card" data-tags="civil"><a href="./projects/highway-design-pavement-qc.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/highway-design-qc-600.avif 600w, ./assets/projects/highway-design-qc-1077.avif 1077w">
+          <img src="./assets/projects/highway-design-qc-600.jpg" width="1077" height="808" loading="lazy" decoding="async" alt="Thomas Gao beside a newly placed asphalt lift during highway paving work">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Civil, field</span><span>2024–25</span></p>
+          <h3>Highway design and pavement QC</h3>
+          <p>Civil 3D design support for two highway redesigns, plus field and laboratory QC on Superpave and CIREAM work.</p>
+        </div>
+      </a></li>
+
+      <li class="card" data-tags="civil"><a href="./projects/residence-site-redevelopment.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/residence-site-poster-600.avif 600w, ./assets/projects/residence-site-poster-1077.avif 1077w">
+          <img src="./assets/projects/residence-site-poster-600.jpg" width="1077" height="808" loading="lazy" decoding="async" alt="Team poster for a student residence redevelopment concept">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Civil, academic</span><span>2025</span></p>
+          <h3>Residence site redevelopment</h3>
+          <p>Civil 3D drawing and grading lead, accessible circulation planning and research for a team design package.</p>
+        </div>
+      </a></li>
+
+      <li class="card" data-tags="civil"><a href="./projects/grand-river-watershed-analysis.html">
+        <picture>
+          <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/grand-river-subwatersheds-600.avif 600w, ./assets/projects/grand-river-subwatersheds-802.avif 802w">
+          <img src="./assets/projects/grand-river-subwatersheds-600.jpg" width="802" height="872" loading="lazy" decoding="async" alt="Map of the Grand River watershed and its colour-coded subwatersheds">
+        </picture>
+        <div class="card-body">
+          <p class="card-meta"><span>Civil, GIS</span><span>2026</span></p>
+          <h3>Grand River watershed analysis</h3>
+          <p>An ArcGIS Pro workflow on a 30 m DEM: flow processing, stream extraction, basin delineation, land use and soils.</p>
+        </div>
+      </a></li>
+    </ul>
+  </section>
+
+  <section class="block" id="experience" aria-labelledby="experience-title">
+    <div class="block-head">
+      <h2 id="experience-title">Experience</h2>
+      <p>Waterloo alternates four-month study and work terms, so these dates interleave with school rather than leaving gaps. Each entry describes the scope of the work, not credit for its outcomes.</p>
+    </div>
+
+    <ol class="roles">
+      <li class="role">
+        <p class="role-when">May – Aug 2026<span>Vancouver, BC</span></p>
+        <div>
+          <h3>Building Envelope Specialist, co-op <span>Entuitive</span></h3>
           <ul>
-            <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3, and Ubakus &mdash; effective U-values and linear (&psi;) and point (&chi;) transmittance for BC Energy Step Code, NECB, and ASHRAE 90.1 compliance. Junction details across several project teams, most modelled in both existing and retrofit configurations.</li>
-            <li>Site Review Reports documenting construction conformance &mdash; annotated photo logs, deficiency registers, follow-up tracking.</li>
-            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients &mdash; component inventories, condition ratings, and 30-year capital renewal cost models.</li>
+            <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3 and Ubakus: effective U-values and linear (ψ) and point (χ) transmittance for BC Energy Step Code, NECB and ASHRAE 90.1 compliance. Junction details across several project teams, most modelled in both existing and retrofit configurations.</li>
+            <li>Site Review Reports documenting construction conformance: annotated photo logs, deficiency registers and follow-up tracking.</li>
+            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients: component inventories, condition ratings and 30-year capital renewal cost models.</li>
             <li>Built ProjectSearch, a local-first photo and document retrieval prototype being evaluated for engineering workflows.</li>
           </ul>
-        </article>
-
-        <article class="role">
-          <div class="role-meta"><b>Brown Beattie</b><span>Sep &ndash; Dec 2025 &middot; Richmond Hill, ON</span></div>
-          <h3>Engineering Technician <span>&mdash; Co-op</span></h3>
-          <ul>
-            <li>Site inspections across concurrent restoration sites &mdash; waterproofing and concrete repair, surface preparation, CSP profiles, adhesion, membrane thickness per OBC, CSA, and manufacturer standards.</li>
-            <li>Ran envelope rehabilitation projects from tender review through substantial performance &mdash; mock-ups, submittal and shop drawing review.</li>
-          </ul>
-        </article>
-
-        <article class="role">
-          <div class="role-meta"><b>Green Infrastructure Partners</b><span>Jan &ndash; May 2025 &middot; Toronto, ON</span></div>
-          <h3>Project Coordinator <span>&mdash; Co-op</span></h3>
-          <ul>
-            <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line &mdash; diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing, tieback anchor testing. Tracked RFIs, RFQs, and submittals across the below-grade scope.</li>
-            <li>Sequenced excavation and support-of-excavation to MTO, CSA, and Ministry of Labour requirements &mdash; field reports, as-builts, and quantity summaries.</li>
-          </ul>
-        </article>
-
-        <article class="role">
-          <div class="role-meta"><b>Green Infrastructure Partners</b><span>May &ndash; Aug 2024 &middot; Thunder Bay, ON</span></div>
-          <h3>Quality Control Technician <span>&mdash; Co-op</span></h3>
-          <ul>
-            <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM, and AASHTO standards &mdash; Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
-            <li>Independently managed QC for MTO <b>Highway 17 and 61</b> rehabilitation near Thunder Bay; mix optimization through gradation, binder content, and foaming parameter analysis.</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- 04 Projects -->
-    <section class="chapter" data-chapter="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title">Selected work</h2>
-      <p class="chapter-intro">Nine documented case studies spanning structural analysis, field delivery, building science, published energy research, and engineering software. Open any card for the evidence, method, role, and outcome.</p>
-
-      <div class="project-archive">
-        <section class="project-group" aria-labelledby="flagship-projects">
-          <div class="project-group-head"><h3 id="flagship-projects">Flagship case studies</h3><span>04 documented</span></div>
-          <div class="project-grid">
-
-            <article class="project-card"><a href="./projects/travers-solar-analysis.html" aria-label="View the Travers Solar capacity and temperature case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/pv-temperature-parity-600.avif 600w, ./assets/projects/pv-temperature-parity-802.avif 802w">
-                  <img src="./assets/projects/pv-temperature-parity-802.jpg"
-                       srcset="./assets/projects/pv-temperature-parity-600.jpg 600w, ./assets/projects/pv-temperature-parity-802.jpg 802w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="802" height="613" loading="lazy" decoding="async"
-                       alt="Measured versus predicted PV module temperatures for baseline and residual models">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Published &middot; Solar</span><span>2026</span></div>
-                <h4>Travers Solar: Capacity &amp; Temperature</h4>
-                <p>Automated ASTM E2848 capacity-test selection and a physics-first residual temperature model for Canada's largest solar facility &mdash; published in <em>Processes</em>.</p>
-                <div class="project-tags"><span>Python</span><span>SCADA</span><span>R&sup2; 0.921</span></div>
-                <div class="project-cta"><span>Peer-reviewed paper</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/envelope-thermal-bridge-studies.html" aria-label="View Envelope Thermal-Bridge Studies case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/thermal-bridge-full-600.avif 600w, ./assets/projects/thermal-bridge-full-933.avif 933w">
-                  <img src="./assets/projects/thermal-bridge-full-933.jpg"
-                       srcset="./assets/projects/thermal-bridge-full-600.jpg 600w, ./assets/projects/thermal-bridge-full-933.jpg 933w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="933" height="808" loading="lazy" decoding="async"
-                       alt="Flixo roof-to-wall junction model with insulation and structural layers">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Building science</span><span>2026</span></div>
-                <h4>Envelope Thermal-Bridge Studies</h4>
-                <p>2D steady-state studies of roof-to-wall and balcony-slab junctions across existing and retrofit insulation scenarios.</p>
-                <div class="project-tags"><span>Flixo</span><span>Ubakus</span><span>Heat flow</span></div>
-                <div class="project-cta"><span>Anonymized work</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/deep-foundations-soe.html" aria-label="View Deep Foundations and Support of Excavation case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/deep-foundations-pape-600.avif 600w, ./assets/projects/deep-foundations-pape-1077.avif 1077w">
-                  <img src="./assets/projects/deep-foundations-pape-1077.jpg"
-                       srcset="./assets/projects/deep-foundations-pape-600.jpg 600w, ./assets/projects/deep-foundations-pape-1077.jpg 1077w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="1077" height="808" loading="lazy" decoding="async"
-                       alt="Excavation and support-wall detail during foundation work at Pape Station">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Field &middot; Transit</span><span>2025</span></div>
-                <h4>Deep Foundations &amp; Support of Excavation</h4>
-                <p>Field coordination across diaphragm walls, caissons, soldier-pile-and-lagging, testing, slurry operations, quantities, and as-builts.</p>
-                <div class="project-tags"><span>SOE</span><span>RFIs / RFQs</span><span>As-builts</span></div>
-                <div class="project-cta"><span>Infrastructure delivery</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/highway-design-pavement-qc.html" aria-label="View Highway Design and Pavement Quality Control case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/highway-design-qc-600.avif 600w, ./assets/projects/highway-design-qc-1077.avif 1077w">
-                  <img src="./assets/projects/highway-design-qc-1077.jpg"
-                       srcset="./assets/projects/highway-design-qc-600.jpg 600w, ./assets/projects/highway-design-qc-1077.jpg 1077w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="1077" height="808" loading="lazy" decoding="async"
-                       alt="Thomas Gao beside a newly placed asphalt lift during highway paving work">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Transportation</span><span>2024&ndash;25</span></div>
-                <h4>Highway Design &amp; Pavement QC</h4>
-                <p>Civil 3D design support for two highway redesigns plus field and laboratory QC on Superpave and CIREAM work.</p>
-                <div class="project-tags"><span>Civil 3D</span><span>AASHTO T283</span><span>Marshall</span></div>
-                <div class="project-cta"><span>Field + laboratory</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-          </div>
-        </section>
-
-        <section class="project-group" aria-labelledby="academic-projects">
-          <div class="project-group-head"><h3 id="academic-projects">Structural &amp; academic</h3><span>03 documented</span></div>
-          <div class="project-grid">
-
-            <article class="project-card"><a href="./projects/structural-frame-analysis.html" aria-label="View the Steel Frame Analysis and Independent Verification case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/structural-frame-substructure-600.avif 600w, ./assets/projects/structural-frame-substructure-636.avif 636w">
-                  <img src="./assets/projects/structural-frame-substructure-636.jpg"
-                       srcset="./assets/projects/structural-frame-substructure-600.jpg 600w, ./assets/projects/structural-frame-substructure-636.jpg 636w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="636" height="471" loading="lazy" decoding="async"
-                       alt="Erection steel on a building under construction with the analysed two-bay sub-frame outlined">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Structural &middot; Analysis</span><span>2026</span></div>
-                <h4>Steel Frame Analysis &amp; Verification</h4>
-                <p>A two-bay steel sub-frame idealised from a building under construction and solved in SAP2000 &mdash; then re-solved with a direct-stiffness solver I wrote, which disagreed.</p>
-                <div class="project-tags"><span>SAP2000</span><span>Direct stiffness</span><span>Influence lines</span></div>
-                <div class="project-cta"><span>Course + independent work</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/residence-site-redevelopment.html" aria-label="View Residence Site Redevelopment case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/residence-site-poster-600.avif 600w, ./assets/projects/residence-site-poster-1077.avif 1077w">
-                  <img src="./assets/projects/residence-site-poster-1077.jpg"
-                       srcset="./assets/projects/residence-site-poster-600.jpg 600w, ./assets/projects/residence-site-poster-1077.jpg 1077w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="1077" height="808" loading="lazy" decoding="async"
-                       alt="Team poster for a student residence redevelopment concept">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Academic &middot; Site</span><span>2025</span></div>
-                <h4>Residence Site Redevelopment</h4>
-                <p>Civil 3D drawing and grading leadership, accessible circulation planning, and research contributions to a team design package.</p>
-                <div class="project-tags"><span>Grading</span><span>Site planning</span><span>Team role</span></div>
-                <div class="project-cta"><span>Academic design</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/grand-river-watershed-analysis.html" aria-label="View Grand River Watershed Analysis case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/grand-river-subwatersheds-600.avif 600w, ./assets/projects/grand-river-subwatersheds-802.avif 802w">
-                  <img src="./assets/projects/grand-river-subwatersheds-802.jpg"
-                       srcset="./assets/projects/grand-river-subwatersheds-600.jpg 600w, ./assets/projects/grand-river-subwatersheds-802.jpg 802w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="802" height="872" loading="lazy" decoding="async"
-                       alt="Map of the Grand River watershed and its colour-coded subwatersheds">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Academic &middot; GIS</span><span>2026</span></div>
-                <h4>Grand River Watershed Analysis</h4>
-                <p>ArcGIS Pro workflow using a 30 m DEM, D8 flow processing, stream extraction, basin delineation, land use, soils, and drainage density.</p>
-                <div class="project-tags"><span>ArcGIS Pro</span><span>Hydrology</span><span>Terrain</span></div>
-                <div class="project-cta"><span>Academic analysis</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-
-          </div>
-        </section>
-
-        <section class="project-group" aria-labelledby="software-projects">
-          <div class="project-group-head"><h3 id="software-projects">Engineering software</h3><span>02 documented</span></div>
-          <div class="project-grid">
-
-            <article class="project-card"><a href="./projects/projectsearch.html" aria-label="View the ProjectSearch case study">
-              <div class="project-media">
-                <picture>
-                  <source type="image/avif" sizes="(max-width: 760px) 92vw, 280px"
-                          srcset="./assets/projects/projectsearch-north-parapet-600.avif 600w, ./assets/projects/projectsearch-north-parapet-1200.avif 1200w">
-                  <img src="./assets/projects/projectsearch-north-parapet-1200.jpg"
-                       srcset="./assets/projects/projectsearch-north-parapet-600.jpg 600w, ./assets/projects/projectsearch-north-parapet-1200.jpg 1200w"
-                       sizes="(max-width: 760px) 92vw, 280px" width="1200" height="799" loading="lazy" decoding="async"
-                       alt="Blue liquid-applied waterproofing turned up a concrete parapet upstand">
-                </picture>
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Flagship &middot; Retrieval</span><span>2026</span></div>
-                <h4>ProjectSearch</h4>
-                <p>Index an engineering photo share, then search it in plain English by what is visible in the image &mdash; with a 3D building view and ranked floor evidence.</p>
-                <div class="project-tags"><span>Python</span><span>SQLite FTS5</span><span>three.js</span></div>
-                <div class="project-cta"><span>Working prototype</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-            <article class="project-card"><a href="./projects/engineering-retrieval-prototype.html" aria-label="View Engineering Retrieval and Report Drafting case study">
-              <div class="project-media">
-                <img src="./assets/projects/rag-query-flow.svg" width="800" height="500" loading="lazy" decoding="async"
-                     alt="One engineering question routed through ranked evidence into a cited draft">
-              </div>
-              <div class="project-body">
-                <div class="project-meta"><span>Knowledge systems</span><span>2026</span></div>
-                <h4>Engineering Retrieval &amp; Report Drafting</h4>
-                <p>A deployed, citation-first RAG prototype for engineering documents and CAD metadata, containerized for Google Cloud.</p>
-                <div class="project-tags"><span>Vertex AI</span><span>Docker</span><span>Google Cloud</span></div>
-                <div class="project-cta"><span>Deployed prototype</span><span>View &#8599;</span></div>
-              </div>
-            </a></article>
-
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <!-- 05 Photography -->
-    <section class="chapter" data-chapter="photography" aria-labelledby="photo-title">
-      <div class="photo-intro">
+        </div>
+      </li>
+      <li class="role">
+        <p class="role-when">Sep – Dec 2025<span>Richmond Hill, ON</span></p>
         <div>
-          <div class="photo-eyebrow">Personal archive &middot; Nature &amp; wildlife</div>
-          <h2 id="photo-title">The field, framed differently.</h2>
+          <h3>Engineering Technician, co-op <span>Brown Beattie</span></h3>
+          <ul>
+            <li>Site inspections across concurrent restoration sites: waterproofing and concrete repair, surface preparation, CSP profiles, adhesion and membrane thickness per OBC, CSA and manufacturer standards.</li>
+            <li>Ran envelope rehabilitation projects from tender review through substantial performance, including mock-ups and submittal and shop drawing review.</li>
+          </ul>
         </div>
-        <p>Outside engineering, photography keeps me looking closely: at texture, movement, light, and the small details that are easy to walk past. These five frames are selected from my personal archive.</p>
-      </div>
-
-      <div class="photo-grid">
-        <figure class="photo-card photo-card--hero">
-          <a href="./assets/photography/eye-closeup-1200.jpg" target="_blank" rel="noopener" aria-label="Open the eye-focused portrait at full size">
-            <picture>
-              <source type="image/avif" sizes="(max-width: 640px) 92vw, 580px"
-                      srcset="./assets/photography/eye-closeup-600.avif 600w, ./assets/photography/eye-closeup-1200.avif 1200w">
-              <img src="./assets/photography/eye-closeup-1200.jpg"
-                   srcset="./assets/photography/eye-closeup-600.jpg 600w, ./assets/photography/eye-closeup-1200.jpg 1200w"
-                   sizes="(max-width: 640px) 92vw, 580px" width="1200" height="800" loading="lazy" decoding="async"
-                   alt="Warm close-up portrait focused on the eyes">
-            </picture>
-          </a>
-          <figcaption><span>Eyes in focus</span><span>Portrait &middot; 01</span></figcaption>
-        </figure>
-
-        <figure class="photo-card">
-          <a href="./assets/photography/squirrel-1200.jpg" target="_blank" rel="noopener" aria-label="Open the squirrel photograph at full size">
-            <picture>
-              <source type="image/avif" sizes="(max-width: 640px) 92vw, 280px"
-                      srcset="./assets/photography/squirrel-600.avif 600w, ./assets/photography/squirrel-1200.avif 1200w">
-              <img src="./assets/photography/squirrel-1200.jpg"
-                   srcset="./assets/photography/squirrel-600.jpg 600w, ./assets/photography/squirrel-1200.jpg 1200w"
-                   sizes="(max-width: 640px) 92vw, 280px" width="1200" height="800" loading="lazy" decoding="async"
-                   style="object-position:left center"
-                   alt="Grey squirrel perched on a mossy tree trunk beneath evergreen branches">
-            </picture>
-          </a>
-          <figcaption><span>Still for a second</span><span>Wildlife &middot; 02</span></figcaption>
-        </figure>
-
-        <figure class="photo-card">
-          <a href="./assets/photography/geese-skyline-1200.jpg" target="_blank" rel="noopener" aria-label="Open the geese and skyline photograph at full size">
-            <picture>
-              <source type="image/avif" sizes="(max-width: 640px) 92vw, 280px"
-                      srcset="./assets/photography/geese-skyline-600.avif 600w, ./assets/photography/geese-skyline-1200.avif 1200w">
-              <img src="./assets/photography/geese-skyline-1200.jpg"
-                   srcset="./assets/photography/geese-skyline-600.jpg 600w, ./assets/photography/geese-skyline-1200.jpg 1200w"
-                   sizes="(max-width: 640px) 92vw, 280px" width="1200" height="800" loading="lazy" decoding="async"
-                   alt="Canada geese floating on water before a winter city skyline at sunset">
-            </picture>
-          </a>
-          <figcaption><span>Winter shoreline</span><span>Wildlife &middot; 03</span></figcaption>
-        </figure>
-
-        <figure class="photo-card">
-          <a href="./assets/photography/allium-macro-1200.jpg" target="_blank" rel="noopener" aria-label="Open the purple allium photograph at full size">
-            <picture>
-              <source type="image/avif" sizes="(max-width: 640px) 92vw, 280px"
-                      srcset="./assets/photography/allium-macro-600.avif 600w, ./assets/photography/allium-macro-1200.avif 1200w">
-              <img src="./assets/photography/allium-macro-1200.jpg"
-                   srcset="./assets/photography/allium-macro-600.jpg 600w, ./assets/photography/allium-macro-1200.jpg 1200w"
-                   sizes="(max-width: 640px) 92vw, 280px" width="1200" height="800" loading="lazy" decoding="async"
-                   style="object-position:right center"
-                   alt="Macro photograph of a spherical purple allium bloom">
-            </picture>
-          </a>
-          <figcaption><span>Allium geometry</span><span>Macro &middot; 04</span></figcaption>
-        </figure>
-
-        <figure class="photo-card">
-          <a href="./assets/photography/waterfall-1200.jpg" target="_blank" rel="noopener" aria-label="Open the waterfall photograph at full size">
-            <picture>
-              <source type="image/avif" sizes="(max-width: 640px) 92vw, 280px"
-                      srcset="./assets/photography/waterfall-600.avif 600w, ./assets/photography/waterfall-1200.avif 1200w">
-              <img src="./assets/photography/waterfall-1200.jpg"
-                   srcset="./assets/photography/waterfall-600.jpg 600w, ./assets/photography/waterfall-1200.jpg 1200w"
-                   sizes="(max-width: 640px) 92vw, 280px" width="1200" height="1800" loading="lazy" decoding="async"
-                   alt="Waterfall cascading down a granite face through evergreen forest">
-            </picture>
-          </a>
-          <figcaption><span>Water in motion</span><span>Landscape &middot; 05</span></figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- 06 Skills -->
-    <section class="chapter" data-chapter="skills" aria-labelledby="skills-title">
-      <h2 id="skills-title">Skills &amp; tools</h2>
-
-      <!-- A tag cloud asks to be taken on trust. Every tool that a case study
-           actually demonstrates is a link to that case study instead, so the
-           list doubles as its own evidence index. -->
-      <p class="skill-legend"><span class="skill-legend-key" aria-hidden="true">&rarr;</span> Underlined tools open the case study that demonstrates them. The rest are working familiarity without a documented project behind them.</p>
-
-      <div class="skill-stack">
-        <div class="skill-group">
-          <div class="skill-group-title">Structural</div>
-          <div class="skill-tags">
-            <a href="./projects/structural-frame-analysis.html">SAP2000</a>
-            <a href="./projects/structural-frame-analysis.html">Direct stiffness (Python)</a>
-            <span>SkyCiv</span><span>Rhino</span><span>Grasshopper</span>
-          </div>
-          <p>Plane-frame and truss analysis &middot; influence lines &middot; load-path reasoning &middot; hand verification of software output</p>
+      </li>
+      <li class="role">
+        <p class="role-when">Jan – May 2025<span>Toronto, ON</span></p>
+        <div>
+          <h3>Project Coordinator, co-op <span>Green Infrastructure Partners</span></h3>
+          <ul>
+            <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line: diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing and tieback anchor testing. Tracked RFIs, RFQs and submittals across the below-grade scope.</li>
+            <li>Sequenced excavation and support of excavation to MTO, CSA and Ministry of Labour requirements, with field reports, as-builts and quantity summaries.</li>
+          </ul>
         </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Software</div>
-          <div class="skill-tags">
-            <a href="./projects/residence-site-redevelopment.html">AutoCAD</a>
-            <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>
-            <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>
-            <a href="./projects/highway-design-pavement-qc.html">Excel (advanced)</a>
-            <a href="./projects/travers-solar-analysis.html">PVSyst</a>
-            <span>Revit</span><span>Bluebeam Revu</span>
-          </div>
+      </li>
+      <li class="role">
+        <p class="role-when">May – Aug 2024<span>Thunder Bay, ON</span></p>
+        <div>
+          <h3>Quality Control Technician, co-op <span>Green Infrastructure Partners</span></h3>
+          <ul>
+            <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM and AASHTO standards: Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
+            <li>Independently managed QC for the MTO Highway 17 and 61 rehabilitation near Thunder Bay; mix optimisation through gradation, binder content and foaming parameter analysis.</li>
+          </ul>
         </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Programming</div>
-          <div class="skill-tags">
-            <a class="is-accent" href="./projects/travers-solar-analysis.html">Python</a>
-            <a class="is-accent" href="./projects/structural-frame-analysis.html">NumPy</a>
-            <span class="is-accent">MATLAB</span>
-            <a class="is-accent" href="./projects/projectsearch.html">SQL</a>
-            <span class="is-accent">VBA</span>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Engineering software</div>
-          <div class="skill-tags">
-            <a href="./projects/projectsearch.html">three.js</a>
-            <a href="./projects/projectsearch.html">SQLite FTS5</a>
-            <a href="./projects/engineering-retrieval-prototype.html">Vertex AI</a>
-            <a href="./projects/engineering-retrieval-prototype.html">Docker</a>
-            <a href="./projects/engineering-retrieval-prototype.html">Google Cloud</a>
-          </div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Building science</div>
-          <div class="skill-tags">
-            <a href="./projects/envelope-thermal-bridge-studies.html">Flixo</a>
-            <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>
-            <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>
-            <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>
-          </div>
-          <p>Thermal bridging and condensation analysis &middot; air and vapour barrier systems &middot; EIFS &middot; PMMA and SBS waterproofing</p>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Codes &amp; standards</div>
-          <p class="skill-codes">NBC &middot; OBC &middot; BCBC &middot; BC Energy Step Code &middot; NECB &middot; ASHRAE 90.1 &middot; CSA A23.1 / A23.3 / S16 / A440 &middot; MTO OPSS &middot; ASTM &middot; AASHTO</p>
-        </div>
-      </div>
-    </section>
+      </li>
+    </ol>
+  </section>
 
-  </div>
+  <section class="block block--split" aria-label="Education and tools">
+    <div id="education">
+      <h2>Education</h2>
+      <h3 class="degree">Bachelor of Applied Science, Civil Engineering</h3>
+      <p class="degree-meta">University of Waterloo, expected 2028</p>
+      <ul class="plain">
+        <li>Cumulative GPA of 4.0</li>
+        <li>President's Scholarship of Distinction, 2024</li>
+        <li>On international exchange in Singapore for the fall 2026 term</li>
+      </ul>
 
-  <div class="panel-foot" id="panel-foot">
-    <button type="button" class="panel-step" id="panel-prev" hidden>&larr; Previous</button>
-    <button type="button" class="panel-continue" id="panel-continue">Continue construction &rarr;</button>
-    <button type="button" class="panel-step panel-step--next" id="panel-next" hidden>Next chapter &rarr;</button>
-  </div>
-</aside>
+      <h3 class="degree">Peer-reviewed publication, first author</h3>
+      <p>Gao, T., <em>et al.</em> Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta. <em>Processes</em> 2026, 14(7), 1078.</p>
+      <p class="links"><a href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Read the paper on MDPI</a><a href="./projects/travers-solar-analysis.html">Read the case study</a></p>
+    </div>
 
-<!-- Topped out ----------------------------------------------------------- -->
-<div class="finale" id="finale" data-screen-label="Topped out" aria-hidden="true" inert>
-  <h2 class="finale-title" id="finale-title">Topped out</h2>
-  <div class="finale-links" id="finale-links">
-    <div class="finale-primary">
-      <a class="btn-accent" href="mailto:t25gao@uwaterloo.ca">t25gao@uwaterloo.ca &#8599;</a>
-      <a class="btn-ghost" href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a>
-      <a class="btn-ghost" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a>
-      <a class="btn-ghost" href="./Thomas-Gao-Resume.pdf" download>Resume &darr;</a>
+    <div id="skills">
+      <h2>Tools</h2>
+      <p class="skills-key">Underlined tools open the case study that demonstrates them.</p>
+      <dl class="skills">
+        <dt>Structure</dt>
+        <dd><a href="./projects/structural-frame-analysis.html">SAP2000</a>, <a href="./projects/structural-frame-analysis.html">direct stiffness in Python</a>, SkyCiv, Rhino, Grasshopper. Plane-frame and truss analysis, influence lines, hand verification of software output.</dd>
+        <dt>Envelope</dt>
+        <dd><a href="./projects/envelope-thermal-bridge-studies.html">Flixo</a>, <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>, <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>, <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>. Thermal bridging and condensation analysis, air and vapour barriers, EIFS, PMMA and SBS waterproofing.</dd>
+        <dt>Code and AI</dt>
+        <dd><a href="./projects/travers-solar-analysis.html">Python</a>, <a href="./projects/structural-frame-analysis.html">NumPy</a>, <a href="./projects/projectsearch.html">SQL</a>, MATLAB, VBA, <a href="./projects/projectsearch.html">three.js</a>, <a href="./projects/projectsearch.html">SQLite FTS5</a>, <a href="./projects/engineering-retrieval-prototype.html">Vertex AI</a>, <a href="./projects/engineering-retrieval-prototype.html">Docker</a>, <a href="./projects/engineering-retrieval-prototype.html">Google Cloud</a>.</dd>
+        <dt>Civil</dt>
+        <dd><a href="./projects/residence-site-redevelopment.html">AutoCAD</a>, <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>, <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>, <a href="./projects/travers-solar-analysis.html">PVSyst</a>, Revit, Bluebeam Revu, advanced Excel.</dd>
+        <dt>Codes</dt>
+        <dd>NBC, OBC, BCBC, BC Energy Step Code, NECB, ASHRAE 90.1, CSA A23.1, A23.3, S16 and A440, MTO OPSS, ASTM, AASHTO.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block" id="photography" aria-labelledby="photo-title">
+    <div class="block-head">
+      <h2 id="photo-title">Off site</h2>
+      <p>Photography keeps me looking closely at texture, movement and light. Five frames from my own archive.</p>
+    </div>
+    <ul class="photos">
+      <li><a href="./assets/photography/eye-closeup-1200.jpg" target="_blank" rel="noopener"><picture>
+        <source type="image/avif" srcset="./assets/photography/eye-closeup-600.avif">
+        <img src="./assets/photography/eye-closeup-600.jpg" width="1200" height="800" loading="lazy" decoding="async" alt="Warm close-up portrait focused on the eyes">
+      </picture></a></li>
+      <li><a href="./assets/photography/squirrel-1200.jpg" target="_blank" rel="noopener"><picture>
+        <source type="image/avif" srcset="./assets/photography/squirrel-600.avif">
+        <img src="./assets/photography/squirrel-600.jpg" width="1200" height="800" loading="lazy" decoding="async" style="object-position:left center" alt="Grey squirrel perched on a mossy tree trunk beneath evergreen branches">
+      </picture></a></li>
+      <li><a href="./assets/photography/geese-skyline-1200.jpg" target="_blank" rel="noopener"><picture>
+        <source type="image/avif" srcset="./assets/photography/geese-skyline-600.avif">
+        <img src="./assets/photography/geese-skyline-600.jpg" width="1200" height="800" loading="lazy" decoding="async" alt="Canada geese floating on water before a winter city skyline at sunset">
+      </picture></a></li>
+      <li><a href="./assets/photography/allium-macro-1200.jpg" target="_blank" rel="noopener"><picture>
+        <source type="image/avif" srcset="./assets/photography/allium-macro-600.avif">
+        <img src="./assets/photography/allium-macro-600.jpg" width="1200" height="800" loading="lazy" decoding="async" style="object-position:right center" alt="Macro photograph of a spherical purple allium bloom">
+      </picture></a></li>
+      <li><a href="./assets/photography/waterfall-1200.jpg" target="_blank" rel="noopener"><picture>
+        <source type="image/avif" srcset="./assets/photography/waterfall-600.avif">
+        <img src="./assets/photography/waterfall-600.jpg" width="1200" height="1800" loading="lazy" decoding="async" alt="Waterfall cascading down a granite face through evergreen forest">
+      </picture></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- Contact ------------------------------------------------------------------ -->
+<section class="scene contact" id="contact" data-scene="contact" data-ground="light">
+  <div class="beat">
+    <h2>Put me on your next project.</h2>
+    <p class="lede">I'm looking for a co-op role from January to April 2027 with a structural, building envelope or engineering software team.</p>
+    <a class="mail" href="mailto:t25gao@uwaterloo.ca">t25gao@uwaterloo.ca</a>
+    <div class="actions">
+      <a class="btn btn--solid" href="./Thomas-Gao-Resume.pdf">Resume (PDF)</a>
+      <a class="btn" href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
-</div>
+  <p class="colophon">Thomas Gao, 2026. The model is drawn live in your browser; this site loads nothing from third parties.</p>
+</section>
 
-<!-- Cursor crosshair ------------------------------------------------------ -->
-<div class="crosshair" id="crosshair" aria-hidden="true">
-  <div class="crosshair-v" id="crosshair-v"></div>
-  <div class="crosshair-h" id="crosshair-h"></div>
-  <div class="crosshair-trail" id="crosshair-trail"></div>
-</div>
+</main>
 
-<p class="sr-only" id="status" role="status" aria-live="polite">Awaiting notice to proceed</p>
-
-<!-- building-scene.js is not listed here on purpose. It pulls in 670 KB of
-     three.js, and none of the model is visible until the reader breaks ground —
-     site.js imports it on idle, or immediately when something needs it. -->
-<script type="module" src="./assets/js/site.js"></script>
+<script type="module" src="./assets/js/main.js"></script>
 </body>
 </html>

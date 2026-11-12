@@ -28,10 +28,10 @@ def _have(cmd):
 
 W, H = 1200, 630
 
-BG = (0.957, 0.949, 0.929)      # #f4f2ed paper
-INK = (0.078, 0.090, 0.102)     # #14171a
-ACCENT = (0.082, 0.267, 0.784)  # #1544c8
-MUTED = (0.388, 0.384, 0.353)   # #63625a
+BG = (0.890, 0.898, 0.886)      # #e3e5e2 concrete
+INK = (0.071, 0.082, 0.094)     # #121518 graphite
+ACCENT = (0.659, 0.212, 0.122)  # #a8361f red oxide
+MUTED = (0.325, 0.353, 0.361)   # #535a5c
 
 DOT = r"\267"  # middle dot, WinAnsiEncoding
 
@@ -178,10 +178,10 @@ def main():
     os.chdir(root)
 
     size = render(build_content(
+        "Structure. Envelope. Code.",
         "Thomas Gao",
-        "T. GAO · CIVIL / CODE",
-        "Civil Engineering, Building Science and Software "
-        "· BASc Civil, University of Waterloo",
+        "Structural analysis, building envelope and AI software for "
+        "engineering teams. Civil Engineering, University of Waterloo.",
     ), "assets/og-image.jpg")
     print(f"wrote assets/og-image.jpg ({size} bytes)")
 
