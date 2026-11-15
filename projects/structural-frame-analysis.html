@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Steel Frame Analysis &amp; Independent Verification — Thomas Gao</title>
-  <meta name="description" content="A two-bay steel sub-frame on a building under construction at Waterloo, idealised and solved in SAP2000 — then re-solved with a direct-stiffness solver written from scratch, which disagreed.">
+  <meta name="description" content="A two-bay steel sub-frame on a building under construction at Waterloo, idealized and solved in SAP2000 — then re-solved with a direct-stiffness solver written from scratch, which disagreed.">
   <meta name="theme-color" content="#f1f2ef">
   <meta name="color-scheme" content="light">
   <link rel="preload" href="../assets/fonts/Archivo-Variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -16,14 +16,14 @@
   <meta property="og:site_name" content="Thomas Gao">
   <meta property="og:url" content="https://thomasg101.github.io/projects/structural-frame-analysis.html">
   <meta property="og:title" content="Steel Frame Analysis &amp; Independent Verification">
-  <meta property="og:description" content="A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
+  <meta property="og:description" content="A two-bay steel sub-frame idealized from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
   <meta property="og:image" content="https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg">
   <meta property="og:image:alt" content="Steel Frame Analysis &amp; Independent Verification — Thomas Gao">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Steel Frame Analysis &amp; Independent Verification">
-  <meta name="twitter:description" content="A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
+  <meta name="twitter:description" content="A two-bay steel sub-frame idealized from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch — which disagreed.">
   <meta name="twitter:image" content="https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg">
   <link rel="stylesheet" href="./project-detail.css">
   <script type="application/ld+json">
@@ -31,7 +31,7 @@
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "name": "Steel Frame Analysis & Independent Verification",
-  "description": "A two-bay steel sub-frame idealised from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch.",
+  "description": "A two-bay steel sub-frame idealized from a building under construction, solved in SAP2000, then re-solved with a direct-stiffness solver written from scratch.",
   "url": "https://thomasg101.github.io/projects/structural-frame-analysis.html",
   "image": "https://thomasg101.github.io/assets/og/structural-frame-analysis.jpg",
   "author": {
@@ -66,7 +66,7 @@
         <div class="hero-copy">
           <p class="eyebrow">Structural · Analysis · 2026</p>
           <h1 id="project-title">Steel Frame Analysis &amp; Verification</h1>
-          <p class="lead">A two-bay steel sub-frame on a building going up across campus — measured, idealised, solved in SAP2000, and then re-solved with a direct-stiffness solver I wrote from scratch. The two models did not agree, and finding out why was the point.</p>
+          <p class="lead">A two-bay steel sub-frame on a building going up across campus — measured, idealized, solved in SAP2000, and then re-solved with a direct-stiffness solver I wrote from scratch. The two models did not agree, and finding out why was the point.</p>
           <ul class="tags" aria-label="Tools and methods">
             <li>SAP2000</li>
             <li>Direct stiffness method</li>
@@ -79,7 +79,7 @@
         <figure class="media-figure">
           <picture>
             <source type="image/avif" srcset="../assets/projects/structural-frame-substructure-600.avif 600w, ../assets/projects/structural-frame-substructure-636.avif 636w" sizes="(max-width: 900px) 92vw, 640px">
-            <img src="../assets/projects/structural-frame-substructure-636.jpg" srcset="../assets/projects/structural-frame-substructure-600.jpg 600w, ../assets/projects/structural-frame-substructure-636.jpg 636w" sizes="(max-width: 900px) 92vw, 640px" width="636" height="471" alt="Erection steel on the Mathematics 4 building with the analysed two-bay sub-frame outlined in orange" fetchpriority="high" decoding="async">
+            <img src="../assets/projects/structural-frame-substructure-636.jpg" srcset="../assets/projects/structural-frame-substructure-600.jpg 600w, ../assets/projects/structural-frame-substructure-636.jpg 636w" sizes="(max-width: 900px) 92vw, 640px" width="636" height="471" alt="Erection steel on the Mathematics 4 building with the analyzed two-bay sub-frame outlined in orange" fetchpriority="high" decoding="async">
           </picture>
           <figcaption>Mathematics 4, University of Waterloo, March 2026. The orange outline marks the sub-frame taken out of the building for analysis; red marks the interior bay.</figcaption>
         </figure>
@@ -98,13 +98,13 @@
             <h2>01 / Context</h2>
             <div>
               <h3>A structure you can walk up to teaches more than one from a textbook.</h3>
-              <p>For CIVE 303 Structural Analysis our team had to choose a real structure, idealise it, and analyse it. We picked the erection steel on the southeast elevation of the Mathematics 4 building, then under construction on the Waterloo campus — close enough to photograph and measure, and simple enough to defend as a plane frame.</p>
-              <p>The choice did most of the teaching. Standing under it, the thing being analysed was not a finished building at all: bare steel, no slabs, no cladding, no final bracing. It was a temporary condition, and temporary conditions are where structures are most exposed.</p>
+              <p>For CIVE 303 Structural Analysis our team had to choose a real structure, idealize it, and analyze it. We picked the erection steel on the southeast elevation of the Mathematics 4 building, then under construction on the Waterloo campus — close enough to photograph and measure, and simple enough to defend as a plane frame.</p>
+              <p>The choice did most of the teaching. Standing under it, the thing being analyzed was not a finished building at all: bare steel, no slabs, no cladding, no final bracing. It was a temporary condition, and temporary conditions are where structures are most exposed.</p>
             </div>
           </section>
 
           <section class="case-section">
-            <h2>02 / Idealisation</h2>
+            <h2>02 / Idealization</h2>
             <div>
               <h3>Every assumption forced into the open.</h3>
               <p>Reducing an elevation of erection steel to twelve members meant committing to a set of claims about a real building: where the sub-frame could honestly be cut out of the structure, which connections behaved as rigid, whether the bases could be taken as fixed, and what the frame was actually carrying on the day we photographed it.</p>
@@ -128,9 +128,9 @@
             <figure class="media-figure">
               <picture>
                 <source type="image/avif" srcset="../assets/projects/structural-frame-idealization-600.avif 600w, ../assets/projects/structural-frame-idealization-1000.avif 1000w" sizes="(max-width: 900px) 92vw, 380px">
-                <img src="../assets/projects/structural-frame-idealization-1000.jpg" srcset="../assets/projects/structural-frame-idealization-600.jpg 600w, ../assets/projects/structural-frame-idealization-1000.jpg 1000w" sizes="(max-width: 900px) 92vw, 380px" width="1000" height="1003" alt="Hand-drawn plane frame idealisation showing nodes A to I, member labels, dimensions and three fixed supports" loading="lazy" decoding="async">
+                <img src="../assets/projects/structural-frame-idealization-1000.jpg" srcset="../assets/projects/structural-frame-idealization-600.jpg 600w, ../assets/projects/structural-frame-idealization-1000.jpg 1000w" sizes="(max-width: 900px) 92vw, 380px" width="1000" height="1003" alt="Hand-drawn plane frame idealization showing nodes A to I, member labels, dimensions and three fixed supports" loading="lazy" decoding="async">
               </picture>
-              <figcaption><span>02 / Idealisation</span> The plane frame that came out of it — nine nodes, twelve members, three fixed bases.</figcaption>
+              <figcaption><span>02 / Idealization</span> The plane frame that came out of it — nine nodes, twelve members, three fixed bases.</figcaption>
             </figure>
           </div>
 
@@ -206,13 +206,13 @@
         <aside class="project-rail" aria-label="Project summary">
           <section>
             <h2>Role</h2>
-            <p>Team member on the CIVE 303 analysis — field measurement, idealisation and SAP2000 modelling. The Python solver, the verification suite and the reconciliation study are my own independent work.</p>
+            <p>Team member on the CIVE 303 analysis — field measurement, idealization and SAP2000 modelling. The Python solver, the verification suite and the reconciliation study are my own independent work.</p>
           </section>
           <section>
             <h2>Methods</h2>
             <ul>
               <li>Direct stiffness method</li>
-              <li>Plane frame idealisation</li>
+              <li>Plane frame idealization</li>
               <li>Müller-Breslau influence lines</li>
               <li>Live-load placement</li>
               <li>Closed-form verification</li>
@@ -229,13 +229,13 @@
           </section>
           <section>
             <h2>Design principle</h2>
-            <p>An idealisation is a claim about a real building. Nothing in the software will check it for you.</p>
+            <p>An idealization is a claim about a real building. Nothing in the software will check it for you.</p>
           </section>
         </aside>
       </div>
 
       <aside class="public-note">
-        <strong>Attribution note.</strong> The CIVE 303 mini-project was team work — field selection, idealisation and the SAP2000 model were produced with three classmates, and the course figures are reproduced here as team output. The Python solver, its verification suite, the comparison against the SAP2000 reactions and the conclusions drawn from that comparison are mine alone. Course deliverables and classmates' names are not reproduced.
+        <strong>Attribution note.</strong> The CIVE 303 mini-project was team work — field selection, idealization and the SAP2000 model were produced with three classmates, and the course figures are reproduced here as team output. The Python solver, its verification suite, the comparison against the SAP2000 reactions and the conclusions drawn from that comparison are mine alone. Course deliverables and classmates' names are not reproduced.
       </aside>
 
       <nav class="project-pagination" aria-label="More projects">
@@ -248,5 +248,6 @@
   <footer class="site-footer">
     <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Project record · Rev. 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
   </footer>
+  <script type="module">import { startTrail } from '../assets/js/trail.js'; startTrail({ mode: () => 'ink' });</script>
 </body>
 </html>

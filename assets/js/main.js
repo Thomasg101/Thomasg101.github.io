@@ -7,6 +7,7 @@
    never taken over. */
 
 import { BuildingScene } from './scene.js';
+import { startTrail } from './trail.js';
 
 const root = document.documentElement;
 const $ = (s, el = document) => el.querySelector(s);
@@ -72,6 +73,11 @@ const sections = $$('main [data-scene]');
 const beats = $$('.beat');
 const tags = $$('.tag');
 const navLinks = $$('.nav-links a');
+const progress = $('#progress');
+
+/* The mouse trail is drawn in the material of the reading it is over. */
+const TRAIL = { hero: 'line', structure: 'line', contact: 'line', envelope: 'heat', code: 'points', cover: 'ink' };
+let trailScene = 'line', coverTop = Infinity, coverBottom = -Infinity;
 
 let scene = null;
 try {
@@ -81,10 +87,11 @@ try {
 }
 
 /* Section and text positions, measured once per layout rather than per frame. */
-let metrics = [], beatMetrics = [], vh = innerHeight, stageH = innerHeight;
+let metrics = [], beatMetrics = [], vh = innerHeight, stageH = innerHeight, docH = 1;
 function measure() {
   vh = innerHeight;
   stageH = stage.clientHeight || vh;
+  docH = Math.max(1, root.scrollHeight - vh);
   const y = scrollY;
   metrics = sections.map(el => {
     const r = el.getBoundingClientRect();
@@ -143,6 +150,9 @@ function steer(where) {
     az: s.az, el: s.el, dist: s.dist * (isWide ? 1 : 1.04), ty: s.ty,
     shiftX, shiftY: isWide ? 0 : 0.035,
     pAz: parallax + drag, pEl: tilt,
+    /* The lean belongs to the Structure chapter alone: it fades with the
+       chapter's weight, so no other reading ever inherits a racked frame. */
+    sway: swayPos * SWAY_MAX * smooth(0.25, 0.75, weight(where, 'structure')),
     bgR: LIGHT.bg[0] + (DARK.bg[0] - LIGHT.bg[0]) * d,
     bgG: LIGHT.bg[1] + (DARK.bg[1] - LIGHT.bg[1]) * d,
     bgB: LIGHT.bg[2] + (DARK.bg[2] - LIGHT.bg[2]) * d,
@@ -156,8 +166,11 @@ function steer(where) {
 const weight = (where, name) =>
   (metrics[where.a].name === name ? 1 - where.t : 0) + (metrics[where.b].name === name ? where.t : 0);
 
-let lastGround = '', lastStageGround = '', lastNavGround = '', lastOver = '', lastCurrent = '';
+let lastGround = '', lastStageGround = '', lastNavGround = '', lastOver = '', lastCurrent = '', lastProgress = -1;
 function paintChrome(where) {
+  const p = Math.round(1000 * clamp01(scrollY / docH)) / 1000;
+  if (p !== lastProgress) { progress.style.transform = `scaleX(${p})`; lastProgress = p; }
+
   const c = scene ? scene.cur : null;
   const lum = c ? 0.3 * c.bgR + 0.59 * c.bgG + 0.11 * c.bgB : 1;
   if (c) {
@@ -175,6 +188,8 @@ function paintChrome(where) {
   if (navGround !== lastNavGround) { nav.dataset.ground = navGround; lastNavGround = navGround; }
 
   const dominant = metrics[where.t > 0.5 ? where.b : where.a];
+  trailScene = TRAIL[dominant.name] || 'ink';
+  coverTop = cr.top; coverBottom = cr.bottom;
   const current = dominant.name === 'cover' ? 'projects' : dominant.el.id;
   if (current !== lastCurrent) {
     navLinks.forEach(a => a.setAttribute('aria-current', String(a.hash === '#' + current)));
@@ -224,6 +239,7 @@ function frame(now) {
   if (scene) {
     /* Nothing to draw while the resume covers the model. */
     const isCovered = cr.top <= 0 && cr.bottom >= (wide.matches ? vh : stageH);
+    stepSway(dt, now, weight(where, 'structure') > 0.25);
     steer(where);
     if (!isCovered) {
       /* Coming back from behind the resume, or from a background tab, land on
@@ -244,19 +260,57 @@ function frame(now) {
 
 /* ----------------------------------------------------------- controls -- */
 
+/* The slider says how far the frame is pushed. The frame itself is a damped
+   spring: hold the thumb and it stays put, let go and it rings back to plumb
+   the way a real frame does when a lateral load comes off. */
 const sway = $('#sway');
-const applySway = () => { if (scene) scene.set({ sway: (sway.value / 100) * 4.6 }); };
-sway.addEventListener('input', () => { touched = true; applySway(); });
+const SWAY_MAX = 4.6;                    /* metres of drift at the roof, slider at 100 */
+const SPRING_W = 2 * Math.PI * 1.5;      /* natural frequency of the ring-down, rad/s */
+const SPRING_Z = 0.22;                   /* damping ratio: two or three visible swings */
+let swayPos = 0, swayVel = 0;            /* 0..1 while held; passes through zero ringing down */
+let swayHeld = false, swayKeysUntil = 0, nudging = false;
 
-/* Show once that the slider does something, then hand it over. */
+const moveThumb = () => { sway.value = Math.round(Math.max(0, swayPos) * 100); };
+
+function stepSway(dt, now, inChapter) {
+  if (!inChapter) {
+    /* Scrolled away mid-push: start plumb next time, thumb back at zero. */
+    if (swayPos || swayVel || sway.value !== '0') {
+      swayPos = swayVel = 0; swayHeld = nudging = false; swayKeysUntil = 0; sway.value = 0;
+    }
+    return;
+  }
+  if (nudging) return;
+  if (swayHeld || now < swayKeysUntil) { swayPos = sway.value / 100; swayVel = 0; return; }
+  if (!swayPos && !swayVel) return;
+  if (reduced) { swayPos = swayVel = 0; moveThumb(); return; }
+  swayVel += (-SPRING_W * SPRING_W * swayPos - 2 * SPRING_Z * SPRING_W * swayVel) * dt;
+  swayPos += swayVel * dt;
+  if (Math.abs(swayPos) < 0.003 && Math.abs(swayVel) < 0.02) swayPos = swayVel = 0;
+  moveThumb();
+}
+
+sway.addEventListener('pointerdown', () => { touched = true; nudging = false; swayHeld = true; });
+sway.addEventListener('input', () => {
+  touched = true; nudging = false;
+  /* Arrow keys have no "release": hold the pose briefly, then let it go. */
+  if (!swayHeld) swayKeysUntil = performance.now() + 2500;
+});
+sway.addEventListener('blur', () => { swayKeysUntil = 0; });
+const letGo = () => { swayHeld = false; };
+addEventListener('pointerup', letGo);
+addEventListener('pointercancel', letGo);
+
+/* Show once that the slider does something: push, then let it spring back. */
 function nudge() {
   const start = performance.now();
+  nudging = true;
   const step = now => {
-    if (touched) return;
-    const t = (now - start) / 1700;
-    if (t >= 1) { sway.value = 0; applySway(); return; }
-    sway.value = Math.round(Math.sin(t * Math.PI) ** 2 * 62);
-    applySway();
+    if (!nudging) return;
+    const t = (now - start) / 650;
+    if (t >= 1) { nudging = false; return; }
+    swayPos = 0.62 * (1 - (1 - t) ** 3);
+    moveThumb();
     requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
@@ -290,12 +344,58 @@ queryButtons.forEach(b => b.addEventListener('click', () => runQuery(Number(b.da
 
 const filterButtons = $$('[data-filter]');
 const cards = $$('.card');
+const tagged = (card, f) => f === 'all' || card.dataset.tags.split(' ').includes(f);
+/* Each filter says how many case studies it holds before it is pressed. */
+filterButtons.forEach(b => {
+  const n = document.createElement('span');
+  n.className = 'chip-n';
+  n.textContent = cards.filter(card => tagged(card, b.dataset.filter)).length;
+  b.append(n);
+});
+cards.forEach((card, i) => { card.style.viewTransitionName = `card-${i}`; });
+function setFilter(f, animate) {
+  const apply = () => {
+    filterButtons.forEach(o => o.setAttribute('aria-pressed', String(o.dataset.filter === f)));
+    cards.forEach(card => { card.hidden = !tagged(card, f); });
+    measure();
+  };
+  /* Where the browser can, cards that stay slide to their new place. */
+  if (animate && document.startViewTransition && !reduced) document.startViewTransition(apply);
+  else apply();
+}
 filterButtons.forEach(b => b.addEventListener('click', () => {
   const f = b.dataset.filter;
-  filterButtons.forEach(o => o.setAttribute('aria-pressed', String(o === b)));
-  cards.forEach(card => { card.hidden = f !== 'all' && !card.dataset.tags.split(' ').includes(f); });
-  measure();
+  setFilter(f, true);
+  /* The filter lives in the address, so a filtered view can be sent to someone. */
+  history.replaceState(null, '', f === 'all' ? `${location.pathname}#projects` : `?work=${f}#projects`);
 }));
+const wanted = new URLSearchParams(location.search).get('work');
+if (wanted && wanted !== 'all' && filterButtons.some(b => b.dataset.filter === wanted)) setFilter(wanted, false);
+
+/* The resume content arrives once as it scrolls into view. The hiding is
+   switched on from here, so if this script never runs nothing stays hidden. */
+if (!reduced && 'IntersectionObserver' in window) {
+  const targets = $$('.block-head, .card, .role, .photos li, .block--split > div');
+  targets.forEach(el => el.classList.add('reveal'));
+  root.classList.add('reveal-ready');
+  const io = new IntersectionObserver(entries => {
+    let i = 0;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.style.setProperty('--d', `${Math.min(i++, 5) * 55}ms`);
+      entry.target.classList.add('is-in');
+      io.unobserve(entry.target);
+    }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  targets.forEach(el => io.observe(el));
+}
+
+/* A mouse leaves a trail: a drafting line in daylight, a heat trace on the
+   thermogram, survey points on the data, plain ink over the resume. */
+startTrail({
+  reducedMotion: reduced,
+  mode: (x, y) => (y >= coverTop && y <= coverBottom ? 'ink' : trailScene)
+});
 
 /* ------------------------------------------------------------ pointer -- */
 
@@ -306,6 +406,8 @@ if (scene) {
       parallax = (e.clientX / innerWidth - 0.5) * -7;
       tilt = (e.clientY / innerHeight - 0.5) * 3;
     }, { passive: true });
+    /* The pointer left the window: let the camera settle back to centre. */
+    document.documentElement.addEventListener('pointerleave', () => { parallax = 0; tilt = 0; });
   }
 
   /* Dragging the model turns it; it eases back once released. */

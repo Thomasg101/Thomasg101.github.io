@@ -666,7 +666,10 @@ export class BuildingScene {
 
   /* Screen position of a world point, in CSS pixels of the canvas. */
   project(point) {
-    const v = this.tmp.copy(point).project(this.camera);
+    const v = this.tmp.copy(point);
+    /* Labels ride the same lateral drift the vertex shader applies. */
+    v.x += this.cur.sway * Math.pow(Math.min(1.3, Math.max(0, v.y / ROOF)), 1.6);
+    v.project(this.camera);
     return { x: (v.x * 0.5 + 0.5) * this.width, y: (-v.y * 0.5 + 0.5) * this.height, visible: v.z < 1 };
   }
 

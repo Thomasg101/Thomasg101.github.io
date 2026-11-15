@@ -1,5 +1,12 @@
 # Scope figures — confirm before publishing
 
+> **Status, 15 November 2026.** None of the estimates below is on the site or the
+> resume any more. The four that were still live on case-study pages (#1, #2, #7
+> and #9) were replaced with descriptors those pages already support. Supply the
+> real number for any row and it can go back in, on the page and in the matching
+> resume bullet. The LinkedIn URL was confirmed as correct, and the exchange host
+> is now named (National University of Singapore).
+
 The case studies deliberately claim no outcomes ("no production rate, cost
 saving, or design-performance result is claimed"). That integrity is worth
 keeping. What was missing was **scope**: how big the work was. Scope facts are

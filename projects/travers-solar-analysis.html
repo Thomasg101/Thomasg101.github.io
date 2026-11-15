@@ -156,7 +156,7 @@
                 <li><strong>Recombine.</strong> Add the predicted residual back onto the physical estimate.</li>
                 <li><strong>Hold out days.</strong> Test on complete unseen days to keep time-series leakage out of the result.</li>
               </ol>
-              <p>Across the saved 3,077-observation test set the residual model reached 1.96 °C MAE, 2.55 °C RMSE, and R² of 0.921 — roughly 52% lower MAE and 51% lower RMSE than the archived physical baseline.</p>
+              <p>Across the saved 3,077-observation test set the residual model reached 1.96 °C MAE, 2.55 °C RMSE, and R² of 0.921 — roughly 52% lower MAE and 51% lower RMSE than the archived physical baseline. The published article reports the leave-one-day-out result for the same approach: MAE from 2.99 to 1.43 °C and R² from 0.60 to 0.91.</p>
             </div>
           </section>
 
@@ -230,5 +230,6 @@
   <footer class="site-footer">
     <div class="shell"><span>Thomas Gao · Civil Engineering</span><span>Published research · 2026</span><span class="footer-links"><a href="https://www.linkedin.com/in/thomas-gao-1a2b3c/" target="_blank" rel="noopener">LinkedIn &#8599;</a><a href="https://github.com/Thomasg101" target="_blank" rel="noopener">GitHub &#8599;</a><a href="mailto:t25gao@uwaterloo.ca">Email &#8599;</a></span></div>
   </footer>
+  <script type="module">import { startTrail } from '../assets/js/trail.js'; startTrail({ mode: () => 'ink' });</script>
 </body>
 </html>

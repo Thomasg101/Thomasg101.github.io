@@ -6,7 +6,7 @@
 <script>document.documentElement.className = 'js';</script>
 
 <title>Thomas Gao — Structure, Envelope, Code</title>
-<meta name="description" content="Thomas Gao is a University of Waterloo civil engineering student working across structural analysis, building envelope, and AI software for engineering teams. Open to co-op roles, January to April 2027.">
+<meta name="description" content="Thomas Gao is a University of Waterloo civil engineering student working toward structural and building envelope design, who writes his own engineering software. Open to co-op roles, January to April 2027.">
 <link rel="canonical" href="https://thomasg101.github.io/">
 <meta name="theme-color" content="#e3e5e2">
 <meta name="author" content="Thomas Gao">
@@ -15,14 +15,14 @@
 <meta property="og:site_name" content="Thomas Gao">
 <meta property="og:url" content="https://thomasg101.github.io/">
 <meta property="og:title" content="Thomas Gao — Structure, Envelope, Code">
-<meta property="og:description" content="Structural analysis, building envelope, and AI software for engineering teams. One building, read three ways.">
+<meta property="og:description" content="Structural analysis and building envelope, backed by software I write myself. One building, read three ways.">
 <meta property="og:image" content="https://thomasg101.github.io/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Thomas Gao — Structure, Envelope, Code">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Thomas Gao — Structure, Envelope, Code">
-<meta name="twitter:description" content="Structural analysis, building envelope, and AI software for engineering teams.">
+<meta name="twitter:description" content="Structural analysis and building envelope, backed by software I write myself.">
 <meta name="twitter:image" content="https://thomasg101.github.io/assets/og-image.jpg">
 
 <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -85,6 +85,7 @@
     <a href="#contact">Contact</a>
   </nav>
   <a class="nav-cv" href="./Thomas-Gao-Resume.pdf">Resume</a>
+  <span class="nav-progress" id="progress" aria-hidden="true"></span>
 </header>
 
 <main>
@@ -93,16 +94,16 @@
 <section class="scene hero" id="top" data-scene="hero" data-ground="light">
   <div class="beat hero-copy">
     <h1><span>Structure.</span> <span>Envelope.</span> <span>Code.</span></h1>
-    <p class="hero-lede">I'm Thomas Gao, a civil engineering student at the University of Waterloo. Four co-op terms have taken me from caisson rigs on the Ontario Line to thermal models of building envelopes, and I write the software that ties the work together.</p>
+    <p class="hero-lede">I’m Thomas Gao, a civil engineering student at the University of Waterloo. I want to design structures and the envelopes around them. Four co-op terms have put me beside caisson rigs on the Ontario Line, on restoration sites, and in thermal models of envelope junctions. I also write my own tools: a frame solver that checks SAP2000, and a search engine for site photos.</p>
     <p class="status"><span class="status-dot" aria-hidden="true"></span>Open to co-op roles, January to April 2027</p>
     <div class="actions">
       <a class="btn btn--solid" href="#projects">See the work</a>
       <a class="btn" href="./Thomas-Gao-Resume.pdf">Resume (PDF)</a>
     </div>
     <ul class="hero-facts">
-      <li><strong>4.0 GPA</strong> in Civil Engineering at Waterloo, class of 2028</li>
-      <li><strong>Four co-op terms</strong> at Entuitive, Brown Beattie and Green Infrastructure Partners</li>
-      <li><strong>First-author paper</strong> in <em>Processes</em>, 2026</li>
+      <li><strong>4.0 GPA</strong> <span>Civil Engineering at Waterloo, class of 2028</span></li>
+      <li><strong>Four co-op terms</strong> <span>Entuitive, Brown Beattie, Green Infrastructure Partners</span></li>
+      <li><strong>First-author paper</strong> <span>On Canada’s largest solar farm, <em>Processes</em> 2026</span></li>
     </ul>
   </div>
   <p class="hero-cue" aria-hidden="true">Scroll to take the building apart</p>
@@ -112,22 +113,22 @@
 <section class="scene chapter" id="structure" data-scene="structure" data-ground="light">
   <div class="beat">
     <h2>Start with the frame.</h2>
-    <p class="lede">Take the cladding off and a building is a load path: slab to beam, beam to column, column to caisson. I have worked on it from both ends, in the analysis model and in the ground.</p>
+    <p class="lede">Take the cladding off and a building is a load path: slab to beam, beam to column, column to caisson. I have worked both ends of it: a steel frame in the analysis model, and the caissons going into the ground at Pape Station.</p>
 
     <div class="control">
       <label class="control-label" for="sway">Push the frame sideways</label>
       <input class="slider" type="range" id="sway" min="0" max="100" value="0" step="1">
-      <p class="note">Lateral drift, exaggerated so the deflected shape is visible. An illustrative model, not a design.</p>
+      <p class="note">Lateral drift, exaggerated so the deflected shape is visible. Let go and the frame springs back. An illustrative model, not a design.</p>
     </div>
 
     <ul class="proof">
       <li><a href="./projects/structural-frame-analysis.html">
         <strong>Steel frame analysis and verification</strong>
-        <span>A two-bay sub-frame solved in SAP2000, then re-solved with a direct-stiffness solver I wrote. The two disagreed, and the case study explains why.</span>
+        <span>I re-solved our SAP2000 model of a two-bay steel frame with a direct-stiffness solver I wrote. Total load agreed within 4.7%, but the support reactions differed by up to 1.4&nbsp;kN. The likeliest cause: the property table we submitted was not the model we ran.</span>
       </a></li>
       <li><a href="./projects/deep-foundations-soe.html">
         <strong>Deep foundations at Pape Station</strong>
-        <span>Coordinated diaphragm walls, caissons, soldier piles and lagging, and load testing on the Ontario Line.</span>
+        <span>One co-op term on the below-grade work for an Ontario Line station: tracking RFIs and submittals, documenting load tests, and keeping quantities and as-builts current across diaphragm walls, caissons and shoring.</span>
       </a></li>
     </ul>
   </div>
@@ -137,7 +138,7 @@
 <section class="scene chapter" id="envelope" data-scene="envelope" data-ground="dark">
   <div class="beat">
     <h2>Then the skin.</h2>
-    <p class="lede">The envelope decides where the heat goes. At Entuitive I modelled junction details in Flixo, THERM and HEAT3 to get effective U-values and linear and point transmittances for BC Energy Step Code, NECB and ASHRAE 90.1, most of them twice: as built and as retrofitted.</p>
+    <p class="lede">The envelope decides where the heat goes, and the weak points are the junctions: slab edges, balconies, parapets. At Entuitive I modelled those details in Flixo, THERM and HEAT3 for energy-code compliance. Most I modelled twice, as built and as retrofitted, so the two could be compared.</p>
 
     <div class="control">
       <div class="segmented" role="radiogroup" aria-label="Envelope condition">
@@ -152,11 +153,11 @@
     <ul class="proof">
       <li><a href="./projects/envelope-thermal-bridge-studies.html">
         <strong>Envelope thermal-bridge studies</strong>
-        <span>2D steady-state studies of roof-to-wall and balcony-slab junctions across existing and retrofit insulation.</span>
+        <span>A steel roof-to-wall connection and a balcony slab, each modelled from existing to continuous insulation to show whether the insulation path stays unbroken around the junction.</span>
       </a></li>
       <li><a href="#experience">
         <strong>Restoration field review at Brown Beattie</strong>
-        <span>Waterproofing and concrete repair inspections, from tender review through substantial performance.</span>
+        <span>Inspected waterproofing and concrete repair on restoration sites, and coordinated rehabilitation projects from tender review through substantial performance.</span>
       </a></li>
     </ul>
   </div>
@@ -166,7 +167,7 @@
 <section class="scene chapter" id="code" data-scene="code" data-ground="dark">
   <div class="beat">
     <h2>Then the data.</h2>
-    <p class="lede">A project leaves behind thousands of site photos and reports that nobody can search. I build the tools that read them: vision models that tag what is in a photo, hybrid retrieval that finds it, and language models that draft from cited sources.</p>
+    <p class="lede">A project leaves behind thousands of site photos and reports that nobody can search. I build tools that read them. They use vision models to tag what is in a photo, hybrid retrieval to find it, and language models to draft from cited sources.</p>
 
     <div class="control search" id="projectsearch">
       <p class="control-label">ProjectSearch: find a site photo by what is visible in it</p>
@@ -185,21 +186,21 @@
           <p id="hit-text">Blue liquid-applied waterproofing turned up the north parapet upstand, terminating on concrete.</p>
         </div>
       </div>
-      <p class="note">Four sample records. The real tool pins every photo to a 3D model of the building, as the model here does. Built during my Entuitive co-op and being evaluated for engineering workflows.</p>
+      <p class="note">Four sample records. The real tool pins every photo to a 3D model of the building, as the model here does. I built it during my Entuitive co-op, where it is under internal evaluation.</p>
     </div>
 
     <ul class="proof">
       <li><a href="./projects/projectsearch.html">
         <strong>ProjectSearch</strong>
-        <span>Embeddings, BM25 over SQLite FTS5, rank fusion and an AI rerank, with a 3D building view and ranked floor evidence.</span>
+        <span>Type what you remember seeing and get the photo, pinned to its place on a 3D model of the building. Semantic and keyword search, fused and reranked, with a confidence rating on every field.</span>
       </a></li>
       <li><a href="./projects/engineering-retrieval-prototype.html">
         <strong>Engineering retrieval and report drafting</strong>
-        <span>A citation-first RAG prototype over engineering documents and CAD metadata, on Vertex AI and Google Cloud.</span>
+        <span>Ask a question across engineering documents and CAD metadata and get the source passages before any drafted text. Deployed on Google Cloud with Vertex AI.</span>
       </a></li>
       <li><a href="./projects/travers-solar-analysis.html">
         <strong>Travers Solar: capacity and temperature</strong>
-        <span>First-author paper. Automated ASTM E2848 capacity testing and a physics-first residual model in Python.</span>
+        <span>First-author paper on a 465&nbsp;MW plant. A residual model on top of the physics cut module-temperature error by about half (MAE 2.99 to 1.43&nbsp;°C, R² 0.60 to 0.91), and automated ASTM E2848 record selection closely reproduced a manual review.</span>
       </a></li>
     </ul>
   </div>
@@ -211,7 +212,7 @@
   <section class="block" id="projects" aria-labelledby="projects-title">
     <div class="block-head">
       <h2 id="projects-title">Selected work</h2>
-      <p>Nine case studies. Each sets out the evidence, the method, my role and the outcome.</p>
+      <p>Nine case studies. Each one shows the evidence, the method and exactly which part was mine.</p>
     </div>
     <div class="filters" role="group" aria-label="Filter case studies">
       <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
@@ -225,12 +226,12 @@
       <li class="card" data-tags="structure code"><a href="./projects/structural-frame-analysis.html">
         <picture>
           <source type="image/avif" sizes="(max-width: 760px) 34vw, 400px" srcset="./assets/projects/structural-frame-substructure-600.avif 600w, ./assets/projects/structural-frame-substructure-636.avif 636w">
-          <img src="./assets/projects/structural-frame-substructure-636.jpg" width="636" height="471" loading="lazy" decoding="async" alt="Erection steel on a building under construction with the analysed two-bay sub-frame outlined">
+          <img src="./assets/projects/structural-frame-substructure-636.jpg" width="636" height="471" loading="lazy" decoding="async" alt="Erection steel on a building under construction with the analyzed two-bay sub-frame outlined">
         </picture>
         <div class="card-body">
           <p class="card-meta"><span>Structure</span><span>2026</span></p>
           <h3>Steel frame analysis and verification</h3>
-          <p>A two-bay steel sub-frame solved in SAP2000, then re-solved with a direct-stiffness solver I wrote, which disagreed.</p>
+          <p>A two-bay steel sub-frame surveyed on site, modelled in SAP2000, then checked with a direct-stiffness solver I wrote.</p>
         </div>
       </a></li>
 
@@ -242,7 +243,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Structure, field</span><span>2025</span></p>
           <h3>Deep foundations and support of excavation</h3>
-          <p>Field coordination across diaphragm walls, caissons, soldier pile and lagging, testing, quantities and as-builts.</p>
+          <p>Construction coordination at Pape Station: RFIs and submittals, test records, quantities and as-builts for diaphragm walls, caissons and shoring.</p>
         </div>
       </a></li>
 
@@ -254,7 +255,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Envelope</span><span>2026</span></p>
           <h3>Envelope thermal-bridge studies</h3>
-          <p>2D steady-state studies of roof-to-wall and balcony-slab junctions across existing and retrofit insulation.</p>
+          <p>2D steady-state models of roof-to-wall and balcony-slab junctions, each run with existing and retrofit insulation.</p>
         </div>
       </a></li>
 
@@ -277,7 +278,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Code, AI</span><span>2026</span></p>
           <h3>Engineering retrieval and report drafting</h3>
-          <p>A deployed, citation-first RAG prototype for engineering documents and CAD metadata, containerised for Google Cloud.</p>
+          <p>A citation-first retrieval prototype for engineering documents and CAD metadata, containerized and deployed on Google Cloud.</p>
         </div>
       </a></li>
 
@@ -289,7 +290,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Code, research</span><span>2026</span></p>
           <h3>Travers Solar: capacity and temperature</h3>
-          <p>Automated ASTM E2848 capacity-test selection and a physics-first residual temperature model, published in <em>Processes</em>.</p>
+          <p>Automated ASTM E2848 capacity-test selection and a residual temperature model for a 465&nbsp;MW solar plant, published in <em>Processes</em>.</p>
         </div>
       </a></li>
 
@@ -301,7 +302,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Civil, field</span><span>2024–25</span></p>
           <h3>Highway design and pavement QC</h3>
-          <p>Civil 3D design support for two highway redesigns, plus field and laboratory QC on Superpave and CIREAM work.</p>
+          <p>Civil 3D design support for two highway redesigns, then field and laboratory QC on Superpave and CIREAM paving.</p>
         </div>
       </a></li>
 
@@ -313,7 +314,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Civil, academic</span><span>2025</span></p>
           <h3>Residence site redevelopment</h3>
-          <p>Civil 3D drawing and grading lead, accessible circulation planning and research for a team design package.</p>
+          <p>A team redevelopment concept for a student residence site. I led the Civil 3D drawing and grading and planned the accessible circulation.</p>
         </div>
       </a></li>
 
@@ -325,7 +326,7 @@
         <div class="card-body">
           <p class="card-meta"><span>Civil, GIS</span><span>2026</span></p>
           <h3>Grand River watershed analysis</h3>
-          <p>An ArcGIS Pro workflow on a 30 m DEM: flow processing, stream extraction, basin delineation, land use and soils.</p>
+          <p>Sub-basins of the Grand River delineated from a 30&nbsp;m elevation model in ArcGIS Pro, then overlaid with land use and soils.</p>
         </div>
       </a></li>
     </ul>
@@ -334,7 +335,7 @@
   <section class="block" id="experience" aria-labelledby="experience-title">
     <div class="block-head">
       <h2 id="experience-title">Experience</h2>
-      <p>Waterloo alternates four-month study and work terms, so these dates interleave with school rather than leaving gaps. Each entry describes the scope of the work, not credit for its outcomes.</p>
+      <p>Four co-op terms between study terms: a design office, restoration sites, a transit station excavation and a pavement lab.</p>
     </div>
 
     <ol class="roles">
@@ -343,20 +344,21 @@
         <div>
           <h3>Building Envelope Specialist, co-op <span>Entuitive</span></h3>
           <ul>
-            <li>2D and 3D thermal modelling in Flixo, THERM, HEAT3 and Ubakus: effective U-values and linear (ψ) and point (χ) transmittance for BC Energy Step Code, NECB and ASHRAE 90.1 compliance. Junction details across several project teams, most modelled in both existing and retrofit configurations.</li>
-            <li>Site Review Reports documenting construction conformance: annotated photo logs, deficiency registers and follow-up tracking.</li>
-            <li>Building Condition Assessments and Depreciation Reports for BC Housing and private clients: component inventories, condition ratings and 30-year capital renewal cost models.</li>
-            <li>Built ProjectSearch, a local-first photo and document retrieval prototype being evaluated for engineering workflows.</li>
+            <li><strong>Thermal modelling.</strong> Modelled 2D and 3D junction details in Flixo, THERM, HEAT3 and Ubakus, calculating effective U-values and linear (ψ) and point (χ) transmittance for BC Energy Step Code, NECB and ASHRAE 90.1. Most were modelled twice, existing and retrofit.</li>
+            <li><strong>Site review.</strong> Wrote Site Review Reports on construction conformance, with annotated photo logs, deficiency registers and follow-up tracking.</li>
+            <li><strong>Condition assessment.</strong> Prepared Building Condition Assessments and Depreciation Reports for BC Housing and private clients: component inventories, condition ratings and 30-year capital renewal cost models.</li>
+            <li><strong>ProjectSearch.</strong> Identified a recurring problem, finding the right site photo or report, and built a local-first search tool to solve it. It is under internal evaluation.</li>
           </ul>
+          <p class="role-links"><a href="./projects/envelope-thermal-bridge-studies.html">Thermal-bridge case study</a><a href="./projects/projectsearch.html">ProjectSearch case study</a></p>
         </div>
       </li>
       <li class="role">
         <p class="role-when">Sep – Dec 2025<span>Richmond Hill, ON</span></p>
         <div>
-          <h3>Engineering Technician, co-op <span>Brown Beattie</span></h3>
+          <h3>Engineering Technician, co-op <span>Brown Beattie Building Science Engineering</span></h3>
           <ul>
-            <li>Site inspections across concurrent restoration sites: waterproofing and concrete repair, surface preparation, CSP profiles, adhesion and membrane thickness per OBC, CSA and manufacturer standards.</li>
-            <li>Ran envelope rehabilitation projects from tender review through substantial performance, including mock-ups and submittal and shop drawing review.</li>
+            <li><strong>Field review.</strong> Inspected waterproofing and structural concrete repair on concurrent restoration sites, checking surface preparation, CSP profiles, adhesion and membrane thickness against OBC, CSA and manufacturer requirements.</li>
+            <li><strong>Project coordination.</strong> Coordinated envelope rehabilitation projects from tender review through substantial performance, including mock-ups and submittal and shop drawing review.</li>
           </ul>
         </div>
       </li>
@@ -365,19 +367,21 @@
         <div>
           <h3>Project Coordinator, co-op <span>Green Infrastructure Partners</span></h3>
           <ul>
-            <li>Coordinated deep foundation and shoring operations for Pape Station on the Ontario Line: diaphragm walls, caisson drilling, soldier pile and lagging, O-cell load testing and tieback anchor testing. Tracked RFIs, RFQs and submittals across the below-grade scope.</li>
-            <li>Sequenced excavation and support of excavation to MTO, CSA and Ministry of Labour requirements, with field reports, as-builts and quantity summaries.</li>
+            <li><strong>Deep foundations.</strong> Coordinated field records and technical queries for the below-grade work at Pape Station on the Ontario Line: diaphragm walls, caisson drilling, and soldier piles and lagging. Read geotechnical and structural drawings to prepare and track RFIs, RFQs and submittals.</li>
+            <li><strong>Testing and records.</strong> Documented O-cell load tests and tieback anchor tests, and kept field reports, quantities and as-builts current as the excavation advanced.</li>
           </ul>
+          <p class="role-links"><a href="./projects/deep-foundations-soe.html">Deep foundations case study</a></p>
         </div>
       </li>
       <li class="role">
         <p class="role-when">May – Aug 2024<span>Thunder Bay, ON</span></p>
         <div>
-          <h3>Quality Control Technician, co-op <span>Green Infrastructure Partners</span></h3>
+          <h3>Quality Control Technician, co-op <span>GIP Construction Engineering</span></h3>
           <ul>
-            <li>Field and lab QC on Superpave and CIREAM materials to MTO, OPSS 1150, ASTM and AASHTO standards: Lottman (AASHTO T283), Marshall stability and flow, bulk specific gravity.</li>
-            <li>Independently managed QC for the MTO Highway 17 and 61 rehabilitation near Thunder Bay; mix optimisation through gradation, binder content and foaming parameter analysis.</li>
+            <li><strong>Laboratory and field testing.</strong> Tested Superpave and CIREAM materials to MTO, OPSS 1150, ASTM and AASHTO standards: Lottman moisture sensitivity (AASHTO T283), Marshall stability and flow, and bulk specific gravity.</li>
+            <li><strong>Highway 17 and 61.</strong> Ran quality control independently on the MTO Highway 17 and 61 rehabilitation near Thunder Bay, and supported mix optimization with gradation, binder content and foaming parameter analysis.</li>
           </ul>
+          <p class="role-links"><a href="./projects/highway-design-pavement-qc.html">Highway and pavement case study</a></p>
         </div>
       </li>
     </ol>
@@ -387,15 +391,16 @@
     <div id="education">
       <h2>Education</h2>
       <h3 class="degree">Bachelor of Applied Science, Civil Engineering</h3>
-      <p class="degree-meta">University of Waterloo, expected 2028</p>
+      <p class="degree-meta">University of Waterloo, Honours Co-operative, expected 2028</p>
       <ul class="plain">
-        <li>Cumulative GPA of 4.0</li>
-        <li>President's Scholarship of Distinction, 2024</li>
-        <li>On international exchange in Singapore for the fall 2026 term</li>
+        <li>4.0 GPA, with Term Distinction in each of the last three academic terms</li>
+        <li>President’s Scholarship of Distinction (2024), President’s Research Award (2026) and President’s International Experience Award (2027)</li>
+        <li>On exchange at the National University of Singapore, fall 2026</li>
       </ul>
 
       <h3 class="degree">Peer-reviewed publication, first author</h3>
-      <p>Gao, T., <em>et al.</em> Capacity Regression and Temperature Prediction for Canada's Largest Solar Facility, Travers Solar, Alberta. <em>Processes</em> 2026, 14(7), 1078.</p>
+      <p>Gao, T., <em>et al.</em> Capacity Regression and Temperature Prediction for Canada’s Largest Solar Facility, Travers Solar, Alberta. <em>Processes</em> 2026, 14(7), 1078.</p>
+      <p class="degree-note">A physics baseline plus a learned residual, validated leave-one-day-out, cut temperature-prediction error from 2.99 to 1.43&nbsp;°C MAE and raised R² from 0.60 to 0.91.</p>
       <p class="links"><a href="https://www.mdpi.com/2227-9717/14/7/1078" target="_blank" rel="noopener">Read the paper on MDPI</a><a href="./projects/travers-solar-analysis.html">Read the case study</a></p>
     </div>
 
@@ -404,13 +409,13 @@
       <p class="skills-key">Underlined tools open the case study that demonstrates them.</p>
       <dl class="skills">
         <dt>Structure</dt>
-        <dd><a href="./projects/structural-frame-analysis.html">SAP2000</a>, <a href="./projects/structural-frame-analysis.html">direct stiffness in Python</a>, SkyCiv, Rhino, Grasshopper. Plane-frame and truss analysis, influence lines, hand verification of software output.</dd>
+        <dd><a href="./projects/structural-frame-analysis.html">SAP2000</a>, S-FRAME, <a href="./projects/structural-frame-analysis.html">direct stiffness in Python</a>, SkyCiv, Rhino, Grasshopper. Plane-frame and truss analysis, influence lines, hand verification of software output.</dd>
         <dt>Envelope</dt>
-        <dd><a href="./projects/envelope-thermal-bridge-studies.html">Flixo</a>, <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>, <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>, <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>. Thermal bridging and condensation analysis, air and vapour barriers, EIFS, PMMA and SBS waterproofing.</dd>
+        <dd><a href="./projects/envelope-thermal-bridge-studies.html">Flixo</a>, <a href="./projects/envelope-thermal-bridge-studies.html">THERM</a>, <a href="./projects/envelope-thermal-bridge-studies.html">HEAT3</a>, <a href="./projects/envelope-thermal-bridge-studies.html">Ubakus</a>, WUFI. Thermal bridging and condensation analysis, air and vapour barriers, EIFS, PMMA and SBS waterproofing.</dd>
         <dt>Code and AI</dt>
-        <dd><a href="./projects/travers-solar-analysis.html">Python</a>, <a href="./projects/structural-frame-analysis.html">NumPy</a>, <a href="./projects/projectsearch.html">SQL</a>, MATLAB, VBA, <a href="./projects/projectsearch.html">three.js</a>, <a href="./projects/projectsearch.html">SQLite FTS5</a>, <a href="./projects/engineering-retrieval-prototype.html">Vertex AI</a>, <a href="./projects/engineering-retrieval-prototype.html">Docker</a>, <a href="./projects/engineering-retrieval-prototype.html">Google Cloud</a>.</dd>
+        <dd><a href="./projects/travers-solar-analysis.html">Python</a>, <a href="./projects/structural-frame-analysis.html">NumPy</a>, <a href="./projects/structural-frame-analysis.html">Matplotlib</a>, FastAPI, <a href="./projects/projectsearch.html">SQL</a>, MATLAB, VBA, <a href="./projects/projectsearch.html">three.js</a>, <a href="./projects/projectsearch.html">SQLite FTS5</a>, <a href="./projects/engineering-retrieval-prototype.html">Vertex AI</a>, <a href="./projects/engineering-retrieval-prototype.html">Docker</a>, <a href="./projects/engineering-retrieval-prototype.html">Google Cloud</a>.</dd>
         <dt>Civil</dt>
-        <dd><a href="./projects/residence-site-redevelopment.html">AutoCAD</a>, <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>, <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>, <a href="./projects/travers-solar-analysis.html">PVSyst</a>, Revit, Bluebeam Revu, advanced Excel.</dd>
+        <dd><a href="./projects/residence-site-redevelopment.html">AutoCAD</a>, <a href="./projects/highway-design-pavement-qc.html">Civil 3D</a>, <a href="./projects/grand-river-watershed-analysis.html">ArcGIS Pro</a>, <a href="./projects/travers-solar-analysis.html">PVSyst</a>, Revit, Bluebeam Revu, Excel.</dd>
         <dt>Codes</dt>
         <dd>NBC, OBC, BCBC, BC Energy Step Code, NECB, ASHRAE 90.1, CSA A23.1, A23.3, S16 and A440, MTO OPSS, ASTM, AASHTO.</dd>
       </dl>
@@ -451,7 +456,7 @@
 <section class="scene contact" id="contact" data-scene="contact" data-ground="light">
   <div class="beat">
     <h2>Put me on your next project.</h2>
-    <p class="lede">I'm looking for a co-op role from January to April 2027 with a structural, building envelope or engineering software team.</p>
+    <p class="lede">I’m looking for a structural or building envelope co-op for January to April 2027. I bring field time on foundations and restoration, thermal modelling, and the habit of checking a model with my own code.</p>
     <a class="mail" href="mailto:t25gao@uwaterloo.ca">t25gao@uwaterloo.ca</a>
     <div class="actions">
       <a class="btn btn--solid" href="./Thomas-Gao-Resume.pdf">Resume (PDF)</a>

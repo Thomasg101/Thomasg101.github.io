@@ -46,8 +46,9 @@ normally.
 | `index.html` | Homepage. All content is real HTML and reads as a document with JavaScript or WebGL off. |
 | `assets/css/site.css` | Homepage styles. The palette and type decisions are documented at the top. |
 | `assets/css/fonts.css` | Self-hosted Archivo (variable) and IBM Plex Mono (generated). |
-| `assets/js/main.js` | Page controller: maps scroll position to the model, wires the three controls. |
+| `assets/js/main.js` | Page controller: maps scroll position to the model, wires the three controls, the work filter, the scroll reveals and the trail. |
 | `assets/js/scene.js` | The Three.js building: geometry, the single shader, camera. Knows nothing about the page. |
+| `assets/js/trail.js` | The mouse trail: one canvas overlay, four styles, chosen by the page. No dependencies. |
 | `assets/js/vendor/three.module.min.js` | Vendored Three.js 0.160.0. |
 | `projects/` | Nine case studies plus two redirect stubs for the merged solar URLs. |
 | `projects/project-detail.css` | Shared case-study styles, on the homepage palette. |
@@ -55,6 +56,7 @@ normally.
 | `assets/projects/`, `assets/photography/`, `assets/profile/` | Imagery, each with AVIF + JPEG derivatives at two widths. |
 | `assets/og-image.jpg`, `assets/og/` | Social cards: one for the site, one per case study (generated). |
 | `assets/favicon.svg`, `favicon.ico` | Wide-flange section mark (generated). |
+| `resume/` | Print source for `Thomas-Gao-Resume.pdf`: one HTML file and one stylesheet, in the site's own type. Not linked or indexed. |
 | `tools/` | Regeneration scripts, see below. |
 | `docs/projectsearch-sync.md` | Notes on what the ProjectSearch section was sourced from. |
 
@@ -65,7 +67,12 @@ normally.
 python3 tools/fetch-fonts.py     # re-download Archivo + Plex Mono, latin subset
 python3 tools/make-og-image.py   # rebuild every 1200x630 Open Graph card
 python3 tools/build-sitemap.py   # rebuild sitemap.xml from pages on disk
+./tools/build-resume.sh          # print resume/index.html to Thomas-Gao-Resume.pdf (headless Chrome)
+node tools/test-trail.mjs        # smoke test for the mouse trail, stub DOM, no browser needed
 ```
+
+The resume is edited in `resume/index.html`, never in the PDF. Keep it in step with the
+homepage: the same dates, employers, figures and tool names appear in both.
 
 `tools/update-project-pages.py` and `tools/simplify-project-css.py` were one-off
 migrations; they are kept for reference and are safe no-ops now.
@@ -81,7 +88,7 @@ presets are blended by scroll position, so the reader sets the pace.
 | Section | `data-scene` | What the model does |
 | --- | --- | --- |
 | Hero | `hero` | Complete building. The only timed animation on the site: a 1.5 s assembly on load. |
-| Structure | `structure` | Cladding flies off; caissons, pile caps and shoring grow down. Slider applies lateral drift. |
+| Structure | `structure` | Cladding flies off; caissons, pile caps and shoring grow down. Slider applies lateral drift; let go and the frame rings back to plumb. The drift is weighted by this chapter, so no other reading inherits a lean. |
 | Envelope | `envelope` | Cladding returns and a thermogram sweeps up it. Switch toggles as-built / retrofit. |
 | Code | `code` | Solid dissolves to outlines and points. Query chips select a photo pin. |
 | Work, experience, education, photos | `cover` | Opaque surface over the model; rendering pauses while it is covered. |
@@ -98,6 +105,10 @@ presets are blended by scroll position, so the reader sets the pace.
   resolve, so links from the case-study pages land in the right place.
 - The thermal and drift views are labelled on the page as illustrative. They
   are a drawing of the idea, not analysis output.
+- A mouse leaves a trail in the material of the reading it is over: a red-oxide
+  drafting line with survey nodes in daylight, a cooling heat trace on the
+  thermogram, shed survey points on the data, and a faint ink line over the
+  resume content and the case studies. Mouse only; the loop stops when idle.
 
 ## Design and accessibility
 
@@ -109,8 +120,9 @@ presets are blended by scroll position, so the reader sets the pace.
 - All controls are native elements (range input, radio group, buttons) with
   visible focus; the retrofit note and search result are live regions.
 - The model and its labels are `aria-hidden`; the same facts are in the text.
-- `prefers-reduced-motion` skips the opening assembly, the idle camera drift
-  and the point twinkle, and snaps between states instead of easing.
+- `prefers-reduced-motion` skips the opening assembly, the idle camera drift,
+  the point twinkle, the frame's spring-back, the scroll reveals and the mouse
+  trail, and snaps between states instead of easing.
 - Without WebGL or JavaScript the sections fall back to solid grounds and the
   page reads top to bottom.
 - Case-study pages have a print stylesheet; the homepage prints as text.
@@ -119,13 +131,14 @@ presets are blended by scroll position, so the reader sets the pace.
 
 - Biography, education, experience, skills, and project claims are grounded in
   the included resume and documented case studies.
-- The two Green Infrastructure Partners co-op terms are grouped under one
-  employer heading with sequential dates, since GIP is the same company in both.
+- The 2025 coordinator term is listed under Green Infrastructure Partners and the
+  2024 quality-control term under GIP Construction Engineering, as on the resume.
 - The EIT credential is unconfirmed and intentionally omitted.
-- **Scope figures added to the experience and case studies are estimates, not
-  records.** See [docs/scope-figures.md](docs/scope-figures.md) for the list that
-  still needs confirming, along with the LinkedIn URL and the Singapore exchange
-  host institution.
+- **No unconfirmed scope figures are published.** The estimates that were on three
+  case-study pages have been removed. [docs/scope-figures.md](docs/scope-figures.md)
+  lists where a confirmed number would strengthen a bullet.
+- Ownership verbs are kept no stronger than the case studies support
+  (coordinated, tracked, documented, inspected).
 - Photography originals remain in Google Drive; the site serves downsized
   derivatives with EXIF metadata removed.
 - Employer/client field photographs and performance plots still require the
@@ -137,8 +150,9 @@ presets are blended by scroll position, so the reader sets the pace.
   deployed index.
 - The Travers Solar case study combines the former capacity-testing and
   PV-temperature pages and cites the co-authored paper in *Processes* 2026,
-  14(7), 1078. Quoted metrics are the archived analysis outputs; the published
-  article remains the citable record.
+  14(7), 1078. The homepage and resume quote the published
+  figures (MAE 2.99 to 1.43 °C, R² 0.60 to 0.91, leave-one-day-out); the case
+  study keeps its archived analysis outputs and says which is which.
 - `uploads/` holds working source material and is git-ignored — it is not part of
   the published site.
 
